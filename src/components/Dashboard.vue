@@ -3,9 +3,9 @@
 
     <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
       <router-link to="/summary" class="navbar-brand col-sm-3 col-md-2 mr-0">
-        4x Merchant
+        Empatkali Merchant
       </router-link>
-      <!-- <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search"> -->
+      <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
       <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
           <router-link to="/login" class="nav-link">
@@ -21,29 +21,70 @@
           <div class="sidebar-sticky">
             <ul class="nav flex-column">
               <li class="nav-item">
-                <router-link to="/summary" class="nav-link">
+                <router-link :to="{ name: 'home' }" class="nav-link">
                   <span data-feather="home"></span>
-                  Summary
+                  Home
                 </router-link>
               </li>
               <li class="nav-item">
-                <router-link to="/sales" class="nav-link">
-                  <span data-feather="pie-chart"></span>
-                  Sales
+                <router-link :to="{ name: 'orders' }" class="nav-link">
+                  <span data-feather="pie-chart"></span> Orders
                 </router-link>
+                <ul class="list-unstyled submenu" style="margin-left: 40px" v-if="$router.currentRoute.name=='orders-all' || $router.currentRoute.name=='orders-draft' || $router.currentRoute.name=='orders-abandoned-checkouts'">
+                  <li><router-link :to="{ name: 'orders-all' }">All Orders</router-link></li>
+                  <li><router-link :to="{ name: 'orders-draft' }">Drafts</router-link></li>
+                  <li><router-link :to="{ name: 'orders-abandoned-checkouts' }">Abandoned Checkouts</router-link></li>
+                </ul>
               </li>
               <li class="nav-item">
-                <router-link to="/goods" class="nav-link">
+                <router-link :to="{ name: 'products' }" class="nav-link">
                   <span data-feather="shopping-cart"></span>
-                  Goods
+                  Products
+                </router-link>
+                <ul class="list-unstyled submenu" style="margin-left: 40px" v-if="$router.currentRoute.name=='products-all' || $router.currentRoute.name=='products-transfers' || $router.currentRoute.name=='products-inventory' || $router.currentRoute.name=='products-collections' || $router.currentRoute.name=='products-gift-cards'">
+                  <router-link :to="{ name: 'products-all' }" tag="li">
+                    <a href="">All products</a>
+                  </router-link>
+                  <router-link :to="{ name: 'products-transfers' }" tag="li">
+                    <a href="">Transfers</a>
+                  </router-link>
+                  <router-link :to="{ name: 'products-inventory' }" tag="li">
+                    <a href="">Inventory</a>
+                  </router-link>
+                  <!-- <router-link :to="{ name: 'products-collections' }" tag="li">
+                    <a href="">Collections</a>
+                  </router-link> -->
+                </ul>
+              </li>
+              <li class="nav-item">
+                <router-link :to="{ name: 'customers' }" class="nav-link">
+                  <span data-feather="dollar-sign"></span>
+                  Customers
                 </router-link>
               </li>
               <li class="nav-item">
-                <router-link to="/finance" class="nav-link">
+                <router-link :to="{ name: 'analytics' }" class="nav-link">
                   <span data-feather="dollar-sign"></span>
-                  Finance
+                  Analytics
                 </router-link>
+                <ul class="list-unstyled submenu" style="margin-left: 40px" v-if="$router.currentRoute.name=='analytics-dashboards' || $router.currentRoute.name=='analytics-reports' || $router.currentRoute.name=='analytics-live-views'">
+                  <router-link :to="{ name: 'analytics-dashboards' }" tag="li">
+                    <a href="">Dashboards</a>
+                  </router-link>
+                  <router-link :to="{ name: 'analytics-reports' }" tag="li">
+                    <a href="">Reports</a>
+                  </router-link>
+                  <router-link :to="{ name: 'analytics-live-views' }" tag="li">
+                    <a href="">Live Views</a>
+                  </router-link>
+                </ul>
               </li>
+              <!-- <li class="nav-item">
+                <router-link :to="{ name: 'discounts' }" class="nav-link">
+                  <span data-feather="dollar-sign"></span>
+                  Discounts
+                </router-link>
+              </li> -->
             </ul>
           </div>
         </nav>
@@ -56,6 +97,22 @@
 
   </div>
 </template>
+
+<script>
+  export default {
+    created() {
+      console.log('test', this.$router.currentRoute.name)
+    },
+    methods: {
+      subIsActive(input) {
+        const paths = Array.isArray(input) ? input: [input]
+        return paths.some(path => {
+          return this.$route.path.indexOf(path) === 0 // current path starts with this path string
+        })
+      }
+    }
+  }
+</script>
 
 <style scoped>
   body {
@@ -122,6 +179,18 @@
     text-transform: uppercase;
   }
 
+  /*Submenus*/
+  .sidebar .submenu {
+    margin-bottom: 5px;
+  }
+  .sidebar .submenu a {
+    font-size: 14px;
+    color: #333;
+  }/*
+  .sidebar .submenu .active {
+    color: #007bff;
+  }*/
+
   /*
    * Content
    */
@@ -133,7 +202,6 @@
   /*
    * Navbar
    */
-
   .navbar-brand {
     padding-top: .75rem;
     padding-bottom: .75rem;
