@@ -10,15 +10,17 @@
             </h5>
             <div class="card-body">
 
-              <form @click.prevent="login">
+              <form @submit.prevent="login">
                 <div class="form-group row">
                   <div class="col">
-                    <input type="email" class="form-control" placeholder="Email">
+                    <input type="email" class="form-control" placeholder="Email"
+                           v-model="data.body.email">
                   </div>
                 </div>
                 <div class="form-group row">
                   <div class="col">
-                    <input type="password" class="form-control" placeholder="Password">
+                    <input type="password" class="form-control" placeholder="Password"
+                           v-model="data.body.password">
                   </div>
                 </div>
                 <div class="form-group row mb-0">
@@ -39,11 +41,30 @@
 <script>
 export default {
   data() {
-    return {}
+    return {
+      data: {
+        body: {},
+        rememberMe: false,
+        fetchUser: true
+      },
+      error: null
+    }
   },
   methods: {
     login() {
-      this.$router.push('/')
+      let vm = this
+      let redirect = vm.$auth.redirect()
+      vm.$auth.login({
+        data: vm.data.body, // Axios
+        rememberMe: true,
+        redirect: '/home',
+        fetchUser: false
+      }).then((res) => {
+        // alert('logging in..')
+        // should add some effects for logging in
+      }, (err) => {
+        alert('Invalid Email/Password!')
+      })
     }
   }
 }

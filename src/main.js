@@ -1,6 +1,25 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import VueAxios from 'vue-axios'
+import axios from 'axios'
 import App from './App.vue'
+
+import { library } from '@fortawesome/fontawesome-svg-core'
+import {
+	faHome,
+	faChartPie,
+	faShoppingCart,
+	faUsers,
+	faShoppingBag,
+	faPhone,
+	faExchangeAlt,
+	faBullhorn,
+	faSearch
+} from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
+library.add(faHome,faChartPie,faShoppingCart,faUsers,faShoppingBag,faPhone,faExchangeAlt,faBullhorn,faSearch)
+Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 // Bootstrap
 import 'bootstrap/dist/css/bootstrap.css'
@@ -21,6 +40,10 @@ import ProductShow from './components/products/Show.vue'
 import ProductsTransfers from './components/products/Transfers.vue'
 import ProductsInventory from './components/products/Inventory.vue'
 import ProductsCollections from './components/products/Collections.vue'
+// Transactions
+import Transactions from './components/transactions/Index.vue'
+// Promos
+import Promotions from './components/promotions/Index.vue'
 // Analytics
 import Analytics from './components/analytics/__Main.vue'
 import AnalyticsDashboards from './components/analytics/Dashboards.vue'
@@ -44,8 +67,8 @@ const routes = [
 				path: '/orders', component: Orders, name: 'orders', redirect: '/orders/',
 				children: [
 					{ path: '/', component: OrdersAll, name: 'orders-all' },
-					{ path: 'draft', component: OrdersDraft, name: 'orders-draft' },
-					{ path: 'abandoned-checkouts', component: OrdersAbandonedCheckouts, name: 'orders-abandoned-checkouts' },
+					/*{ path: 'draft', component: OrdersDraft, name: 'orders-draft' },
+					{ path: 'abandoned-checkouts', component: OrdersAbandonedCheckouts, name: 'orders-abandoned-checkouts' },*/
 				]
 			},
 			// Products
@@ -53,11 +76,26 @@ const routes = [
 				path: '/products', component: Products, name: 'products', redirect: '/products/',
 				children: [
 					{ path: '/', component: ProductsAll, name: 'products-all' },
+					/*{ path: ':productId', component: ProductShow, name: 'product-show' },
+					{ path: 'transfers', component: ProductsTransfers, name: 'products-transfers' },
+					{ path: 'inventory', component: ProductsInventory, name: 'products-inventory' },
+					{ path: 'collections', component: ProductsCollections, name: 'products-collections' },*/
+				]
+			},
+			// Transactions
+			{
+				path: '/transactions', component: Transactions, name: 'transactions', /*redirect: '/transactions/',*/
+				/*children: [
+					{ path: '/', component: ProductsAll, name: 'products-all' },
 					{ path: ':productId', component: ProductShow, name: 'product-show' },
 					{ path: 'transfers', component: ProductsTransfers, name: 'products-transfers' },
 					{ path: 'inventory', component: ProductsInventory, name: 'products-inventory' },
 					{ path: 'collections', component: ProductsCollections, name: 'products-collections' },
-				]
+				]*/
+			},
+			// Promos
+			{
+				path: '/promotions', component: Promotions, name: 'promotions'
 			},
 			// Analytics
 			{
@@ -89,6 +127,33 @@ const router = new VueRouter({
 
 Vue.config.productionTip = false
 Vue.use(VueRouter)
+Vue.use(VueAxios, axios)
+
+// this really solves issue.. lol
+Vue.router = router
+
+Vue.use(require('@websanova/vue-auth'), {
+	auth: {
+	    request(req, token) {
+	        this.options.http._setHeaders.call(this, req, { Authorization: `Bearer ${token}` });
+	    },
+	    response(res) {
+			var token = res.data.jwt
+			if (token) {
+				token = token.split(/Bearer\:?\s?/i);
+				return token[token.length > 1 ? 1 : 0].trim()
+			}
+	    },
+	},
+	// auth: require('@websanova/vue-auth/drivers/auth/bearer.js'),
+	http: require('@websanova/vue-auth/drivers/http/axios.1.x.js'),
+	router: require('@websanova/vue-auth/drivers/router/vue-router.2.x.js'),
+	loginData: {url: `${process.env.VUE_APP_API_URL}/auth`, method: 'POST', redirect: '/login'},
+	authRedirect: { path: `${process.env.VUE_APP_API_URL}/auth` },
+	tokenDefaultName: 'auth_token',
+	refreshData: { enabled: false },
+	fetchData: { enabled: false }
+})
 
 new Vue({
   render: h => h(App),

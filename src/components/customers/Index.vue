@@ -1,31 +1,9 @@
 <template>
-  <div class="mb-4 mt-4">
-  	<div class="mb-4">
-  		<div class="row">
-  			<div class="col-md-10">
-					<h2 class="mb-0">
-						Customers
-						<router-link :to="{ name: 'customer-add' }" class="btn btn-primary">Add customer</router-link>
-					</h2>
-					<!-- <ul class="list-inline">
-						<li class="list-inline-item">
-							<a href="#" class="text-secondary">
-								<span data-feather="download" style="width: 18px"></span> Import Customers
-							</a>
-						</li>
-						<li class="list-inline-item">
-							<a href="#" class="text-secondary">
-								<span data-feather="upload" style="width: 18px"></span> Export
-							</a>
-						</li>
-					</ul> -->
-  			</div>
-  			<!-- <div class="col-md-2 text-right pt-3"> -->
-  			<!-- <div class="col-md-2 text-right">
-  				<a href="" class="btn btn-primary">Add Customer</a>
-  			</div> -->
-  		</div>
-		</div>
+  <div class="mb-4">
+		<h2>
+			<font-awesome-icon icon="users" /> Customers
+			<router-link :to="{ name: 'customer-add' }" class="btn btn-primary">Add customer</router-link>
+		</h2>	
 		<div class="card">
 		  <!-- <div class="card-header">
 		    <ul class="nav nav-tabs card-header-tabs">
@@ -49,16 +27,8 @@
 			<div class="card-body">
 				<div class="input-group mb-3">
 				  <div class="input-group-prepend">
-				    <button class="btn btn-secondary dropdown-toggle px-4" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Filter</button>
-				    <div class="dropdown-menu">
-				      <a class="dropdown-item" href="#">Action</a>
-				      <a class="dropdown-item" href="#">Another action</a>
-				      <a class="dropdown-item" href="#">Something else here</a>
-				      <div role="separator" class="dropdown-divider"></div>
-				      <a class="dropdown-item" href="#">Separated link</a>
-				    </div>
-				    <span class="input-group-text" style="background: transparent">
-				    	<span data-feather="search" style="width: 18px"></span>
+				    <span class="input-group-text">
+				    	<font-awesome-icon icon="search" />
 				    </span>
 				  </div>
 				  <input type="text" class="form-control" aria-label="Text input with dropdown button" placeholder="Search customer" style="border-left: 0">

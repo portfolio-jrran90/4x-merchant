@@ -22,26 +22,25 @@
             <ul class="nav flex-column">
               <li class="nav-item">
                 <router-link :to="{ name: 'home' }" class="nav-link">
-                  <span data-feather="home"></span>
+                  <font-awesome-icon icon="home" />
                   Home
                 </router-link>
               </li>
               <li class="nav-item">
                 <router-link :to="{ name: 'orders' }" class="nav-link">
-                  <span data-feather="pie-chart"></span> Orders
+                  <font-awesome-icon icon="shopping-cart" /> Orders
                 </router-link>
-                <ul class="list-unstyled submenu" style="margin-left: 40px" v-if="$router.currentRoute.name=='orders-all' || $router.currentRoute.name=='orders-draft' || $router.currentRoute.name=='orders-abandoned-checkouts'">
+                <!-- <ul class="list-unstyled submenu" style="margin-left: 40px" v-if="$router.currentRoute.name=='orders-all' || $router.currentRoute.name=='orders-draft' || $router.currentRoute.name=='orders-abandoned-checkouts'">
                   <li><router-link :to="{ name: 'orders-all' }">All Orders</router-link></li>
                   <li><router-link :to="{ name: 'orders-draft' }">Drafts</router-link></li>
                   <li><router-link :to="{ name: 'orders-abandoned-checkouts' }">Abandoned Checkouts</router-link></li>
-                </ul>
+                </ul> -->
               </li>
               <li class="nav-item">
                 <router-link :to="{ name: 'products' }" class="nav-link">
-                  <span data-feather="shopping-cart"></span>
-                  Products
+                  <font-awesome-icon icon="shopping-bag" /> Products
                 </router-link>
-                <ul class="list-unstyled submenu" style="margin-left: 40px" v-if="$router.currentRoute.name=='products-all' || $router.currentRoute.name=='products-transfers' || $router.currentRoute.name=='products-inventory' || $router.currentRoute.name=='products-collections' || $router.currentRoute.name=='products-gift-cards'">
+                <!-- <ul class="list-unstyled submenu" style="margin-left: 40px" v-if="$router.currentRoute.name=='products-all' || $router.currentRoute.name=='products-transfers' || $router.currentRoute.name=='products-inventory' || $router.currentRoute.name=='products-collections' || $router.currentRoute.name=='products-gift-cards'">
                   <router-link :to="{ name: 'products-all' }" tag="li">
                     <a href="">All products</a>
                   </router-link>
@@ -51,21 +50,26 @@
                   <router-link :to="{ name: 'products-inventory' }" tag="li">
                     <a href="">Inventory</a>
                   </router-link>
-                  <!-- <router-link :to="{ name: 'products-collections' }" tag="li">
-                    <a href="">Collections</a>
-                  </router-link> -->
-                </ul>
+                </ul> -->
+              </li>
+              <li class="nav-item">
+                <router-link :to="{ name: 'transactions' }" class="nav-link">
+                  <font-awesome-icon icon="exchange-alt" /> Transaction
+                </router-link>
+              </li>
+              <li class="nav-item">
+                <router-link :to="{ name: 'promotions' }" class="nav-link">
+                  <font-awesome-icon icon="bullhorn" /> Promotion
+                </router-link>
               </li>
               <li class="nav-item">
                 <router-link :to="{ name: 'customers' }" class="nav-link">
-                  <span data-feather="dollar-sign"></span>
-                  Customers
+                  <font-awesome-icon icon="users" /> Customers
                 </router-link>
               </li>
               <li class="nav-item">
                 <router-link :to="{ name: 'analytics' }" class="nav-link">
-                  <span data-feather="dollar-sign"></span>
-                  Analytics
+                  <font-awesome-icon icon="chart-pie" /> Analytics
                 </router-link>
                 <ul class="list-unstyled submenu" style="margin-left: 40px" v-if="$router.currentRoute.name=='analytics-dashboards' || $router.currentRoute.name=='analytics-reports' || $router.currentRoute.name=='analytics-live-views'">
                   <router-link :to="{ name: 'analytics-dashboards' }" tag="li">

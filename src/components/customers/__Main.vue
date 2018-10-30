@@ -1,5 +1,5 @@
 <template>
-  <div class="pt-4 mb-4">
+  <div class="py-4">
 		<router-view></router-view>
   </div>
 </template>
