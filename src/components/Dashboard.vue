@@ -8,9 +8,9 @@
       <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
       <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
-          <router-link to="/login" class="nav-link">
+          <a href="#" class="nav-link" @click.prevent="logout()">
             <span data-feather="log-out"></span> Sign out
-          </router-link>
+          </a>
         </li>
       </ul>
     </nav>
@@ -22,8 +22,7 @@
             <ul class="nav flex-column">
               <li class="nav-item">
                 <router-link :to="{ name: 'home' }" class="nav-link">
-                  <font-awesome-icon icon="home" />
-                  Home
+                  <font-awesome-icon icon="home" /> Home
                 </router-link>
               </li>
               <li class="nav-item">
@@ -104,15 +103,19 @@
 
 <script>
   export default {
-    created() {
-      console.log('test', this.$router.currentRoute.name)
-    },
     methods: {
-      subIsActive(input) {
-        const paths = Array.isArray(input) ? input: [input]
-        return paths.some(path => {
-          return this.$route.path.indexOf(path) === 0 // current path starts with this path string
-        })
+      logout() {
+        this.$auth.logout({
+          // makeRequest: true,
+          success() {
+            // console.log(res.data)
+            console.log('success');
+          },
+          error() {
+            console.log('error');
+          },
+          redirect: '/login'
+        });
       }
     }
   }

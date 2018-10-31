@@ -5,12 +5,12 @@
         <div class="col-4">
           <div class="card">
             <h5 class="card-header text-center">
-              <img src="https://empatkali.co.id/img/logo.svg" alt="empatkali"><br>
+              <img src="http://empatkali.co.id/img/logo.svg" alt="empatkali"><br>
               Login
             </h5>
             <div class="card-body">
 
-              <form @submit.prevent="login">
+              <form @submit.prevent="login()">
                 <div class="form-group row">
                   <div class="col">
                     <input type="email" class="form-control" placeholder="Email"
@@ -40,8 +40,12 @@
 
 <script>
 export default {
+  mounted() {
+    console.log('redirect', this.$auth.redirect())
+  },
   data() {
     return {
+      context: 'login context',
       data: {
         body: {},
         rememberMe: false,

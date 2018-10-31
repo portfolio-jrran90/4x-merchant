@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import BootstrapVue from 'bootstrap-vue'
 import VueRouter from 'vue-router'
 import VueAxios from 'vue-axios'
 import axios from 'axios'
@@ -21,8 +22,15 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 library.add(faHome,faChartPie,faShoppingCart,faUsers,faShoppingBag,faPhone,faExchangeAlt,faBullhorn,faSearch)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
+Vue.config.productionTip = false
+Vue.use(VueRouter)
+Vue.use(VueAxios, axios)
+Vue.use(BootstrapVue)
+// Vue.axios.defaults.baseURL = process.env.VUE_APP_BASE_URL
+
 // Bootstrap
 import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 // Route components
 import Login from './components/Login.vue'
@@ -57,9 +65,10 @@ import CustomerAdd from './components/customers/Add.vue'
 
 const routes = [
 	{ path: '*', redirect: '/login'},
-	{ path: '/login', component: Login },
+	{ path: '/login', component: Login, meta: { auth: false } },
 	{
 		path: '/', component: Dashboard, name: 'dashboard', redirect: '/home',
+		meta: { auth: true },
 		children: [
 			{ path: '/home', component: Home, name: 'home' },
 			// Orders
@@ -124,10 +133,6 @@ const router = new VueRouter({
 	mode: 'history',
 	routes
 })
-
-Vue.config.productionTip = false
-Vue.use(VueRouter)
-Vue.use(VueAxios, axios)
 
 // this really solves issue.. lol
 Vue.router = router
