@@ -58,7 +58,7 @@
 		<!-- modals -->
 		<b-modal v-model="modalShowTransactionDetail" size="lg">
 			<div slot="modal-title">
-				Transaction details for {{ transactionDetails[0].invoice }}
+				Transaction details for {{ (transactionDetails[0])?transactionDetails[0].invoice:'' }}
 			</div>
 			<table class="table table-striped table-sm table-bordered">
 				<thead>

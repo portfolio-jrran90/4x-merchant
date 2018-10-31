@@ -25,32 +25,16 @@
                   <font-awesome-icon icon="home" /> Home
                 </router-link>
               </li>
-              <li class="nav-item">
+              <!-- <li class="nav-item">
                 <router-link :to="{ name: 'orders' }" class="nav-link">
                   <font-awesome-icon icon="shopping-cart" /> Orders
                 </router-link>
-                <!-- <ul class="list-unstyled submenu" style="margin-left: 40px" v-if="$router.currentRoute.name=='orders-all' || $router.currentRoute.name=='orders-draft' || $router.currentRoute.name=='orders-abandoned-checkouts'">
-                  <li><router-link :to="{ name: 'orders-all' }">All Orders</router-link></li>
-                  <li><router-link :to="{ name: 'orders-draft' }">Drafts</router-link></li>
-                  <li><router-link :to="{ name: 'orders-abandoned-checkouts' }">Abandoned Checkouts</router-link></li>
-                </ul> -->
               </li>
               <li class="nav-item">
                 <router-link :to="{ name: 'products' }" class="nav-link">
                   <font-awesome-icon icon="shopping-bag" /> Products
                 </router-link>
-                <!-- <ul class="list-unstyled submenu" style="margin-left: 40px" v-if="$router.currentRoute.name=='products-all' || $router.currentRoute.name=='products-transfers' || $router.currentRoute.name=='products-inventory' || $router.currentRoute.name=='products-collections' || $router.currentRoute.name=='products-gift-cards'">
-                  <router-link :to="{ name: 'products-all' }" tag="li">
-                    <a href="">All products</a>
-                  </router-link>
-                  <router-link :to="{ name: 'products-transfers' }" tag="li">
-                    <a href="">Transfers</a>
-                  </router-link>
-                  <router-link :to="{ name: 'products-inventory' }" tag="li">
-                    <a href="">Inventory</a>
-                  </router-link>
-                </ul> -->
-              </li>
+              </li> -->
               <li class="nav-item">
                 <router-link :to="{ name: 'transactions' }" class="nav-link">
                   <font-awesome-icon icon="exchange-alt" /> Transaction
