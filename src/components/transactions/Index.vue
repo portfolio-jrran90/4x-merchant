@@ -6,7 +6,7 @@
 		</h2>
 		<div class="card">
 		  <div class="card-header">
-		    <ul class="nav nav-tabs card-header-tabs">
+		    <!-- <ul class="nav nav-tabs card-header-tabs">
 		      <li class="nav-item">
 		        <a class="nav-link active" href="#">Approved</a>
 		      </li>
@@ -16,10 +16,8 @@
 		      <li class="nav-item">
 		        <a class="nav-link" href="#">Not approve</a>
 		      </li>
-		    </ul>
-		  </div>
-			<div class="card-body">
-				<div class="input-group mb-3">
+		    </ul> -->
+				<div class="input-group">
 				  <div class="input-group-prepend">
 				    <span class="input-group-text">
 				    	<font-awesome-icon icon="search" />
@@ -27,6 +25,8 @@
 				  </div>
 				  <input type="text" class="form-control" aria-label="Text input with dropdown button" placeholder="Search transaction" style="border-left: 0">
 				</div>
+		  </div>
+			<div class="card-body">
 				<table class="table table-striped table-bordered mb-0" style="border: 0 !important">
 					<thead>
 						<tr>

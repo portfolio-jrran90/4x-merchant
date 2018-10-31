@@ -19,14 +19,17 @@
 				<table class="table table-striped table-bordered mb-0">
 					<thead>
 						<tr>
-							<th>Name</th>
+							<th>Title</th>
 							<th>Description</th>
 							<th>Period</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr v-for="data in promotions">
-							<td>{{ data.title }}</td>
+							<td>
+								<img :src="data.img" class="img-thumbnail float-left mr-2" alt="" style="width: 100px; height: 100px; object-fit: cover">
+								<strong>{{ data.title }}</strong>
+							</td>
 							<td>{{ data.detail }}</td>
 							<td>{{ data.period }}</td>
 						</tr>
