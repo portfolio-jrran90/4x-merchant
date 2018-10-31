@@ -20,7 +20,8 @@
       </div>
     </div>
     <div class="col-md-4 pt-5">
-      <form>
+      <embed src="https://merchant.empatkali.co.id/utama.php" style="width: 100%; height: 350px">
+      <!-- <form>
         <div class="form-group">
           <div class="input-group mb-2">
             <div class="input-group-prepend">
@@ -32,7 +33,7 @@
           </div>
         </div>
         <button type="submit" class="btn btn-primary btn-block">Submit</button>
-      </form>
+      </form> -->
     </div>
   </div>
 </template>
