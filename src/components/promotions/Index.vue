@@ -113,7 +113,7 @@ export default {
 			let vm = this
 			axios.post(`${process.env.VUE_APP_API_URL}/promotion`, vm.dataInputPromotion).then(res => {
 				alert('Promotion successfully added!')
-				axios.get('http://sandbox.empatkali.co.id/promo').then(res2 => vm.promotions = res2.data)
+				axios.get('https://sandbox.empatkali.co.id/promo').then(res2 => vm.promotions = res2.data)
 			})
 		}
 	}
