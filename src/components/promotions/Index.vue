@@ -94,7 +94,7 @@ export default {
 	},
 	created() {
 		let vm = this
-		axios.get('http://sandbox.empatkali.co.id/promo').then(res => {
+		axios.get('https://sandbox.empatkali.co.id/promo').then(res => {
 			vm.promotions = res.data
 			console.log(res.data)
 		})
