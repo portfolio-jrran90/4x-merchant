@@ -50,7 +50,7 @@
                   <font-awesome-icon icon="users" /> Customers
                 </router-link>
               </li>
-              <li class="nav-item">
+              <!-- <li class="nav-item">
                 <router-link :to="{ name: 'analytics' }" class="nav-link">
                   <font-awesome-icon icon="chart-pie" /> Analytics
                 </router-link>
@@ -65,7 +65,7 @@
                     <a href="">Live Views</a>
                   </router-link>
                 </ul>
-              </li>
+              </li> -->
               <!-- <li class="nav-item">
                 <router-link :to="{ name: 'discounts' }" class="nav-link">
                   <span data-feather="dollar-sign"></span>
