@@ -6,17 +6,6 @@
 		</h2>
 		<div class="card">
 		  <div class="card-header">
-		    <!-- <ul class="nav nav-tabs card-header-tabs">
-		      <li class="nav-item">
-		        <a class="nav-link active" href="#">Approved</a>
-		      </li>
-		      <li class="nav-item">
-		        <a class="nav-link" href="#">Pending</a>
-		      </li>
-		      <li class="nav-item">
-		        <a class="nav-link" href="#">Not approve</a>
-		      </li>
-		    </ul> -->
 				<div class="input-group">
 				  <div class="input-group-prepend">
 				    <span class="input-group-text">
@@ -30,10 +19,10 @@
 				<table class="table table-striped table-bordered mb-0" style="border: 0 !important">
 					<thead>
 						<tr>
-							<th>Order #</th>
-							<th>Date</th>
-							<th>Payment status</th>
-							<th class="text-right">Total price</th>
+							<th>Id Order</th>
+							<th>Tanggal Pembayaran</th>
+							<th>Status Pembayaran</th>
+							<th class="text-right">Total Harga</th>
 							<th></th>
 						</tr>
 					</thead>
@@ -47,7 +36,7 @@
 							</td>
 							<td class="text-right">{{ Intl.NumberFormat('id-ID', {style: 'currency', currency: 'IDR'}).format(data.Total) }}</td>
 							<td class="text-right">
-								<small><a href="#" @click.prevent="openModal('ShowTransactionDetail', data)">view transaction detail</a></small>
+								<small><a href="#" @click.prevent="openModal('ShowTransactionDetail', data)">Lihat detail transaksi</a></small>
 							</td>
 						</tr>
 					</tbody>
@@ -65,9 +54,9 @@
 					<tr>
 						<th></th>
 						<th class="text-center">No</th>
-						<th>Payment due</th>
-						<th>Paid date</th>
-						<th class="text-center">Pg</th>
+						<th>Jatuh Tempo</th>
+						<th>Tanggal Pembayaran</th>
+						<th class="text-center">CREDIT / TRANSFER</th>
 						<th class="text-right">Total</th>
 					</tr>
 				</thead>

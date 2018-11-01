@@ -17,10 +17,17 @@
 		  </div>
 			<div class="card-body">
 				<table class="table table-striped mb-0 table-bordered" style="border: 0 !important">
+					<thead>
+						<tr>
+							<th>Handphone Customer</th>
+							<th>Jumlah Pembelian</th>
+							<th class="text-right">Harga Total Pembelian</th>
+						</tr>
+					</thead>
 					<tbody>
 						<tr v-for="data in customers">
 							<td>{{ data.HP }}</td>
-							<td class="text-right">{{ `${data.jumlah} orders`}}</td>
+							<td>{{ `${data.jumlah} orders`}}</td>
 							<td class="text-right">{{ `${Intl.NumberFormat('id-ID', {style: 'currency', currency: 'IDR'}).format(data.total)} spent` }} </td>
 						</tr>
 					</tbody>

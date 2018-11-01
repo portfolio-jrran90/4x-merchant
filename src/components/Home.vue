@@ -4,7 +4,7 @@
     <div class="col-md-7">
       <div class="pt-5">
         <h2 class="mb-4">
-          Selamat datang di EmpatKali Merchant Dashboard, <strong>Dhonald</strong>
+          Selamat datang di EmpatKali Merchant Dashboard, <strong>Ilbisonte</strong>
         </h2>
 
         <div class="card">
@@ -12,7 +12,7 @@
             <div class="row">
               <div class="col">
                 <h4 class="mb-3">Masukkan product promo merchant anda</h4>
-                <router-link :to="{ name: 'products' }" class="btn btn-primary">Add promo</router-link>
+                <router-link :to="{ name: 'promotions' }" class="btn btn-primary">Add promo</router-link>
               </div>
             </div>
           </div>

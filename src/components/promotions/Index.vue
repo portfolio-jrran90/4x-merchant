@@ -19,9 +19,9 @@
 				<table class="table table-striped table-bordered mb-0">
 					<thead>
 						<tr>
-							<th>Title</th>
-							<th>Description</th>
-							<th>Period</th>
+							<th>Name Promo</th>
+							<th>Deskripsi Promo</th>
+							<th>Periode Promo</th>
 						</tr>
 					</thead>
 					<tbody>
