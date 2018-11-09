@@ -35,3 +35,9 @@
     </div>
   </div>
 </template>
+
+<style scoped>
+  ul, span {
+    font-size: 22px;
+  }
+</style>
