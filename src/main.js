@@ -63,9 +63,16 @@ import CustomersAll from './components/customers/Index.vue'
 import CustomerShow from './components/customers/Show.vue'
 import CustomerAdd from './components/customers/Add.vue'
 
+// Mobile {test}
+import Mobile from './components/Mobile.vue'
+
 const routes = [
 	{ path: '*', redirect: '/login'},
 	{ path: '/login', component: Login, meta: { auth: false } },
+	// Mobile
+	{
+		path: '/mobile', component: Mobile, name: 'mobile'
+	},
 	{
 		path: '/', component: Dashboard, name: 'dashboard', redirect: '/home',
 		meta: { auth: true },
@@ -123,7 +130,7 @@ const routes = [
 					{ path: ':customerId', component: CustomerShow, name: 'customer-show' },
 					{ path: 'add', component: CustomerAdd, name: 'customer-add' },
 				]
-			}
+			},
 		]
 	},
 ]
