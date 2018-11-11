@@ -30,7 +30,7 @@
           <div class="card-body">
             <h4 class="mb-3">MASUKKAN NO TELP UNTUK APPROVAL PEMBAYARAN</h4>
             <input type="text" class="form-control" placeholder="PHONE NUMBER" v-model="hp">
-            <button class="btn btn-primary btn-block mt-2" @click.prevent="send" :disabled="!hp">SEND</button>
+            <button class="btn btn-block btn-secondary mt-2" @click.prevent="send" :disabled="!hp">SEND</button>
           </div>
         </div>
       </div>
