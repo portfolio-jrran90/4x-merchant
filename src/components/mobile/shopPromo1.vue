@@ -5,21 +5,23 @@
       <div class="col-md-6 offset-md-3">
         <div class="card mt-3">
           <div class="card-header">
-            <h2 class="mb-0">Merchant - Ilbisonte</h2>
+            <h2 class="mb-0">Ilbisonte</h2>
           </div>
           <div class="card-body">
             <!-- <img src="" alt=""> -->
             <div style="overflow: hidden;" class="mb-3">
-              <div class="float-left mr-2" style="width: 100px; height: 100px; background: #ccc"></div>
+              <div class="float-left mr-2" >
+                <img style="width: 100px; height: 100px; background: #ccc" src="https://www.marcopoloni.com/images/Il-Bisonte/GIANELLA-Il-Bisonte-Leather-Pochette-320.jpg"/>
+              </div>
               <div>
-                <h4>ILBISONTE PROMO</h4>
+                <h4>ILBISONTE PROMO BAG</h4>
                 <span>Rp 3.500.000</span>
               </div>
             </div>
 
             <ul class="list-unstyled mb-0">
               <li><strong>Harga total:</strong> Rp 3.500.000</li>
-              <li><strong>Tagihan yang harus dibayar: <span style="font-size: 20px">Rp 850.000</span></strong></li>
+              <li><strong>Tagihan yang harus dibayar: <span style="font-size: 20px">Rp 875.000</span></strong></li>
             </ul>
           </div>
         </div>
@@ -51,7 +53,7 @@ export default {
       let data = {
         duit: 3500000,
         m: '081808314197',
-        p: 'ILB',
+        p: 'ILBISONTE',
         hp: vm.hp
       }
       axios.post('https://sandbox2.empatkali.co.id/initiatepurchase', data).then(res => {

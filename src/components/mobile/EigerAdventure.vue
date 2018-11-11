@@ -1,0 +1,66 @@
+<template>
+  
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        <div class="card mt-3">
+          <div class="card-header">
+            <h2 class="mb-0">EIGER</h2>
+          </div>
+          <div class="card-body">
+            <!-- <img src="" alt=""> -->
+            <div style="overflow: hidden;" class="mb-3">
+              <div class="float-left mr-2" >
+                <img style="width: 100px; height: 100px; background: #ccc" src="https://eigeradventure.com/media/catalog/product/cache/1/thumbnail/1100x1385/9df78eab33525d08d6e5fb8d27136e95/2/5/2576e07n_2.jpg"/>
+              </div>
+              <div>
+                <h4>Eiger Riding Cupra 1.2 Backpack 24L - Brown</h4>
+                <span>Rp 390.000</span>
+              </div>
+            </div>
+
+            <ul class="list-unstyled mb-0">
+              <li><strong>Harga total:</strong> Rp 390.000</li>
+              <li><strong>Tagihan yang harus dibayar: <span style="font-size: 20px">Rp 97.500</span></strong></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card mt-3">
+          <div class="card-body">
+            <h4 class="mb-3">MASUKKAN NO TELP UNTUK APPROVAL PEMBAYARAN</h4>
+            <input type="text" class="form-control" placeholder="PHONE NUMBER" v-model="hp">
+            <button class="btn btn-primary btn-block mt-2" @click.prevent="send" :disabled="!hp">SEND</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import axios from 'axios'
+
+export default {
+  data() {
+    return {
+      hp: ''
+    }
+  },
+  methods: {
+    send() {
+      let vm = this
+      let data = {
+        duit: 390000,
+        m: '081808314197',
+        p: 'ILB',
+        hp: vm.hp
+      }
+      axios.post('https://sandbox2.empatkali.co.id/initiatepurchase', data).then(res => {
+        alert('Successfully Sent!')
+        vm.hp = ''
+      })
+    }
+  }
+}
+</script>

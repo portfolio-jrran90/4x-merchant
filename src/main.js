@@ -64,15 +64,60 @@ import CustomerShow from './components/customers/Show.vue'
 import CustomerAdd from './components/customers/Add.vue'
 
 // Mobile {test}
-import Mobile from './components/Mobile.vue'
+import Mobile from './components/mobile/Mobile.vue'
+import Sco from './components/mobile/Sco.vue'
+import Brodo from './components/mobile/Bro.do.vue'
+import Buccheri from './components/mobile/Buccheri.vue'
+import Eiger from './components/mobile/EigerAdventure.vue'
+import EsGotado from './components/mobile/EsGotado.vue'
+import Gutenic from './components/mobile/GuTenic.vue'
+import KickDenim from './components/mobile/KickDenim.vue'
+import matoaIndo from './components/mobile/matoaIndo.vue'
+import shopPromo1 from './components/mobile/shopPromo1.vue'
+import shopPromo2 from './components/mobile/shopPromo2.vue'
+import Tomkins from './components/mobile/Tomkins.vue'
 
 const routes = [
 	{ path: '*', redirect: '/login'},
 	{ path: '/login', component: Login, meta: { auth: false } },
-	// Mobile
+	//  start For Mobile Promotion Link fake Purchases 
 	{
-		path: '/mobile', component: Mobile, name: 'mobile'
+		path: '/mobile', component: Mobile, name: 'mobile',
 	},
+	{
+		path: '/mobile/sco', component: Sco, name: 'sco',
+	},
+	{
+		path: '/mobile/brodo', component: Brodo, name: 'brodo',
+	},
+	{
+		path: '/mobile/buccheri', component: Buccheri, name: 'buccheri',
+	},
+	{
+		path: '/mobile/eiger', component: Eiger, name: 'eiger',
+	},
+	{
+		path: '/mobile/esgotado', component: EsGotado, name: 'esgotado',
+	},
+	{
+		path: '/mobile/gutenic', component: Gutenic, name: 'gutenic',
+	},
+	{
+		path: '/mobile/kickdenim', component: KickDenim, name: 'kickdenim',
+	},
+	{
+		path: '/mobile/matoaindo', component: matoaIndo, name: 'matoaindo',
+	},
+	{
+		path: '/mobile/shoppromo1', component: shopPromo1, name: 'shoppromo1',
+	},
+	{
+		path: '/mobile/shoppromo2', component: shopPromo2, name: 'shoppromo2',
+	},
+	{
+		path: '/mobile/tomkins', component: Tomkins, name: 'tomkins'
+	},
+	// End For Mobile Promotion Link fake Purchases
 	{
 		path: '/', component: Dashboard, name: 'dashboard', redirect: '/home',
 		meta: { auth: true },
