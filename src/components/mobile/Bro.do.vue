@@ -11,7 +11,7 @@
             <!-- <img src="" alt=""> -->
             <div style="overflow: hidden;" class="mb-3">
               <div class="float-left mr-2" >
-                <img style="width: 100px; height: 100px; background: #ccc" src="http://bro.do/11525-product_thumbnail_default/ventura-ez-e-dark-choco-bs.jpg"/>
+                <img style="width: 100px; height: 100px; background: #ccc" src="http://bro.do/12006-product_zoom_default/gentlemen-notebook-navy.jpg"/>
               </div>
               <div>
                 <h4>Gentlemen Notebook Navy</h4>

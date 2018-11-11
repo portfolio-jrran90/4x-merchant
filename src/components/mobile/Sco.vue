@@ -11,7 +11,7 @@
             <!-- <img src="" alt=""> -->
             <div style="overflow: hidden;" class="mb-3">
               <div class="float-left mr-2" >
-                <img style="width: 100px; height: 100px; background: #ccc" src="https://manage.schofficial.com/assets/images/product/kaywa.2-wtb-black-2.jpg"/>
+                <img style="width: 100px; height: 100px; background: #ccc" src="https://manage.schofficial.com/assets/images/product/sdt-82-purple-blue-benhur-pink-off-white-2.jpg"/>
               </div>
               <div>
                 <h4>SDT 82</h4>
