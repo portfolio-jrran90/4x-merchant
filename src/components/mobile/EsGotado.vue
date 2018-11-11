@@ -11,7 +11,7 @@
             <!-- <img src="" alt=""> -->
             <div style="overflow: hidden;" class="mb-3">
               <div class="float-left mr-2" >
-                <img style="width: 100px; height: 100px; background: #ccc" src="https://esgotado.com/galaxia/files/images/imagepro/imgpro_29005152693891369.jpg"/>
+                <img style="width: 100px; height: 100px; background: #ccc" src="https://esgotado.com/galaxia/files/images/imagepro/imgpro_66326147572559512.jpg"/>
               </div>
               <div>
                 <h4>ZANANO SEGUNDO LIGHT BLUE</h4>

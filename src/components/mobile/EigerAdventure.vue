@@ -11,7 +11,7 @@
             <!-- <img src="" alt=""> -->
             <div style="overflow: hidden;" class="mb-3">
               <div class="float-left mr-2" >
-                <img style="width: 100px; height: 100px; background: #ccc" src="https://eigeradventure.com/media/catalog/product/cache/1/thumbnail/1100x1385/9df78eab33525d08d6e5fb8d27136e95/2/5/2576e07n_2.jpg"/>
+                <img style="width: 100px; height: 100px; background: #ccc" src="https://eigeradventure.com/media/catalog/product/cache/1/thumbnail/1100x1385/9df78eab33525d08d6e5fb8d27136e95/9/1/910004176002_2.jpg"/>
               </div>
               <div>
                 <h4>Eiger 1989 Nepalese Scarf</h4>

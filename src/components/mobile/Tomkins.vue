@@ -11,7 +11,7 @@
             <!-- <img src="" alt=""> -->
             <div style="overflow: hidden;" class="mb-3">
               <div class="float-left mr-2" >
-                <img style="width: 100px; height: 100px; background: #ccc" src="http://www.tomkins.id/image/cache/data/peterloo%20for%20web-800x800.jpg"/>
+                <img style="width: 100px; height: 100px; background: #ccc" src="http://www.tomkins.id/image/cache/data/GOTTI-800x800.jpg"/>
               </div>
               <div>
                 <h4>GOTTI</h4>

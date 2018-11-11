@@ -11,7 +11,7 @@
             <!-- <img src="" alt=""> -->
             <div style="overflow: hidden;" class="mb-3">
               <div class="float-left mr-2" >
-                <img style="width: 100px; height: 100px; background: #ccc" src="https://www.buccheri.com/uploads/buzz-image-thumbnail-140935.jpeg"/>
+                <img style="width: 100px; height: 100px; background: #ccc" src="https://www.buccheri.com/uploads/-image-160550.jpeg"/>
               </div>
               <div>
                 <h4>DANIELA</h4>

@@ -11,7 +11,7 @@
             <!-- <img src="" alt=""> -->
             <div style="overflow: hidden;" class="mb-3">
               <div class="float-left mr-2" >
-                <img style="width: 100px; height: 100px; background: #ccc" src="https://www.guteninc.com/assets/images/product/vidic-sweater-hoodie-black-2.jpg?w=800"/>
+                <img style="width: 100px; height: 100px; background: #ccc" src="https://www.guteninc.com/assets/images/product/street-wanderers-blue-stretch-3.jpg?w=800"/>
               </div>
               <div>
                 <h4>Street Wanderers Blue Stretch</h4>

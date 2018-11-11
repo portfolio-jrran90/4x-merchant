@@ -11,7 +11,7 @@
             <!-- <img src="" alt=""> -->
             <div style="overflow: hidden;" class="mb-3">
               <div class="float-left mr-2" >
-                <img style="width: 100px; height: 100px; background: #ccc" src="http://bro.do/11525-product_thumbnail_default/ventura-ez-e-dark-choco-bs.jpg"/>
+                <img style="width: 100px; height: 100px; background: #ccc" src="https://www.matoa-indonesia.com/assets/img/items/lore-cherry-1.jpg"/>
               </div>
               <div>
                 <h4>Lore Cherry</h4>
