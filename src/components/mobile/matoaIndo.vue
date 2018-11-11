@@ -14,14 +14,14 @@
                 <img style="width: 100px; height: 100px; background: #ccc" src="http://bro.do/11525-product_thumbnail_default/ventura-ez-e-dark-choco-bs.jpg"/>
               </div>
               <div>
-                <h4>Tomia Ebony</h4>
-                <span>Rp 896.000</span>
+                <h4>Lore Cherry</h4>
+                <span>Rp 875.000</span>
               </div>
             </div>
 
             <ul class="list-unstyled mb-0">
-              <li><strong>Harga total:</strong> Rp 896.000</li>
-              <li><strong>Tagihan yang harus dibayar: <span style="font-size: 20px">Rp 224.000</span></strong></li>
+              <li><strong>Harga total:</strong> Rp 875.000</li>
+              <li><strong>Tagihan yang harus dibayar: <span style="font-size: 20px">Rp 218.750</span></strong></li>
             </ul>
           </div>
         </div>
@@ -51,9 +51,9 @@ export default {
     send() {
       let vm = this
       let data = {
-        duit: 896000,
+        duit: 875000,
         m: '081808314197',
-        p: 'ILB',
+        p: 'MATOAINDO',
         hp: vm.hp
       }
       axios.post('https://sandbox2.empatkali.co.id/initiatepurchase', data).then(res => {

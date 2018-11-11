@@ -14,14 +14,14 @@
                 <img style="width: 100px; height: 100px; background: #ccc" src="https://esgotado.com/galaxia/files/images/imagepro/imgpro_29005152693891369.jpg"/>
               </div>
               <div>
-                <h4>DUFFLO TERCERIO BLACK</h4>
-                <span>Rp 375.000</span>
+                <h4>ZANANO SEGUNDO LIGHT BLUE</h4>
+                <span>Rp 265.000</span>
               </div>
             </div>
 
             <ul class="list-unstyled mb-0">
-              <li><strong>Harga total:</strong> Rp 375.000</li>
-              <li><strong>Tagihan yang harus dibayar: <span style="font-size: 20px">Rp 93.750</span></strong></li>
+              <li><strong>Harga total:</strong> Rp 265.000</li>
+              <li><strong>Tagihan yang harus dibayar: <span style="font-size: 20px">Rp 66.250</span></strong></li>
             </ul>
           </div>
         </div>
@@ -51,9 +51,9 @@ export default {
     send() {
       let vm = this
       let data = {
-        duit: 375000,
+        duit: 265000,
         m: '081808314197',
-        p: 'ILB',
+        p: 'ESGOTADO',
         hp: vm.hp
       }
       axios.post('https://sandbox2.empatkali.co.id/initiatepurchase', data).then(res => {

@@ -14,14 +14,14 @@
                 <img style="width: 100px; height: 100px; background: #ccc" src="http://bro.do/11525-product_thumbnail_default/ventura-ez-e-dark-choco-bs.jpg"/>
               </div>
               <div>
-                <h4>Ventura Ez E+ Dark Choco Black Sole</h4>
-                <span>Rp 649.000</span>
+                <h4>Gentlemen Notebook Navy</h4>
+                <span>Rp 299.000</span>
               </div>
             </div>
 
             <ul class="list-unstyled mb-0">
-              <li><strong>Harga total:</strong> Rp 649.000</li>
-              <li><strong>Tagihan yang harus dibayar: <span style="font-size: 20px">Rp 162.250</span></strong></li>
+              <li><strong>Harga total:</strong> Rp 299.000</li>
+              <li><strong>Tagihan yang harus dibayar: <span style="font-size: 20px">Rp 74.750</span></strong></li>
             </ul>
           </div>
         </div>
@@ -51,7 +51,7 @@ export default {
     send() {
       let vm = this
       let data = {
-        duit: 649000,
+        duit: 299000,
         m: '081808314197',
         p: 'BRODO',
         hp: vm.hp

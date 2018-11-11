@@ -14,14 +14,14 @@
                 <img style="width: 100px; height: 100px; background: #ccc" src="https://www.buccheri.com/uploads/buzz-image-thumbnail-140935.jpeg"/>
               </div>
               <div>
-                <h4>BUZZ</h4>
-                <span>Rp 679.000</span>
+                <h4>DANIELA</h4>
+                <span>Rp 479.000</span>
               </div>
             </div>
 
             <ul class="list-unstyled mb-0">
-              <li><strong>Harga total:</strong> Rp 679.000</li>
-              <li><strong>Tagihan yang harus dibayar: <span style="font-size: 20px">Rp 169.250</span></strong></li>
+              <li><strong>Harga total:</strong> Rp 479.000</li>
+              <li><strong>Tagihan yang harus dibayar: <span style="font-size: 20px">Rp 119.750</span></strong></li>
             </ul>
           </div>
         </div>
@@ -51,9 +51,9 @@ export default {
     send() {
       let vm = this
       let data = {
-        duit: 679000,
+        duit: 479000,
         m: '081808314197',
-        p: 'ILB',
+        p: 'BUCCHERI',
         hp: vm.hp
       }
       axios.post('https://sandbox2.empatkali.co.id/initiatepurchase', data).then(res => {

@@ -14,14 +14,14 @@
                 <img style="width: 100px; height: 100px; background: #ccc" src="https://eigeradventure.com/media/catalog/product/cache/1/thumbnail/1100x1385/9df78eab33525d08d6e5fb8d27136e95/2/5/2576e07n_2.jpg"/>
               </div>
               <div>
-                <h4>Eiger Riding Cupra 1.2 Backpack 24L - Brown</h4>
-                <span>Rp 390.000</span>
+                <h4>Eiger 1989 Nepalese Scarf</h4>
+                <span>Rp 145.000</span>
               </div>
             </div>
 
             <ul class="list-unstyled mb-0">
-              <li><strong>Harga total:</strong> Rp 390.000</li>
-              <li><strong>Tagihan yang harus dibayar: <span style="font-size: 20px">Rp 97.500</span></strong></li>
+              <li><strong>Harga total:</strong> Rp 145.000</li>
+              <li><strong>Tagihan yang harus dibayar: <span style="font-size: 20px">Rp 36.250</span></strong></li>
             </ul>
           </div>
         </div>
@@ -51,9 +51,9 @@ export default {
     send() {
       let vm = this
       let data = {
-        duit: 390000,
+        duit: 145000,
         m: '081808314197',
-        p: 'ILB',
+        p: 'EIGER',
         hp: vm.hp
       }
       axios.post('https://sandbox2.empatkali.co.id/initiatepurchase', data).then(res => {

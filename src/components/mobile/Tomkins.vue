@@ -14,14 +14,14 @@
                 <img style="width: 100px; height: 100px; background: #ccc" src="http://www.tomkins.id/image/cache/data/peterloo%20for%20web-800x800.jpg"/>
               </div>
               <div>
-                <h4>PETERLOO</h4>
-                <span>Rp 280.000</span>
+                <h4>GOTTI</h4>
+                <span>Rp 344.000</span>
               </div>
             </div>
 
             <ul class="list-unstyled mb-0">
-              <li><strong>Harga total:</strong> Rp 280.000</li>
-              <li><strong>Tagihan yang harus dibayar: <span style="font-size: 20px">Rp 70.000</span></strong></li>
+              <li><strong>Harga total:</strong> Rp 344.000</li>
+              <li><strong>Tagihan yang harus dibayar: <span style="font-size: 20px">Rp 86.000</span></strong></li>
             </ul>
           </div>
         </div>
@@ -51,9 +51,9 @@ export default {
     send() {
       let vm = this
       let data = {
-        duit: 280000,
+        duit: 344000,
         m: '081808314197',
-        p: 'ILB',
+        p: 'TOMKINS',
         hp: vm.hp
       }
       axios.post('https://sandbox2.empatkali.co.id/initiatepurchase', data).then(res => {

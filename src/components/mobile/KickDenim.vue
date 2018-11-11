@@ -53,7 +53,7 @@ export default {
       let data = {
         duit: 300000,
         m: '081808314197',
-        p: 'ILB',
+        p: 'KICKDENIM',
         hp: vm.hp
       }
       axios.post('https://sandbox2.empatkali.co.id/initiatepurchase', data).then(res => {

@@ -14,14 +14,14 @@
                 <img style="width: 100px; height: 100px; background: #ccc" src="https://www.guteninc.com/assets/images/product/vidic-sweater-hoodie-black-2.jpg?w=800"/>
               </div>
               <div>
-                <h4>Vidic Sweater Hoodie Black</h4>
-                <span>Rp 336.000</span>
+                <h4>Street Wanderers Blue Stretch</h4>
+                <span>Rp 300.000</span>
               </div>
             </div>
 
             <ul class="list-unstyled mb-0">
-              <li><strong>Harga total:</strong> Rp 336.000</li>
-              <li><strong>Tagihan yang harus dibayar: <span style="font-size: 20px">Rp 84.000</span></strong></li>
+              <li><strong>Harga total:</strong> Rp 300.000</li>
+              <li><strong>Tagihan yang harus dibayar: <span style="font-size: 20px">Rp 75.000</span></strong></li>
             </ul>
           </div>
         </div>
@@ -51,9 +51,9 @@ export default {
     send() {
       let vm = this
       let data = {
-        duit: 336000,
+        duit: 300000,
         m: '081808314197',
-        p: 'ILB',
+        p: 'GUTENIC',
         hp: vm.hp
       }
       axios.post('https://sandbox2.empatkali.co.id/initiatepurchase', data).then(res => {

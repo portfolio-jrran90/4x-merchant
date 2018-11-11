@@ -14,14 +14,14 @@
                 <img style="width: 100px; height: 100px; background: #ccc" src="https://manage.schofficial.com/assets/images/product/kaywa.2-wtb-black-2.jpg"/>
               </div>
               <div>
-                <h4>KAYWA.2</h4>
-                <span>Rp 170.000</span>
+                <h4>SDT 82</h4>
+                <span>Rp 260.000</span>
               </div>
             </div>
 
             <ul class="list-unstyled mb-0">
-              <li><strong>Harga total:</strong> Rp 170.000</li>
-              <li><strong>Tagihan yang harus dibayar: <span style="font-size: 20px">Rp 42.500</span></strong></li>
+              <li><strong>Harga total:</strong> Rp 260.000</li>
+              <li><strong>Tagihan yang harus dibayar: <span style="font-size: 20px">Rp 65.000</span></strong></li>
             </ul>
           </div>
         </div>
@@ -51,9 +51,9 @@ export default {
     send() {
       let vm = this
       let data = {
-        duit: 170000,
+        duit: 260000,
         m: '081808314197',
-        p: 'Sco',
+        p: 'Sch',
         hp: vm.hp
       }
       axios.post('https://sandbox2.empatkali.co.id/initiatepurchase', data).then(res => {
