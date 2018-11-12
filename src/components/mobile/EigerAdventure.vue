@@ -56,7 +56,7 @@ export default {
         p: 'EIGER',
         hp: vm.hp
       }
-      axios.post('https://sandbox2.empatkali.co.id/initiatepurchase', data).then(res => {
+      axios.post('https://sandbox2.empatkali.co.id/initiatepurchase_client', data).then(res => {
         alert('Successfully Sent!')
         vm.hp = ''
       })
