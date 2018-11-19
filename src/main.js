@@ -15,11 +15,24 @@ import {
 	faPhone,
 	faExchangeAlt,
 	faBullhorn,
-	faSearch
+	faSearch,
+	faCoins,
+	faStore
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-library.add(faHome,faChartPie,faShoppingCart,faUsers,faShoppingBag,faPhone,faExchangeAlt,faBullhorn,faSearch)
+library.add(
+	faHome,
+	faChartPie,
+	faShoppingCart,
+	faUsers,
+	faShoppingBag,
+	faPhone,
+	faExchangeAlt,
+	faBullhorn,
+	faSearch,
+	faCoins,
+	faStore)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 Vue.config.productionTip = false
@@ -76,6 +89,9 @@ import matoaIndo from './components/mobile/matoaIndo.vue'
 import shopPromo1 from './components/mobile/shopPromo1.vue'
 import shopPromo2 from './components/mobile/shopPromo2.vue'
 import Tomkins from './components/mobile/Tomkins.vue'
+
+// Outlet Merchant
+import OutletMerchant from './components/outlet-merchant/Index.vue'
 
 const routes = [
 	{ path: '*', redirect: '/login'},
@@ -175,6 +191,10 @@ const routes = [
 					{ path: ':customerId', component: CustomerShow, name: 'customer-show' },
 					{ path: 'add', component: CustomerAdd, name: 'customer-add' },
 				]
+			},
+			// Outlet Merchants
+			{
+				path: '/outlet-merchants', component: OutletMerchant, name: 'outlet-merchants'
 			},
 		]
 	},
