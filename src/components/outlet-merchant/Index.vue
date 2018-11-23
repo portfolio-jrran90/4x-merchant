@@ -21,25 +21,47 @@
 						loading...
 					</div>
 				</div> -->
-				<table class="table table-striped table-bordered mb-0">
-					<thead>
-						<tr>
-							<!-- <th>Name</th> -->
-							<th>Email</th>
-							<th>Phone #</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr v-for="data in outletMerchants">
-							<!-- <td>{{ `${data.firstname} ${data.lastname}` }}</td> -->
-							<td>{{ data.id }}</td>
-							<td>{{ data.hp }}</td>
-						</tr>
-						<!-- <tr v-if="outletMerchants.length == 0">
-							<td colspan="3">No record found!</td>
-						</tr> -->
-					</tbody>
-				</table>
+				<div class="card-deck mb-3 text-center">
+					<div class="card mb-4 shadow-sm">
+						<div class="card-header">
+							<h4 class="my-0 font-weight-normal">Outlet</h4>
+						</div>
+						<div class="card-body">
+							<ul class="list-unstyled mt-3 mb-4">
+							<h1 class="card-title pricing-card-title"><small class="text-muted">Outlet Name</small></small></h1>
+								<li>&nbsp</li>
+							</ul>
+							<button type="button" class="btn btn-lg btn-block btn-outline-primary">Lihat Outlet</button>
+						</div>
+					</div>
+
+					<div class="card mb-4 shadow-sm">
+						<div class="card-header">
+							<h4 class="my-0 font-weight-normal">Outlet</h4>
+						</div>
+						<div class="card-body">
+							<ul class="list-unstyled mt-3 mb-4">
+							<h1 class="card-title pricing-card-title"><small class="text-muted">Outlet Name</small></small></h1>
+								<li>&nbsp</li>
+							</ul>
+							<button type="button" class="btn btn-lg btn-block btn-outline-primary">Lihat Outlet</button>
+						</div>
+					</div>
+
+					<div class="card mb-4 shadow-sm">
+						<div class="card-header">
+							<h4 class="my-0 font-weight-normal">Outlet</h4>
+						</div>
+						<div class="card-body">
+							<ul class="list-unstyled mt-3 mb-4">
+							<h1 class="card-title pricing-card-title"><small class="text-muted">Outlet Name</small></small></h1>
+								<li>&nbsp</li>
+							</ul>
+							<button type="button" class="btn btn-lg btn-block btn-outline-primary">Lihat Outlet</button>
+						</div>
+					</div>
+					
+				</div>
 			</div>
 		</div>
 

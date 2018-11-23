@@ -42,38 +42,59 @@
 		<b-modal v-model="modalShowAddPromotion" title="Add promotion" @ok="addPromotion">
 			<div>
 			  <div class="form-group row">
-			    <label for="inputTitle" class="col-sm-3 col-form-label">Title</label>
-			    <div class="col-sm-9">
-			    	<input type="text" class="form-control" id="inputTitle" placeholder="Enter title"
+			    <label for="inputTitle" class="col-sm-4 col-form-label">Title</label>
+			    <div class="col-sm-8">
+			    	<input type="text" class="form-control" id="inputTitle" placeholder="Title Promo"
 			    				 v-model="dataInputPromotion.title">
 			    </div>
 			  </div>
 			  <div class="form-group row">
-			    <label for="inputImg" class="col-sm-3 col-form-label">Image URL</label>
-			    <div class="col-sm-9">
+			    <label for="inputImg" class="col-sm-4 col-form-label">Image Promo</label>
+			    <div class="col-sm-8">
 			    	<input type="url" class="form-control" id="inputImg" placeholder="ex. http://url.com/image.jpg"
 			    				 v-model="dataInputPromotion.img">
 			    </div>
 			  </div>
 			  <div class="form-group row">
-			    <label for="inputPeriod" class="col-sm-3 col-form-label">Period</label>
-			    <div class="col-sm-9">
+			    <label for="inputPeriod" class="col-sm-4 col-form-label">Period</label>
+			    <div class="col-sm-8">
 			    	<input type="text" class="form-control" id="inputPeriod" placeholder="ex. 1 Nov - 30 Nov 2018"
 			    				 v-model="dataInputPromotion.period">
 					</div>
 			  </div>
 			  <div class="form-group row">
-			    <label for="inputDetail" class="col-sm-3 col-form-label">Detail</label>
-			    <div class="col-sm-9">
+			    <label for="inputDetail" class="col-sm-4 col-form-label">Detail</label>
+			    <div class="col-sm-8">
 			    	<textarea id="inputDetail" rows="5" class="form-control" placeholder="Enter promo detail"
 			    						v-model="dataInputPromotion.detail"></textarea>
 			    </div>
 			  </div>
 			  <div class="form-group row">
-			    <label for="inputURL" class="col-sm-3 col-form-label">URL</label>
-			    <div class="col-sm-9">
+			    <label for="inputURL" class="col-sm-4 col-form-label">URL</label>
+			    <div class="col-sm-8">
 			    	<input type="url" class="form-control" id="inputURL" placeholder="Enter URL"
 			    				 v-model="dataInputPromotion.url">
+			    </div>
+			  </div>
+				<div class="form-group row">
+			    <label for="inputLogo" class="col-sm-4 col-form-label">Logo</label>
+			    <div class="col-sm-8">
+			    	<input type="url" class="form-control" id="inputLogo" placeholder="Insert Logo"
+			    				 v-model="dataInputPromotion.Logo">
+			    </div>
+			  </div>
+				<div class="form-group row">
+			    <label for="inputFLogo" class="col-sm-4 col-form-label">Feed Logo</label>
+			    <div class="col-sm-8">
+			    	<input type="url" class="form-control" id="inputFLogo" placeholder="Insert Feed Logo"
+			    				 v-model="dataInputPromotion.Flogo">
+			    </div>
+			  </div>
+				<div class="form-group row">
+			    <label for="inputDiskon" class="col-sm-4 col-form-label">Diskon</label>
+			    <div class="col-sm-8">
+			    	<input type="url" class="form-control" id="inputDiskon" placeholder="Insert Diskon"
+			    				 v-model="dataInputPromotion.diskon">
 			    </div>
 			  </div>
 			</div>
