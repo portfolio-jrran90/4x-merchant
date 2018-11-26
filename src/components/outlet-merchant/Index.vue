@@ -21,47 +21,22 @@
 						loading...
 					</div>
 				</div> -->
-				<div class="card-deck mb-3 text-center">
-					<div class="card mb-4 shadow-sm">
-						<div class="card-header">
-							<h4 class="my-0 font-weight-normal">Outlet</h4>
-						</div>
-						<div class="card-body">
-							<ul class="list-unstyled mt-3 mb-4">
-							<h1 class="card-title pricing-card-title"><small class="text-muted">Outlet Name</small></small></h1>
-								<li>&nbsp</li>
-							</ul>
-							<button type="button" class="btn btn-lg btn-block btn-outline-primary">Lihat Outlet</button>
-						</div>
-					</div>
-
-					<div class="card mb-4 shadow-sm">
-						<div class="card-header">
-							<h4 class="my-0 font-weight-normal">Outlet</h4>
-						</div>
-						<div class="card-body">
-							<ul class="list-unstyled mt-3 mb-4">
-							<h1 class="card-title pricing-card-title"><small class="text-muted">Outlet Name</small></small></h1>
-								<li>&nbsp</li>
-							</ul>
-							<button type="button" class="btn btn-lg btn-block btn-outline-primary">Lihat Outlet</button>
+				<div class="row text-center">
+					<div class="col-md-4 mb-4" v-for="data in outletMerchants">
+						<div class="card shadow-sm">
+							<div class="card-header">
+								<h4 class="my-0 font-weight-normal">{{ data.merchant }}</h4>
+							</div>
+							<div class="card-body">
+								<h1 class="card-title pricing-card-title mb-4">
+									<small class="text-muted">{{ data.name }}</small></small>
+								</h1>
+								<button type="button" class="btn btn-lg btn-block btn-outline-primary" @click="openModal('OutletDetails', data)">Lihat Outlet</button>
+							</div>
 						</div>
 					</div>
-
-					<div class="card mb-4 shadow-sm">
-						<div class="card-header">
-							<h4 class="my-0 font-weight-normal">Outlet</h4>
-						</div>
-						<div class="card-body">
-							<ul class="list-unstyled mt-3 mb-4">
-							<h1 class="card-title pricing-card-title"><small class="text-muted">Outlet Name</small></small></h1>
-								<li>&nbsp</li>
-							</ul>
-							<button type="button" class="btn btn-lg btn-block btn-outline-primary">Lihat Outlet</button>
-						</div>
-					</div>
-					
 				</div>
+
 			</div>
 		</div>
 
@@ -109,6 +84,54 @@
 			 	<button class="btn btn-primary" type="button" @click="addOutletMerchant">Add</button>
 			</div>
     </b-modal>
+
+		<b-modal v-model="modalShowOutletDetails" title="Outlet Details" size="lg">
+			
+			<!-- convert this to div instead of table for optimization -->
+			<table class="table table-bordered mb-0">
+				<tbody>
+					<tr>
+						<td class="text-center">
+							<img :src="outletMerchantDetails.image" alt="" class="img-thumbnail img-fluid">
+						</td>
+						<td>
+							<table class="table mb-0">
+								<tbody>
+									<tr>
+										<td class="table-secondary"><strong>Name</strong></td>
+										<td>{{ outletMerchantDetails.name }}</td>
+									</tr>
+									<tr>
+										<td class="table-secondary"><strong>Title</strong></td>
+										<td>{{ outletMerchantDetails.title }}</td>
+									</tr>
+									<!-- <tr>
+										<td>Long and lat, should show google map</td>
+										<td></td>
+									</tr> -->
+									<tr>
+										<td class="table-secondary"><strong>Website</strong></td>
+										<td>{{ outletMerchantDetails.website }}</td>
+									</tr>
+									<tr>
+										<td class="table-secondary"><strong>E-mail</strong></td>
+										<td>{{ outletMerchantDetails.email }}</td>
+									</tr>
+									<tr>
+										<td class="table-secondary"><strong>Handphone</strong></td>
+										<td>{{ outletMerchantDetails.hp }}</td>
+									</tr>
+								</tbody>
+							</table>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<div slot="modal-footer" class="w-100">
+			 	<button class="btn btn-secondary mr-2" @click="modalShowOutletDetails=false">Close</button>
+			</div>
+    </b-modal>
   </div>
 </template>
 
@@ -121,18 +144,17 @@ export default {
 			// loader: true,
 			// okBtnDisabled: true,
 			modalShowAddOutletMerchant: false,
+			modalShowOutletDetails: false, // lihat outlet - see outlet
 			dataInputOutletMerchant: {},
-			outletMerchants: [],
+			outletMerchants: {},
+			outletMerchantDetails: {},
 
 			errors: []
 		}
 	},
 	created() {
 		let vm = this
-		axios.get(`${process.env.VUE_APP_API_URL}/outlet`).then(res => {
-			vm.outletMerchants = res.data
-			// vm.loader = false
-		})
+		axios.get(`${process.env.VUE_APP_API_URL}/outlet`).then(res => vm.outletMerchants = res.data)
 	},
 	methods: {
 		openModal(modal, data) {
@@ -142,6 +164,12 @@ export default {
 					vm.modalShowAddOutletMerchant = true
 					vm.dataInputOutletMerchant = {}
 					vm.errors = []
+					break
+				case 'OutletDetails':
+					vm.modalShowOutletDetails = true
+
+					vm.outletMerchantDetails = {} // reset view
+					vm.outletMerchantDetails = data
 					break
 				default: alert('error!')
 			}
