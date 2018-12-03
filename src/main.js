@@ -2,6 +2,8 @@ import Vue from 'vue'
 import BootstrapVue from 'bootstrap-vue'
 import VueRouter from 'vue-router'
 import VueAxios from 'vue-axios'
+import VeeValidate from 'vee-validate'
+import * as VueGoogleMaps from 'vue2-google-maps'
 import axios from 'axios'
 import App from './App.vue'
 
@@ -39,6 +41,32 @@ Vue.config.productionTip = false
 Vue.use(VueRouter)
 Vue.use(VueAxios, axios)
 Vue.use(BootstrapVue)
+Vue.use(VeeValidate)
+Vue.use(VueGoogleMaps, {
+  load: {
+    key: 'AIzaSyBRRJRioAVgvCyzU7ETrnomHNd9RxKkok8',
+    libraries: 'places', // This is required if you use the Autocomplete plugin
+    // OR: libraries: 'places,drawing'
+    // OR: libraries: 'places,drawing,visualization'
+    // (as you require)
+
+    //// If you want to set the version, you can do so:
+    // v: '3.26',
+  },
+
+  //// If you intend to programmatically custom event listener code
+  //// (e.g. `this.$refs.gmap.$on('zoom_changed', someFunc)`)
+  //// instead of going through Vue templates (e.g. `<GmapMap @zoom_changed="someFunc">`)
+  //// you might need to turn this on.
+  // autobindAllEvents: false,
+
+  //// If you want to manually install components, e.g.
+  //// import {GmapMarker} from 'vue2-google-maps/src/components/marker'
+  //// Vue.component('GmapMarker', GmapMarker)
+  //// then disable the following:
+  // installComponents: true,
+})
+
 // Vue.axios.defaults.baseURL = process.env.VUE_APP_BASE_URL
 
 // Bootstrap
@@ -225,8 +253,8 @@ Vue.use(require('@websanova/vue-auth'), {
 	// auth: require('@websanova/vue-auth/drivers/auth/bearer.js'),
 	http: require('@websanova/vue-auth/drivers/http/axios.1.x.js'),
 	router: require('@websanova/vue-auth/drivers/router/vue-router.2.x.js'),
-	loginData: {url: `${process.env.VUE_APP_API_URL}/auth`, method: 'POST', redirect: '/login'},
-	authRedirect: { path: `${process.env.VUE_APP_API_URL}/auth` },
+	loginData: {url: `${process.env.VUE_APP_API_URL}/auth2`, method: 'POST', redirect: '/login'},
+	authRedirect: { path: `${process.env.VUE_APP_API_URL}/auth2` },
 	tokenDefaultName: 'auth_token',
 	refreshData: { enabled: false },
 	fetchData: { enabled: false }

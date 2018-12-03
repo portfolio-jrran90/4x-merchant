@@ -43,42 +43,72 @@
 		<!-- modals -->
 		<b-modal v-model="modalShowAddOutletMerchant" title="Add an outlet merchant"
 						 :no-close-on-esc="true"
-						 :no-close-on-backdrop="true">
-			<div class="alert alert-danger" v-if="errors.length!=0">
-				<h4>Please fix error(s):</h4>
-				<ul class="mb-0">
-					<li v-for="err in errors">{{ err }}</li>
-				</ul>
-			</div>
-			<div>
-			  <div class="form-group row">
-			    <label for="inputTitle" class="col-sm-3 col-form-label">Handphone</label>
-			    <div class="col-sm-9">
-			    	<input type="text" class="form-control" id="inputTitle" placeholder="Enter handphone"
-			    				 v-model="dataInputOutletMerchant.hp">
-			    </div>
-			  </div>
-			  <div class="form-group row">
-			    <label for="inputImg" class="col-sm-3 col-form-label">E-mail</label>
-			    <div class="col-sm-9">
-			    	<input type="email" class="form-control" id="inputImg" placeholder="Enter e-mail"
-			    				 v-model="dataInputOutletMerchant.email">
-			    </div>
-			  </div>
-			  <div class="form-group row">
-			    <label for="inputPassword" class="col-sm-3 col-form-label">Password</label>
-			    <div class="col-sm-9">
-			    	<input type="password" class="form-control" id="inputPassword" placeholder="Enter password"
-			    				 v-model="dataInputOutletMerchant.pass">
+						 :no-close-on-backdrop="true"
+						 size="lg">
+			<div class="row">
+				<div class="col">
+					<div>
+					  <div class="form-group row">
+					    <label for="inputName" class="col-sm-3 col-form-label">Name</label>
+					    <div class="col-sm-9">
+					    	<input type="text" class="form-control" id="inputName" placeholder="Enter name" name="name"
+					    				 :class="{'is-invalid': errors.first('name')}"
+					    				 v-model="dataInputOutletMerchant.name" v-validate="'required'">
+								<small class="invalid-feedback">{{ errors.first('name') }}</small>
+					    </div>
+					  </div>
+					  <div class="form-group row">
+					    <label for="inputTitle" class="col-sm-3 col-form-label">Title</label>
+					    <div class="col-sm-9">
+					    	<input type="text" class="form-control" id="inputTitle" placeholder="Enter title" name="title"
+					    				 :class="{'is-invalid': errors.first('title')}"
+					    				 v-model="dataInputOutletMerchant.title" v-validate="'required'">
+					    	<span class="invalid-feedback">{{ errors.first('title') }}</span>
+					    </div>
+					  </div>
+					  <div class="form-group row">
+					    <label for="inputWebsite" class="col-sm-3 col-form-label">Website</label>
+					    <div class="col-sm-9">
+					    	<input type="url" class="form-control" id="inputWebsite" placeholder="e.g. http://url.com" name="website"
+					    				 :class="{'is-invalid': errors.first('website')}"
+					    				 v-model="dataInputOutletMerchant.website" v-validate="'required|url:require_protocol'">
+					    	<span class="invalid-feedback">{{ errors.first('website') }}</span>
+					    </div>
+					  </div>
+					  <div class="form-group row">
+					    <label for="inputTitle" class="col-sm-3 col-form-label">Handphone</label>
+					    <div class="col-sm-9">
+					    	<input type="text" class="form-control" id="inputTitle" placeholder="e.g. 123456" name="handphone"
+					    				 :class="{'is-invalid': errors.first('handphone')}"
+					    				 v-model="dataInputOutletMerchant.hp" v-validate="'required'">
+								<span class="invalid-feedback">{{ errors.first('handphone') }}</span>
+					    </div>
+					  </div>
+					  <div class="form-group row">
+					    <label for="inputImg" class="col-sm-3 col-form-label">E-mail</label>
+					    <div class="col-sm-9">
+					    	<input type="email" class="form-control" id="inputImg" placeholder="Enter e-mail" name="email"
+					    				 :class="{'is-invalid': errors.first('email')}"
+					    				 v-model="dataInputOutletMerchant.email" v-validate="'required|email'">
+								<span class="invalid-feedback">{{ errors.first('email') }}</span>
+					    </div>
+					  </div>
 					</div>
-			  </div>
-			  <!-- <div class="form-group row">
-			    <div class="col-sm-9 offset-md-3">
-			    	<input type="password" class="form-control" placeholder="Confirm password"
-			    				 v-model="dataInputOutletMerchant.confirm">
-					</div>
-			  </div> -->
+				</div>
+				<div class="col">
+		      <gmap-autocomplete
+		      	@place_changed="setPlace"
+		        class="form-control">
+		      </gmap-autocomplete>
+		      <small class="text-muted" style="line-height: normal">Note: if no address inputted, this will capture your current geolocation.</small>
+					<GmapMap
+					  :center="center"
+					  :zoom="12"
+					  class="w-100 mt-2" style="height: 320px"
+					></GmapMap>
+				</div>
 			</div>
+
 			<div slot="modal-footer" class="w-100">
 			 	<button class="btn btn-secondary mr-2" @click="modalShowAddOutletMerchant=false">Cancel</button>
 			 	<button class="btn btn-primary" type="button" @click="addOutletMerchant">Add</button>
@@ -86,47 +116,38 @@
     </b-modal>
 
 		<b-modal v-model="modalShowOutletDetails" title="Outlet Details" size="lg">
-			
-			<!-- convert this to div instead of table for optimization -->
-			<table class="table table-bordered mb-0">
+			<table class="table mb-0">
 				<tbody>
 					<tr>
-						<td class="text-center">
-							<img :src="outletMerchantDetails.image" alt="" class="img-thumbnail img-fluid">
-						</td>
-						<td>
-							<table class="table mb-0">
-								<tbody>
-									<tr>
-										<td class="table-secondary"><strong>Name</strong></td>
-										<td>{{ outletMerchantDetails.name }}</td>
-									</tr>
-									<tr>
-										<td class="table-secondary"><strong>Title</strong></td>
-										<td>{{ outletMerchantDetails.title }}</td>
-									</tr>
-									<!-- <tr>
-										<td>Long and lat, should show google map</td>
-										<td></td>
-									</tr> -->
-									<tr>
-										<td class="table-secondary"><strong>Website</strong></td>
-										<td>{{ outletMerchantDetails.website }}</td>
-									</tr>
-									<tr>
-										<td class="table-secondary"><strong>E-mail</strong></td>
-										<td>{{ outletMerchantDetails.email }}</td>
-									</tr>
-									<tr>
-										<td class="table-secondary"><strong>Handphone</strong></td>
-										<td>{{ outletMerchantDetails.hp }}</td>
-									</tr>
-								</tbody>
-							</table>
-						</td>
+						<td class="table-secondary"><strong>Name</strong></td>
+						<td>{{ outletMerchantDetails.name }}</td>
+					</tr>
+					<tr>
+						<td class="table-secondary"><strong>Title</strong></td>
+						<td>{{ outletMerchantDetails.title }}</td>
+					</tr>
+					<tr>
+						<td class="table-secondary"><strong>Website</strong></td>
+						<td>{{ outletMerchantDetails.website }}</td>
+					</tr>
+					<tr>
+						<td class="table-secondary"><strong>E-mail</strong></td>
+						<td>{{ outletMerchantDetails.email }}</td>
+					</tr>
+					<tr>
+						<td class="table-secondary"><strong>Handphone</strong></td>
+						<td>{{ outletMerchantDetails.hp }}</td>
 					</tr>
 				</tbody>
 			</table>
+
+			<h4 class="my-3">Location</h4>
+
+			<GmapMap
+			  :center="{ lat: parseFloat(outletMerchantDetails.lat), lng: parseFloat(outletMerchantDetails.lon) }"
+			  :zoom="12"
+			  class="w-100 mt-2" style="height: 320px"
+			></GmapMap>
 
 			<div slot="modal-footer" class="w-100">
 			 	<button class="btn btn-secondary mr-2" @click="modalShowOutletDetails=false">Close</button>
@@ -149,12 +170,17 @@ export default {
 			outletMerchants: {},
 			outletMerchantDetails: {},
 
-			errors: []
+			// Google map
+			center: {},
 		}
+	},
+	mounted() {
+    this.geolocation()
+    console.log( this.geolocation() )
 	},
 	created() {
 		let vm = this
-		axios.get(`${process.env.VUE_APP_API_URL}/outlet`).then(res => vm.outletMerchants = res.data)
+		axios.get(`${process.env.VUE_APP_API_URL}/outlet2`).then(res => vm.outletMerchants = res.data)
 	},
 	methods: {
 		openModal(modal, data) {
@@ -177,26 +203,43 @@ export default {
 		addOutletMerchant() {
 			let vm = this
 
-			vm.errors = []
-			if (!vm.dataInputOutletMerchant.hp) vm.errors.push('Handphone required!')
-			if (!vm.dataInputOutletMerchant.email) vm.errors.push('E-mail required!')
-			if (!vm.dataInputOutletMerchant.pass) vm.errors.push('Password required!')
-
-			if (vm.dataInputOutletMerchant.hp && vm.dataInputOutletMerchant.email && vm.dataInputOutletMerchant.pass) {
-				axios.post(`${process.env.VUE_APP_API_URL}/outlet`, vm.dataInputOutletMerchant).then(res => {
-					alert('Outlet merchant successfully added!')
-					axios.get(`${process.env.VUE_APP_API_URL}/outlet`).then(res => vm.outletMerchants = res.data)
-					vm.modalShowAddOutletMerchant = false
-				})
-				// vm.okBtnDisabled = false
-				return true
-			}
+			Object.assign(vm.dataInputOutletMerchant, { lon: vm.center.lng, lat: vm.center.lat })
+      vm.$validator.validate().then(result => {
+        if (!result) {
+        	alert('Please fix following error(s)!')
+        } else {
+					axios.post(`${process.env.VUE_APP_API_URL}/outlet2`, vm.dataInputOutletMerchant).then(res => {
+						alert('Outlet merchant successfully added!')
+						axios.get(`${process.env.VUE_APP_API_URL}/outlet2`).then(res => vm.outletMerchants = res.data)
+						vm.modalShowAddOutletMerchant = false
+					})
+				}
+			})
+		},
+		/**
+		 * Google Map
+		 */
+		setPlace(place) {
+      if (!place) return
+      this.center = {
+      	lat: place.geometry.location.lat(),
+      	lng: place.geometry.location.lng()
+      }
+		},
+		geolocation() {
+			navigator.geolocation.getCurrentPosition(pos => {
+				this.center = {
+					lat: pos.coords.latitude,
+					lng: pos.coords.longitude
+				}
+			})
 		}
 	}
 }
 </script>
 
-<style scoped>
+<style>
+	.pac-container { z-index: 100000 !important }
 	/*.card-body {
 		position: relative;
 	}
