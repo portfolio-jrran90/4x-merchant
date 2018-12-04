@@ -13,7 +13,7 @@
               <form @submit.prevent="login()">
                 <div class="form-group row">
                   <div class="col">
-                    <input type="email" class="form-control" placeholder="Email"
+                    <input type="text" class="form-control" placeholder="Email"
                            v-model="data.body.email">
                   </div>
                 </div>
