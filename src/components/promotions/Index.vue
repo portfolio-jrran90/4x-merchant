@@ -1,9 +1,9 @@
 <template>
   <div class="py-4">
     <h2>
-      <font-awesome-icon icon="bullhorn"/>Promosi
+      <font-awesome-icon icon="bullhorn"/> Promosi
       <a href="#" class="btn btn-secondary" @click.prevent="openModal('AddPromotion')">
-        <font-awesome-icon icon="plus"/>Add
+        <font-awesome-icon icon="plus"/> Add
       </a>
     </h2>
     <div class="card">
@@ -75,19 +75,19 @@
     <b-modal v-model="modalShowAddPromotion" title="Add promotion" @ok="addPromotion">
       <div>
         <div class="form-group row">
-          <label for="inputTitle" class="col-sm-4 col-form-label">Title</label>
+          <label for="inputTitle" class="col-sm-4 col-form-label">Promo</label>
           <div class="col-sm-8">
             <input
               type="text"
               class="form-control"
               id="inputTitle"
-              placeholder="Title Promo"
+              placeholder="Judul Promo"
               v-model="dataInputPromotion.title"
             >
           </div>
         </div>
         <div class="form-group row">
-          <label for="inputImg" class="col-sm-4 col-form-label">Image Promo</label>
+          <label for="inputImg" class="col-sm-4 col-form-label">Gambar Promo</label>
           <div class="col-sm-8">
             <input
               type="url"
@@ -99,7 +99,7 @@
           </div>
         </div>
         <div class="form-group row">
-          <label for="inputPeriod" class="col-sm-4 col-form-label">Period</label>
+          <label for="inputPeriod" class="col-sm-4 col-form-label">Periode</label>
           <div class="col-sm-8">
             <input
               type="text"
@@ -111,7 +111,7 @@
           </div>
         </div>
         <div class="form-group row">
-          <label for="inputDetail" class="col-sm-4 col-form-label">Detail</label>
+          <label for="inputDetail" class="col-sm-4 col-form-label">Detail Promo</label>
           <div class="col-sm-8">
             <textarea
               id="inputDetail"
@@ -131,30 +131,6 @@
               id="inputURL"
               placeholder="Enter URL"
               v-model="dataInputPromotion.url"
-            >
-          </div>
-        </div>
-        <div class="form-group row">
-          <label for="inputLogo" class="col-sm-4 col-form-label">Logo</label>
-          <div class="col-sm-8">
-            <input
-              type="url"
-              class="form-control"
-              id="inputLogo"
-              placeholder="Insert Logo"
-              v-model="dataInputPromotion.Logo"
-            >
-          </div>
-        </div>
-        <div class="form-group row">
-          <label for="inputFLogo" class="col-sm-4 col-form-label">Feed Logo</label>
-          <div class="col-sm-8">
-            <input
-              type="url"
-              class="form-control"
-              id="inputFLogo"
-              placeholder="Insert Feed Logo"
-              v-model="dataInputPromotion.Flogo"
             >
           </div>
         </div>
@@ -210,7 +186,7 @@ export default {
         .then(res => {
           alert("Promotion successfully added!");
           axios
-            .get("https://sandbox.empatkali.co.id/promo")
+            .get(`${process.env.VUE_APP_API_URL}/promotion`)
             .then(res2 => (vm.promotions = res2.data));
         });
     }
