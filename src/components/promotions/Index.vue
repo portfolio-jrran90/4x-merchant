@@ -1,9 +1,9 @@
 <template>
   <div class="py-4">
     <h2>
-      <font-awesome-icon icon="bullhorn"/> Promosi
+      <font-awesome-icon icon="bullhorn"/>Promosi
       <a href="#" class="btn btn-secondary" @click.prevent="openModal('AddPromotion')">
-        <font-awesome-icon icon="plus"/> Add
+        <font-awesome-icon icon="plus"/>Add
       </a>
     </h2>
     <div class="card">
@@ -27,8 +27,6 @@
           <thead>
             <tr>
               <th>Promo</th>
-              <th>Logo</th>
-              <th>Feature Logo</th>
               <th>Periode</th>
               <th>Diskon</th>
               <th>Deskripsi</th>
@@ -44,22 +42,6 @@
                   class="img-thumbnail float-left mr-2"
                   alt
                   style="width: 250px; height: 250px; object-fit: cover"
-                >
-              </td>
-              <td>
-                <img
-                  :src="data.Logo"
-                  class="img-thumbnail float-left mr-2"
-                  alt
-                  style="width: 100px; height: 100px; object-fit: cover"
-                >
-              </td>
-              <td>
-                <img
-                  :src="data.Flogo"
-                  class="img-thumbnail float-left mr-2"
-                  alt
-                  style="width: 100px; height: 100px; object-fit: cover"
                 >
               </td>
               <td>{{ data.period }}</td>

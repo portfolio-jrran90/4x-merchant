@@ -1,13 +1,13 @@
 <template>
   <div class="py-4">
     <h2>
-      <font-awesome-icon icon="store"/> Outlet Merchant
+      <font-awesome-icon icon="store"/>Outlet Merchant
       <a
         href="#"
         class="btn btn-secondary"
         @click.prevent="openModal('AddOutletMerchant')"
       >
-        <font-awesome-icon icon="plus"/> Add
+        <font-awesome-icon icon="plus"/>Add
       </a>
     </h2>
     <div class="card">
@@ -240,7 +240,7 @@ export default {
   created() {
     let vm = this;
     axios
-      .get(`${process.env.VUE_APP_API_URL}/outlet2`)
+      .get(`${process.env.VUE_APP_API_URL}/outlet`)
       .then(res => (vm.outletMerchants = res.data));
   },
   methods: {
@@ -275,13 +275,13 @@ export default {
         } else {
           axios
             .post(
-              `${process.env.VUE_APP_API_URL}/outlet2`,
+              `${process.env.VUE_APP_API_URL}/outlet`,
               vm.dataInputOutletMerchant
             )
             .then(res => {
               alert("Outlet merchant successfully added!");
               axios
-                .get(`${process.env.VUE_APP_API_URL}/outlet2`)
+                .get(`${process.env.VUE_APP_API_URL}/outlet`)
                 .then(res => (vm.outletMerchants = res.data));
               vm.modalShowAddOutletMerchant = false;
             });
