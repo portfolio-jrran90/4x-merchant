@@ -320,11 +320,11 @@ Vue.use(require('@websanova/vue-auth'), {
   http: require('@websanova/vue-auth/drivers/http/axios.1.x.js'),
   router: require('@websanova/vue-auth/drivers/router/vue-router.2.x.js'),
   loginData: {
-    url: `${process.env.VUE_APP_API_URL}/auth2`,
+    url: `${process.env.VUE_APP_API_URL}/auth`,
     method: 'POST',
     redirect: '/login',
   },
-  authRedirect: { path: `${process.env.VUE_APP_API_URL}/auth2` },
+  authRedirect: { path: `${process.env.VUE_APP_API_URL}/auth` },
   tokenDefaultName: 'auth_token',
   refreshData: { enabled: false },
   fetchData: { enabled: false },

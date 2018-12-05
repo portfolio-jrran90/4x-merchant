@@ -3,8 +3,7 @@
     <div class="col-md-9">
       <div class="pt-5">
         <h2 class="mb-4">
-          Selamat datang di EmpatKali Merchant Dashboard,
-          <strong>Ilbisonte</strong>
+          Selamat datang di EmpatKali Merchant Dashboard
         </h2>
 
         <div class="card">

@@ -123,7 +123,7 @@ export default {
   created() {
     let vm = this;
     axios
-      .get(`${process.env.VUE_APP_API_URL}/transactions`)
+      .get(`${process.env.VUE_APP_API_URL}/merchanttransactions`)
       .then(res => (vm.transactions = res.data));
   },
   methods: {
