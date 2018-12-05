@@ -43,7 +43,7 @@
                   :src="data.img"
                   class="img-thumbnail float-left mr-2"
                   alt
-                  style="width: 100px; height: 100px; object-fit: cover"
+                  style="width: 250px; height: 250px; object-fit: cover"
                 >
               </td>
               <td>
