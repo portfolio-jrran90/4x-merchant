@@ -1,7 +1,7 @@
 <template>
   <div class="py-4">
     <h2>
-      <font-awesome-icon icon="exchange-alt"/> Transaction
+      <font-awesome-icon icon="exchange-alt"/>Transaction
     </h2>
     <div class="card">
       <div class="card-header">
@@ -123,7 +123,7 @@ export default {
   created() {
     let vm = this;
     axios
-      .get(`${process.env.VUE_APP_API_URL}/transactions`)
+      .get(`${process.env.VUE_APP_API_URL}/merchanttransactions`)
       .then(res => (vm.transactions = res.data));
   },
   methods: {
