@@ -1,9 +1,9 @@
 <template>
   <div class="py-4">
     <h2>
-      <font-awesome-icon icon="bullhorn"/>Promosi
+      <font-awesome-icon icon="bullhorn"/> Promosi
       <a href="#" class="btn btn-secondary" @click.prevent="openModal('AddPromotion')">
-        <font-awesome-icon icon="plus"/>Add
+        <font-awesome-icon icon="plus"/> Add
       </a>
     </h2>
     <div class="card">

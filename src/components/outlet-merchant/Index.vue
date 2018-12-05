@@ -1,13 +1,13 @@
 <template>
   <div class="py-4">
     <h2>
-      <font-awesome-icon icon="store"/>Outlet Merchant
+      <font-awesome-icon icon="store"/> Outlet Merchant
       <a
         href="#"
         class="btn btn-secondary"
         @click.prevent="openModal('AddOutletMerchant')"
       >
-        <font-awesome-icon icon="plus"/>Add
+        <font-awesome-icon icon="plus"/> Add
       </a>
     </h2>
     <div class="card">

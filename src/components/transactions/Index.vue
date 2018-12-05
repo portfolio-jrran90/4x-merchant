@@ -67,8 +67,7 @@
       <table class="table table-striped table-sm table-bordered">
         <thead>
           <tr>
-            <th></th>
-            <th class="text-center">No</th>
+            <th>Pembayaran</th>
             <th>Jatuh Tempo</th>
             <th>Tanggal Pembayaran</th>
             <th class="text-center">CREDIT / TRANSFER</th>
@@ -77,8 +76,7 @@
         </thead>
         <tbody>
           <tr v-for="data in transactionDetails">
-            <td class="text-center">{{ data.paymentcount }}</td>
-            <td class="text-center">{{ data.No }}</td>
+            <td class="text-center" style="width: 20%">Pembayaran ke - {{ data.paymentcount }}</td>
             <td>{{ data.paymentdue }}</td>
             <td>{{ data.paiddate }}</td>
             <td class="text-center">{{ data.pg }}</td>
@@ -89,7 +87,7 @@
         </tbody>
         <tfoot>
           <tr>
-            <td colspan="5" class="text-right">
+            <td colspan="4" class="text-right">
               <strong>Total</strong>
             </td>
             <td class="text-right">
@@ -135,7 +133,7 @@ export default {
           vm.transactionDetails = {};
           vm.modalShowTransactionDetail = true;
           axios
-            .get(`${process.env.VUE_APP_API_URL}/transactions/${data.No}`)
+            .get(`${process.env.VUE_APP_API_URL}/merchanttransactions/${data.No}`)
             .then(res => {
               vm.transactionDetails = Object.assign(res.data, {
                 totals: data.Total

@@ -21,6 +21,7 @@ import {
   faCoins,
   faStore,
   faPlus,
+  faUserPlus
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
@@ -36,7 +37,8 @@ library.add(
   faSearch,
   faCoins,
   faStore,
-  faPlus
+  faPlus,
+  faUserPlus
 );
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 
@@ -123,6 +125,9 @@ import Tomkins from './components/mobile/Tomkins.vue';
 
 // Outlet Merchant
 import OutletMerchant from './components/outlet-merchant/Index.vue';
+
+// Add User Store Merchant
+import AddStore from './components/addStore/Index.vue';
 
 const routes = [
   { path: '*', redirect: '/login' },
@@ -287,6 +292,12 @@ const routes = [
         path: '/outlet-merchants',
         component: OutletMerchant,
         name: 'outlet-merchants',
+      },
+      // Add User Store
+      {
+        path: '/addStore',
+        component: AddStore,
+        name: 'addStore',
       },
     ],
   },
