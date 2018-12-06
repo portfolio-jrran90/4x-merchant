@@ -57,11 +57,12 @@
     <!-- modals -->
     <b-modal
       v-model="modalShowAddOutletMerchant"
-      title="Add an outlet merchant"
+      title="Tambahkan outlet / store merchant anda"
       :no-close-on-esc="true"
       :no-close-on-backdrop="true"
       size="lg"
     >
+    <p style="color: red">Silahkan isi data pada form dibawah ini untuk menambahkan outlet / store merchant anda</p>
       <div class="row">
         <div class="col">
           <div>

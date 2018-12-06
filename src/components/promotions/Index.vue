@@ -54,7 +54,10 @@
     </div>
 
     <!-- modals -->
-    <b-modal v-model="modalShowAddPromotion" title="Add promotion" @ok="addPromotion">
+    <b-modal v-model="modalShowAddPromotion" title="Tambahkan Promo" @ok="addPromotion">
+      <p
+        style="color: red"
+      >Silahkan isi data pada form dibawah ini untuk menambahkan promo pada merchant anda</p>
       <div>
         <div class="form-group row">
           <label for="inputTitle" class="col-sm-4 col-form-label">Promo</label>

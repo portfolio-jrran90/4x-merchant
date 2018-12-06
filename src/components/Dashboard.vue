@@ -57,7 +57,7 @@
               </li>
               <li class="nav-item">
                 <router-link :to="{ name: 'addStore' }" class="nav-link">
-                  <font-awesome-icon icon="plus" /> User Store
+                  <font-awesome-icon icon="plus" /> Add User
                 </router-link>
               </li>
               <!-- <li class="nav-item">

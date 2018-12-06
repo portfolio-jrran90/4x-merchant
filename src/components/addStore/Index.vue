@@ -45,7 +45,8 @@
     </div>
 
     <!-- modals -->
-    <b-modal v-model="modalShowAdd_User" title="Add User Store" @ok="addStore_User">
+    <b-modal v-model="modalShowAdd_User" title="Tambah Pengguna Store Dashboard" @ok="addStore_User">
+      <p style="color: red">Silahkan isi data pada form dibawah ini untuk menambahkan pengguna agar dapat mengakses Store Dashboard pada outlet/store merchant anda</p>
       <div>
         <div class="form-group row">
           <label for="inputUsername" class="col-sm-4 col-form-label">Username</label>
