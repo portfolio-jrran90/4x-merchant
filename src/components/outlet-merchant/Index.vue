@@ -1,13 +1,13 @@
 <template>
   <div class="py-4">
     <h2>
-      <font-awesome-icon icon="store"/>Outlet Merchant
+      <font-awesome-icon icon="store"/> Outlet Merchant
       <a
         href="#"
         class="btn btn-secondary"
         @click.prevent="openModal('AddOutletMerchant')"
       >
-        <font-awesome-icon icon="plus"/>Add
+        <font-awesome-icon icon="plus"/> Add
       </a>
     </h2>
     <div class="card">
@@ -57,11 +57,12 @@
     <!-- modals -->
     <b-modal
       v-model="modalShowAddOutletMerchant"
-      title="Add an outlet merchant"
+      title="Tambahkan outlet / store merchant anda"
       :no-close-on-esc="true"
       :no-close-on-backdrop="true"
       size="lg"
     >
+    <p style="color: red">Silahkan isi data pada form dibawah ini untuk menambahkan outlet / store merchant anda</p>
       <div class="row">
         <div class="col">
           <div>

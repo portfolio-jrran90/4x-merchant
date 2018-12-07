@@ -37,22 +37,27 @@
               </li> -->
               <li class="nav-item">
                 <router-link :to="{ name: 'transactions' }" class="nav-link">
-                  <font-awesome-icon icon="exchange-alt" /> Transaction
+                  <font-awesome-icon icon="exchange-alt" /> Transaksi
                 </router-link>
               </li>
               <li class="nav-item">
                 <router-link :to="{ name: 'promotions' }" class="nav-link">
-                  <font-awesome-icon icon="bullhorn" /> Promotion
+                  <font-awesome-icon icon="bullhorn" /> Promosi
                 </router-link>
               </li>
               <li class="nav-item">
                 <router-link :to="{ name: 'customers' }" class="nav-link">
-                  <font-awesome-icon icon="users" /> Customers
+                  <font-awesome-icon icon="users" /> Pelanggan
                 </router-link>
               </li>
               <li class="nav-item">
                 <router-link :to="{ name: 'outlet-merchants' }" class="nav-link">
                   <font-awesome-icon icon="store" /> Outlet Merchant
+                </router-link>
+              </li>
+              <li class="nav-item">
+                <router-link :to="{ name: 'addStore' }" class="nav-link">
+                  <font-awesome-icon icon="plus" /> Add User
                 </router-link>
               </li>
               <!-- <li class="nav-item">
