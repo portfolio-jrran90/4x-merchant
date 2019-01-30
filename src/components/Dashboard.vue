@@ -60,6 +60,12 @@
                   <font-awesome-icon icon="plus" /> Add User
                 </router-link>
               </li>
+              <li class="nav-item">
+                <router-link :to="{ name: 'account-setting' }" class="nav-link">
+                  <font-awesome-icon icon="cog" /> Settings
+                </router-link>
+              </li>
+
               <!-- <li class="nav-item">
                 <router-link :to="{ name: 'analytics' }" class="nav-link">
                   <font-awesome-icon icon="chart-pie" /> Analytics

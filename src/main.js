@@ -21,7 +21,12 @@ import {
   faCoins,
   faStore,
   faPlus,
-  faUserPlus
+  faUserPlus,
+  faCog,
+  faCreditCard,
+  faHammer
+  // faTools
+  // faCashRegister
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
@@ -38,7 +43,12 @@ library.add(
   faCoins,
   faStore,
   faPlus,
-  faUserPlus
+  faUserPlus,
+  faCog,
+  faCreditCard,
+  faHammer
+  // faTools
+  // faCashRegister
 );
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 
@@ -128,6 +138,11 @@ import OutletMerchant from './components/outlet-merchant/Index.vue';
 
 // Add User Store Merchant
 import AddStore from './components/addStore/Index.vue';
+
+// Store settings
+import AccountSetting from './components/settings/__Main.vue'
+import AccountSettingIndex from './components/settings/Index.vue'
+import AccountSettingMidtrans from './components/settings/Midtrans.vue'
 
 const routes = [
   { path: '*', redirect: '/login' },
@@ -299,6 +314,17 @@ const routes = [
         component: AddStore,
         name: 'addStore',
       },
+      // Store Settings
+      {
+        path: '/account-setting',
+        component: AccountSetting,
+        name: 'account-setting',
+        redirect: '/account-setting/',
+        children: [
+          { path: '/', component: AccountSettingIndex, name: 'as-index' },
+          { path: 'midtrans-api', component: AccountSettingMidtrans, name: 'as-midtrans' },
+        ]
+      }
     ],
   },
 ];
