@@ -183,9 +183,9 @@ export default {
   },
   created() {
     let vm = this;
-    axios.get(`${process.env.VUE_APP_API_URL}/promotion`).then(res => {
+    /*axios.get(`${process.env.VUE_APP_API_URL}/promotion`).then(res => {
       vm.promotions = res.data;
-    });
+    });*/
   },
   methods: {
     openModal(modal, data) {

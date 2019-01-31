@@ -24,27 +24,5 @@
 </template>
 
 <script>
-import axios from "axios";
-// handphone, harga, item deskripsi
-export default {
-  data() {
-    return {
-      verifyDataInput: {}
-    };
-  },
-  methods: {
-    verifyCustomer() {
-      let vm = this;
-      axios
-        .post(
-          "https://merchant.empatkali.co.id/utama.php?duit=2000000",
-          vm.verifyDataInput
-        )
-        .then(res => {
-          console.log("res", res.data);
-        });
-      // console.log('verify customer data', vm.verifyDataInput)
-    }
-  }
-};
+export default {}
 </script>

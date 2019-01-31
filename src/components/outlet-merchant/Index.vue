@@ -240,9 +240,9 @@ export default {
   },
   created() {
     let vm = this;
-    axios
+    /*axios
       .get(`${process.env.VUE_APP_API_URL}/outlet`)
-      .then(res => (vm.outletMerchants = res.data));
+      .then(res => (vm.outletMerchants = res.data));*/
   },
   methods: {
     openModal(modal, data) {

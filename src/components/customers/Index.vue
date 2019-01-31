@@ -47,7 +47,7 @@ export default {
 	},
 	created() {
 		let vm = this
-		axios.get(`${process.env.VUE_APP_API_URL}/cust`).then(res => vm.customers = res.data)
+		// axios.get(`${process.env.VUE_APP_API_URL}/cust`).then(res => vm.customers = res.data)
 	}
 }
 </script>

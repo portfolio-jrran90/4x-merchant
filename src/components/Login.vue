@@ -17,7 +17,7 @@
                       class="form-control"
                       id="inputEmail"
                       placeholder="Email"
-                      v-model="data.body.email"
+                      v-model="data.body.identity"
                     >
                   </div>
                 </div>
@@ -56,8 +56,8 @@ export default {
       context: "login context",
       data: {
         body: {
-          email: "ilbisonte",
-          password: "1234"
+          identity: "zarastore",
+          password: "P@ssw0rdP@ssw0rd"
         },
         rememberMe: false,
         fetchUser: true
@@ -69,12 +69,17 @@ export default {
     login() {
       let vm = this;
       let redirect = vm.$auth.redirect();
+
       vm.$auth
         .login({
           data: vm.data.body, // Axios
           rememberMe: true,
           redirect: "/home",
-          fetchUser: false
+          fetchUser: false,
+          headers: {
+            'Authorization': 'Basic ZW1wYXRrYWxpOnZIPHRWQEBFN3cuWDNjWlM=',
+            'Content-Type': 'application/json'
+          }
         })
         .then(
           res => {

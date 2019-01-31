@@ -335,7 +335,6 @@ const router = new VueRouter({
   routes,
 });
 
-// this really solves issue.. lol
 Vue.router = router;
 
 Vue.use(require('@websanova/vue-auth'), {
@@ -346,25 +345,27 @@ Vue.use(require('@websanova/vue-auth'), {
       });
     },
     response(res) {
-      var token = res.data.jwt;
+      var token = res.data.token
       if (token) {
         token = token.split(/Bearer\:?\s?/i);
         return token[token.length > 1 ? 1 : 0].trim();
       }
     },
   },
+
   // auth: require('@websanova/vue-auth/drivers/auth/bearer.js'),
+  // auth: require('@websanova/vue-auth/drivers/auth/basic.js'),
   http: require('@websanova/vue-auth/drivers/http/axios.1.x.js'),
   router: require('@websanova/vue-auth/drivers/router/vue-router.2.x.js'),
   loginData: {
-    url: `${process.env.VUE_APP_API_URL}/auth`,
+    url: `${process.env.VUE_APP_API_URL}/api/merchants/login`,
     method: 'POST',
     redirect: '/login',
   },
-  authRedirect: { path: `${process.env.VUE_APP_API_URL}/auth` },
+  authRedirect: { path: `${process.env.VUE_APP_API_URL}/api/merchants/login` },
   tokenDefaultName: 'auth_token',
   refreshData: { enabled: false },
-  fetchData: { enabled: false },
+  fetchData: { enabled: false }
 });
 
 new Vue({

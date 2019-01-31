@@ -161,9 +161,9 @@ export default {
   },
   created() {
     let vm = this;
-    axios.get(`${process.env.VUE_APP_API_URL}/outletid`).then(res => {
+    /*axios.get(`${process.env.VUE_APP_API_URL}/outletid`).then(res => {
       vm.UserStore = res.data;
-    });
+    });*/
   },
   methods: {
     openModal(modal, data) {
