@@ -277,7 +277,7 @@ export default {
         loc: {
           coordinates: [vm.center.lng, vm.center.lat] // long, lat
         }
-      });
+      })
 
       vm.$validator.validate().then(result => {
         if (!result) {
@@ -296,11 +296,16 @@ export default {
               }
             )
             .then(res => {
-              alert("Outlet merchant successfully added!");
-              /*axios
-                .get(`${process.env.VUE_APP_API_URL}/outlet`)
-                .then(res => (vm.outletMerchants = res.data));*/
-              vm.modalShowAddOutletMerchant = false
+              axios.get(`${process.env.VUE_APP_API_URL}/api/stores?limit=100&skip=0`, {
+                headers: {
+                  'Authorization': process.env.VUE_APP_AUTHORIZATION,
+                  'x-access-token': localStorage.getItem('auth_token')
+                }
+              }).then(res2 => {
+                vm.outletMerchants = res2.data
+                alert("Outlet merchant successfully added!");
+                vm.modalShowAddOutletMerchant = false
+              })
             })
             .catch(err => {
               if (err.response) {
