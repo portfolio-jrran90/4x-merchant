@@ -56,8 +56,8 @@ export default {
       context: "login context",
       data: {
         body: {
-          identity: "zarastore",
-          password: "P@ssw0rdP@ssw0rd"
+          identity: "",
+          password: ""
         },
         rememberMe: false,
         fetchUser: true
