@@ -51,8 +51,8 @@
                 </router-link>
               </li>
               <li class="nav-item">
-                <router-link :to="{ name: 'outlet-merchants' }" class="nav-link">
-                  <font-awesome-icon icon="store" /> Outlet Merchant
+                <router-link :to="{ name: 'stores' }" class="nav-link">
+                  <font-awesome-icon icon="store" /> Store
                 </router-link>
               </li>
               <li class="nav-item">

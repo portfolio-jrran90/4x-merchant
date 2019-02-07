@@ -133,8 +133,8 @@ import shopPromo1 from './components/mobile/shopPromo1.vue';
 import shopPromo2 from './components/mobile/shopPromo2.vue';
 import Tomkins from './components/mobile/Tomkins.vue';
 
-// Outlet Merchant
-import OutletMerchant from './components/outlet-merchant/Index.vue';
+// Store
+import Store from './components/stores/Index.vue';
 
 // Add User Store Merchant
 import AddStore from './components/addStore/Index.vue';
@@ -302,18 +302,21 @@ const routes = [
           { path: 'add', component: CustomerAdd, name: 'customer-add' },
         ],
       },
-      // Outlet Merchants
+
+      // Store
       {
-        path: '/outlet-merchants',
-        component: OutletMerchant,
-        name: 'outlet-merchants',
+        path: '/stores',
+        component: Store,
+        name: 'stores',
       },
       // Add User Store
+      // Note: Subject for deletion
       {
         path: '/addStore',
         component: AddStore,
         name: 'addStore',
       },
+      
       // Store Settings
       {
         path: '/account-setting',

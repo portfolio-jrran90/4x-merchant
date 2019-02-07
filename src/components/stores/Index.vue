@@ -1,10 +1,10 @@
 <template>
   <div class="py-4">
     <h2>
-      <font-awesome-icon icon="store"/> Outlet Merchant
+      <font-awesome-icon icon="store"/> Stores
       <a
         href="#"
-        class="btn btn-secondary"
+        class="btn btn-secondary float-right"
         @click.prevent="openModal('AddOutletMerchant')"
       >
         <font-awesome-icon icon="plus"/> Add
@@ -27,11 +27,6 @@
         </div>
       </div>
       <div class="card-body">
-        <!-- <div class="loader d-flex w-100 h-100" v-if="loader">
-					<div class="align-self-center mx-auto">
-						loading...
-					</div>
-        </div>-->
         <div class="row text-center">
           <div class="col-md-4 mb-4" v-for="data in outletMerchants">
             <div class="card shadow-sm">
@@ -83,54 +78,6 @@
               </div>
             </div>
             <div class="form-group row">
-              <label for="inputTitle" class="col-sm-3 col-form-label">Title</label>
-              <div class="col-sm-9">
-                <input
-                  type="text"
-                  class="form-control"
-                  id="inputTitle"
-                  placeholder="Enter title"
-                  name="title"
-                  :class="{'is-invalid': errors.first('title')}"
-                  v-model="dataInputOutletMerchant.title"
-                  v-validate="'required'"
-                >
-                <span class="invalid-feedback">{{ errors.first('title') }}</span>
-              </div>
-            </div>
-            <div class="form-group row">
-              <label for="inputWebsite" class="col-sm-3 col-form-label">Website</label>
-              <div class="col-sm-9">
-                <input
-                  type="url"
-                  class="form-control"
-                  id="inputWebsite"
-                  placeholder="e.g. http://url.com"
-                  name="website"
-                  :class="{'is-invalid': errors.first('website')}"
-                  v-model="dataInputOutletMerchant.website"
-                  v-validate="'required|url:require_protocol'"
-                >
-                <span class="invalid-feedback">{{ errors.first('website') }}</span>
-              </div>
-            </div>
-            <div class="form-group row">
-              <label for="inputTitle" class="col-sm-3 col-form-label">Handphone</label>
-              <div class="col-sm-9">
-                <input
-                  type="text"
-                  class="form-control"
-                  id="inputTitle"
-                  placeholder="e.g. 123456"
-                  name="handphone"
-                  :class="{'is-invalid': errors.first('handphone')}"
-                  v-model="dataInputOutletMerchant.hp"
-                  v-validate="'required'"
-                >
-                <span class="invalid-feedback">{{ errors.first('handphone') }}</span>
-              </div>
-            </div>
-            <div class="form-group row">
               <label for="inputImg" class="col-sm-3 col-form-label">E-mail</label>
               <div class="col-sm-9">
                 <input
@@ -146,6 +93,58 @@
                 <span class="invalid-feedback">{{ errors.first('email') }}</span>
               </div>
             </div>
+
+            <div class="form-group row">
+              <label for="inputUsername" class="col-sm-3 col-form-label">Username</label>
+              <div class="col-sm-9">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="inputUsername"
+                  placeholder="Enter username"
+                  name="username"
+                  :class="{'is-invalid': errors.first('username')}"
+                  v-model="dataInputOutletMerchant.username"
+                  v-validate="'required'"
+                >
+                <span class="invalid-feedback">{{ errors.first('username') }}</span>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="inputMobileNo" class="col-sm-3 col-form-label">Mobile #</label>
+              <div class="col-sm-9">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="inputMobileNo"
+                  placeholder="e.g. 123456"
+                  name="mobileNumber"
+                  :class="{'is-invalid': errors.first('mobileNumber')}"
+                  v-model="dataInputOutletMerchant.mobileNumber"
+                  v-validate="'required'"
+                >
+                <span class="invalid-feedback">{{ errors.first('mobileNumber') }}</span>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="inputPassword" class="col-sm-3 col-form-label">Password</label>
+              <div class="col-sm-9">
+                <input
+                  type="password"
+                  class="form-control"
+                  id="inputPassword"
+                  placeholder="Enter password"
+                  name="password"
+                  :class="{'is-invalid': errors.first('password')}"
+                  v-model="dataInputOutletMerchant.password"
+                  v-validate="'required'"
+                >
+                <span class="invalid-feedback">{{ errors.first('password') }}</span>
+              </div>
+            </div>
+
           </div>
         </div>
         <div class="col">
@@ -217,12 +216,15 @@
 </template>
 
 <script>
+// Note:
+// - sweet alert
+// - axios custom error handler
+
 import axios from "axios";
 
 export default {
   data() {
     return {
-      // loader: true,
       // okBtnDisabled: true,
       modalShowAddOutletMerchant: false,
       modalShowOutletDetails: false, // lihat outlet - see outlet
@@ -231,18 +233,16 @@ export default {
       outletMerchantDetails: {},
 
       // Google map
-      center: {}
+      center: {},
     };
-  },
-  mounted() {
-    this.geolocation();
-    console.log(this.geolocation());
   },
   created() {
     let vm = this;
     /*axios
       .get(`${process.env.VUE_APP_API_URL}/outlet`)
       .then(res => (vm.outletMerchants = res.data));*/
+    this.geolocation()
+    console.log('aw', this.geolocation())    
   },
   methods: {
     openModal(modal, data) {
@@ -267,24 +267,44 @@ export default {
       let vm = this;
 
       Object.assign(vm.dataInputOutletMerchant, {
-        lon: vm.center.lng,
-        lat: vm.center.lat
+        loc: {
+          coordinates: [vm.center.lng, vm.center.lat] // long, lat
+        }
       });
+
       vm.$validator.validate().then(result => {
         if (!result) {
           alert("Please fix following error(s)!");
         } else {
           axios
             .post(
-              `${process.env.VUE_APP_API_URL}/outlet`,
-              vm.dataInputOutletMerchant
+              `${process.env.VUE_APP_API_URL}/api/stores`,
+              vm.dataInputOutletMerchant,
+              {
+                headers: {
+                  'Authorization': process.env.VUE_APP_AUTHORIZATION,
+                  'Content-Type': 'application/json',
+                  'x-access-token': localStorage.getItem('auth_token')
+                }
+              }
             )
             .then(res => {
               alert("Outlet merchant successfully added!");
-              axios
+              /*axios
                 .get(`${process.env.VUE_APP_API_URL}/outlet`)
-                .then(res => (vm.outletMerchants = res.data));
-              vm.modalShowAddOutletMerchant = false;
+                .then(res => (vm.outletMerchants = res.data));*/
+              vm.modalShowAddOutletMerchant = false
+            })
+            .catch(err => {
+              if (err.response) {
+                alert(err.response.data.message)
+                console.log(err.response.data.message)
+              } else if (err.request) {
+                console.log(err.request)
+              } else {
+                console.log('Error', err.message)
+              }
+              console.log(err.config)
             });
         }
       });
@@ -293,19 +313,19 @@ export default {
      * Google Map
      */
     setPlace(place) {
-      if (!place) return;
+      if (!place) return
       this.center = {
-        lat: place.geometry.location.lat(),
-        lng: place.geometry.location.lng()
+        lat: parseFloat(place.geometry.location.lat()),
+        lng: parseFloat(place.geometry.location.lng())
       };
     },
     geolocation() {
       navigator.geolocation.getCurrentPosition(pos => {
         this.center = {
-          lat: pos.coords.latitude,
-          lng: pos.coords.longitude
-        };
-      });
+          lat: parseFloat(pos.coords.latitude),
+          lng: parseFloat(pos.coords.longitude)
+        }
+      })
     }
   }
 };
@@ -315,11 +335,4 @@ export default {
 .pac-container {
   z-index: 100000 !important;
 }
-/*.card-body {
-		position: relative;
-	}
-	.loader {
-		position: absolute; left: 0; top: 0;
-		background: #333; color: #fff;
-	}*/
 </style>

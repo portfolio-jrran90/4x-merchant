@@ -5,7 +5,7 @@
         <div class="col-4">
           <div class="card">
             <h5 class="card-header text-center">
-              <img src="http://empatkali.co.id/img/logo.svg" alt="empatkali">
+              <img src="https://empatkali.co.id/assets/img/logo-final.png" alt="empatkali logo" style="width: 50px" class="mb-2">
               <br>Login
             </h5>
             <div class="card-body">
@@ -77,7 +77,7 @@ export default {
           redirect: "/home",
           fetchUser: false,
           headers: {
-            'Authorization': 'Basic ZW1wYXRrYWxpOnZIPHRWQEBFN3cuWDNjWlM=',
+            'Authorization': process.env.VUE_APP_AUTHORIZATION,
             'Content-Type': 'application/json'
           }
         })
