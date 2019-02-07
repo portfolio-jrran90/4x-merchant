@@ -77,7 +77,7 @@ export default {
           redirect: "/home",
           fetchUser: false,
           headers: {
-            'Authorization': 'Basic ZW1wYXRrYWxpOnZIPHRWQEBFN3cuWDNjWlM=',
+            'Authorization': process.env.VUE_APP_AUTHORIZATION,
             'Content-Type': 'application/json'
           }
         })
