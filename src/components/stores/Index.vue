@@ -27,25 +27,69 @@
         </div>
       </div>
       <div class="card-body">
-        <div class="row text-center">
-          <div class="col-md-4 mb-4" v-for="data in outletMerchants">
-            <div class="card shadow-sm">
-              <div class="card-header">
-                <h4 class="my-0 font-weight-normal">{{ data.merchant }}</h4>
-              </div>
+
+        <div class="row">
+          <div class="col-md-3">
+            <table class="table table-sm table-bordered table-hover">
+              <thead class="thead-dark">
+                <tr>
+                  <th colspan="2">Name</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(data, index) in outletMerchants" :class="{ 'table-active': selectedStore === data._id }">
+                  <td>{{ data.name }}</td>
+                  <td class="text-center">
+                    <a href="#" @click.prevent="showStoreDetails(data._id)">view</a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="col">
+            <div class="card">
               <div class="card-body">
-                <h1 class="card-title pricing-card-title mb-4">
-                  <small class="text-muted">{{ data.name }}</small>
-                </h1>
-                <button
-                  type="button"
-                  class="btn btn-lg btn-block btn-outline-primary"
-                  @click="openModal('OutletDetails', data)"
-                >Lihat Outlet</button>
+
+                <h4>Details for {{ storeDetails.name }}</h4>
+
+                <div class="row">
+                  <div class="col">
+                    <GmapMap
+                      :center="{ lat: parseFloat(storeDetails.loc.coordinates[1]), lng: parseFloat(storeDetails.loc.coordinates[0]) }"
+                      :zoom="12"
+                      class="w-100 mt-2"
+                      style="height: 320px"
+                    ></GmapMap>
+                  </div>
+                  <div class="col">
+                    <table class="table table-sm table-bordered">
+                      <tbody>
+                        <tr>
+                          <td class="table-secondary">Username</td>
+                          <td class="table-light">{{ storeDetails.username }}</td>
+                        </tr>
+                        <tr>
+                          <td class="table-secondary">E-mail</td>
+                          <td class="table-light">{{ storeDetails.email }}</td>
+                        </tr>
+                        <tr>
+                          <td class="table-secondary">Mobile No.</td>
+                          <td class="table-light">{{ storeDetails.mobileNumber }}</td>
+                        </tr>
+                        <tr>
+                          <td class="table-secondary">Date Created</td>
+                          <td class="table-light">{{ storeDetails.createdAt }}</td>
+                        </tr>
+                      </tbody>
+                    </table>                    
+                  </div>
+                </div>
+
               </div>
             </div>
           </div>
         </div>
+
       </div>
     </div>
 
@@ -163,55 +207,6 @@
       </div>
     </b-modal>
 
-    <b-modal v-model="modalShowOutletDetails" title="Outlet Details" size="lg">
-      <table class="table mb-0">
-        <tbody>
-          <tr>
-            <td class="table-secondary">
-              <strong>Name</strong>
-            </td>
-            <td>{{ outletMerchantDetails.name }}</td>
-          </tr>
-          <tr>
-            <td class="table-secondary">
-              <strong>Title</strong>
-            </td>
-            <td>{{ outletMerchantDetails.title }}</td>
-          </tr>
-          <tr>
-            <td class="table-secondary">
-              <strong>Website</strong>
-            </td>
-            <td>{{ outletMerchantDetails.website }}</td>
-          </tr>
-          <tr>
-            <td class="table-secondary">
-              <strong>E-mail</strong>
-            </td>
-            <td>{{ outletMerchantDetails.email }}</td>
-          </tr>
-          <tr>
-            <td class="table-secondary">
-              <strong>Handphone</strong>
-            </td>
-            <td>{{ outletMerchantDetails.hp }}</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <h4 class="my-3">Location</h4>
-
-      <GmapMap
-        :center="{ lat: parseFloat(outletMerchantDetails.lat), lng: parseFloat(outletMerchantDetails.lon) }"
-        :zoom="12"
-        class="w-100 mt-2"
-        style="height: 320px"
-      ></GmapMap>
-
-      <div slot="modal-footer" class="w-100">
-        <button class="btn btn-secondary mr-2" @click="modalShowOutletDetails=false">Close</button>
-      </div>
-    </b-modal>
   </div>
 </template>
 
@@ -225,24 +220,43 @@ import axios from "axios";
 export default {
   data() {
     return {
-      // okBtnDisabled: true,
       modalShowAddOutletMerchant: false,
-      modalShowOutletDetails: false, // lihat outlet - see outlet
       dataInputOutletMerchant: {},
       outletMerchants: {},
-      outletMerchantDetails: {},
+      outletMerchantDetails: {}, // remove this one
 
       // Google map
       center: {},
+
+      // Store Details
+      storeDetails: {},
+      selectedStore: false, // this will highlight the active row
     };
   },
   created() {
     let vm = this;
-    /*axios
-      .get(`${process.env.VUE_APP_API_URL}/outlet`)
-      .then(res => (vm.outletMerchants = res.data));*/
-    this.geolocation()
-    console.log('aw', this.geolocation())    
+
+    // get geolocation
+    vm.geolocation()
+
+    axios.get(`${process.env.VUE_APP_API_URL}/api/stores?limit=100&skip=0`, {
+      headers: {
+        'Authorization': process.env.VUE_APP_AUTHORIZATION,
+        'x-access-token': localStorage.getItem('auth_token')
+      }
+    }).then(res => {
+      vm.outletMerchants = res.data
+      // load the first data
+      axios.get(`${process.env.VUE_APP_API_URL}/api/stores/${res.data[0]._id}`, {
+        headers: {
+          'Authorization': process.env.VUE_APP_AUTHORIZATION,
+          'x-access-token': localStorage.getItem('auth_token')
+        }
+      }).then(res2 => {
+        vm.storeDetails = res2.data
+        vm.selectedStore = res.data[0]._id
+      })
+    })
   },
   methods: {
     openModal(modal, data) {
@@ -252,15 +266,8 @@ export default {
           vm.modalShowAddOutletMerchant = true;
           vm.dataInputOutletMerchant = {};
           vm.errors = [];
-          break;
-        case "OutletDetails":
-          vm.modalShowOutletDetails = true;
-
-          vm.outletMerchantDetails = {}; // reset view
-          vm.outletMerchantDetails = data;
-          break;
-        default:
-          alert("error!");
+          break
+        default: alert("error!")
       }
     },
     addOutletMerchant() {
@@ -325,6 +332,25 @@ export default {
           lat: parseFloat(pos.coords.latitude),
           lng: parseFloat(pos.coords.longitude)
         }
+      })
+    },
+
+    /**
+     * Display store details
+     * 
+     * @param  ObjectId storeId
+     */
+    showStoreDetails(storeId) {
+      let vm = this
+
+      axios.get(`${process.env.VUE_APP_API_URL}/api/stores/${storeId}`, {
+        headers: {
+          'Authorization': process.env.VUE_APP_AUTHORIZATION,
+          'x-access-token': localStorage.getItem('auth_token')
+        }
+      }).then(res => {
+        vm.storeDetails = res.data
+        vm.selectedStore = storeId
       })
     }
   }
