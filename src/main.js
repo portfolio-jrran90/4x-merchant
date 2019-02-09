@@ -5,6 +5,7 @@ import VueAxios from 'vue-axios';
 import VeeValidate from 'vee-validate';
 import * as VueGoogleMaps from 'vue2-google-maps';
 import axios from 'axios';
+import VueSweetalert2 from 'vue-sweetalert2'
 import App from './App.vue';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -81,6 +82,7 @@ Vue.use(VueGoogleMaps, {
   //// then disable the following:
   // installComponents: true,
 });
+Vue.use(VueSweetalert2)
 
 // Vue.axios.defaults.baseURL = process.env.VUE_APP_BASE_URL
 
@@ -143,6 +145,9 @@ import AddStore from './components/addStore/Index.vue';
 import AccountSetting from './components/settings/__Main.vue'
 import AccountSettingIndex from './components/settings/Index.vue'
 import AccountSettingMidtrans from './components/settings/Midtrans.vue'
+
+// Activate Merchant
+import ActivateMerchant from './components/ActivateMerchant.vue'
 
 const routes = [
   { path: '*', redirect: '/login' },
@@ -209,6 +214,12 @@ const routes = [
     name: 'tomkins',
   },
   // End For Mobile Promotion Link fake Purchases
+
+  // Activate merchant
+  {
+    path: '/activation',
+    component: ActivateMerchant
+  },
   {
     path: '/',
     component: Dashboard,
@@ -355,9 +366,6 @@ Vue.use(require('@websanova/vue-auth'), {
       }
     },
   },
-
-  // auth: require('@websanova/vue-auth/drivers/auth/bearer.js'),
-  // auth: require('@websanova/vue-auth/drivers/auth/basic.js'),
   http: require('@websanova/vue-auth/drivers/http/axios.1.x.js'),
   router: require('@websanova/vue-auth/drivers/router/vue-router.2.x.js'),
   loginData: {
