@@ -43,19 +43,22 @@
                     <a href="#" @click.prevent="showStoreDetails(data._id)">view</a>
                   </td>
                 </tr>
+                <tr v-if="Object.keys(outletMerchants).length==0">
+                  <td colspan="2">
+                    No record! <a href="#" @click.prevent="openModal('AddOutletMerchant')">Add store</a>
+                  </td>
+                </tr>
               </tbody>
             </table>
           </div>
           <div class="col">
-            <div class="card">
+            <div class="card" v-if="(Object.keys(storeDetails).length != 0)">
               <div class="card-body">
-
-                <h4>Details for {{ storeDetails.name }}</h4>
-
+                <h4>Details for {{ storeDetails.name || '---' }}</h4>
                 <div class="row">
                   <div class="col">
                     <GmapMap
-                      :center="{ lat: parseFloat(storeDetails.loc.coordinates[1]), lng: parseFloat(storeDetails.loc.coordinates[0]) }"
+                      :center="{ lat: ((storeDetails.loc)?parseFloat(storeDetails.loc.coordinates[1]):0), lng: ((storeDetails.loc)?parseFloat(storeDetails.loc.coordinates[0]):0) }"
                       :zoom="12"
                       class="w-100 mt-2"
                       style="height: 320px"
@@ -66,19 +69,19 @@
                       <tbody>
                         <tr>
                           <td class="table-secondary">Username</td>
-                          <td class="table-light">{{ storeDetails.username }}</td>
+                          <td class="table-light">{{ storeDetails.username || '---' }}</td>
                         </tr>
                         <tr>
                           <td class="table-secondary">E-mail</td>
-                          <td class="table-light">{{ storeDetails.email }}</td>
+                          <td class="table-light">{{ storeDetails.email || '---' }}</td>
                         </tr>
                         <tr>
                           <td class="table-secondary">Mobile No.</td>
-                          <td class="table-light">{{ storeDetails.mobileNumber }}</td>
+                          <td class="table-light">{{ storeDetails.mobileNumber || '---' }}</td>
                         </tr>
                         <tr>
                           <td class="table-secondary">Date Created</td>
-                          <td class="table-light">{{ storeDetails.createdAt }}</td>
+                          <td class="table-light">{{ storeDetails.createdAt || '---' }}</td>
                         </tr>
                       </tbody>
                     </table>                    
@@ -245,6 +248,7 @@ export default {
         'x-access-token': localStorage.getItem('auth_token')
       }
     }).then(res => {
+      // awts
       vm.outletMerchants = res.data
       // load the first data
       axios.get(`${process.env.VUE_APP_API_URL}/api/stores/${res.data[0]._id}`, {
