@@ -1,26 +1,30 @@
 <template>
   <div class="py-4">
     <h2>
-      <font-awesome-icon icon="exchange-alt"/> Transaksi
+      <font-awesome-icon icon="chart-pie"/> Sales Reports
     </h2>
     <div class="card">
       <div class="card-header">
         <div class="input-group">
           <div class="input-group-prepend">
             <span class="input-group-text">
-              <font-awesome-icon icon="search"/>
+              <!-- <font-awesome-icon icon="search"/> -->
+              Filter
             </span>
           </div>
           <input
             type="text"
             class="form-control"
             aria-label="Text input with dropdown button"
-            placeholder="Search transaction"
             style="border-left: 0"
           >
         </div>
       </div>
       <div class="card-body">
+        <div class="text-right mb-3">
+          <button class="btn btn-secondary mr-2">Order By</button>
+          <button class="btn btn-secondary">Print</button>
+        </div>
         <table class="table table-striped table-bordered mb-0" style="border: 0 !important">
           <thead>
             <tr>
@@ -28,7 +32,6 @@
               <th class="text-right">Total</th>
               <th>Store</th>
               <th>Status Cicilan</th>
-              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -42,20 +45,6 @@
                   v-if="data.status==1 || data.status==2 || data.status==3 || data.status==4"
                 >Cicilan ke-{{ data.status }}</span>
                 <span class="badge badge-pill badge-warning" v-if="data.status==0">Pending</span>
-              </td>
-              <td class="text-right">
-                <ul class="list-inline mb-0">
-                  <li class="list-inline-item">
-                    <a href="#" @click.prevent="openModal('ShowTransactionDetail', data)">
-                      <small>View Detail</small>
-                    </a>
-                  </li>
-                  <li class="list-inline-item">
-                    <a href="#" @click.prevent="openModal('ShowTransactionDetail', data)">
-                      <small>Create Invoice</small>
-                    </a>
-                  </li>
-                </ul>
               </td>
             </tr>
           </tbody>

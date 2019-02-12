@@ -25,9 +25,11 @@
     "vue2-google-maps": "^0.10.5"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.0.0",
-    "@vue/cli-plugin-eslint": "^3.0.0",
-    "@vue/cli-service": "^3.0.0",
+    "@vue/cli-plugin-babel": "^3.4.0",
+    "@vue/cli-plugin-eslint": "^3.4.0",
+    "@vue/cli-service": "^3.4.0",
+    "node-sass": "^4.11.0",
+    "sass-loader": "^7.1.0",
     "vue-template-compiler": "^2.5.17"
   },
   "eslintConfig": {

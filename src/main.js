@@ -14,6 +14,7 @@ import {
   faChartPie,
   faShoppingCart,
   faUsers,
+  faUser,
   faShoppingBag,
   faPhone,
   faExchangeAlt,
@@ -25,7 +26,9 @@ import {
   faUserPlus,
   faCog,
   faCreditCard,
-  faHammer
+  faHammer,
+  faEnvelope,
+  faCalendarCheck
   // faTools
   // faCashRegister
 } from '@fortawesome/free-solid-svg-icons';
@@ -36,6 +39,7 @@ library.add(
   faChartPie,
   faShoppingCart,
   faUsers,
+  faUser,
   faShoppingBag,
   faPhone,
   faExchangeAlt,
@@ -47,7 +51,9 @@ library.add(
   faUserPlus,
   faCog,
   faCreditCard,
-  faHammer
+  faHammer,
+  faEnvelope,
+  faCalendarCheck
   // faTools
   // faCashRegister
 );
@@ -136,18 +142,28 @@ import shopPromo2 from './components/mobile/shopPromo2.vue';
 import Tomkins from './components/mobile/Tomkins.vue';
 
 // Store
-import Store from './components/stores/Index.vue';
+// import Store from './components/stores/Index.vue';
 
 // Add User Store Merchant
 import AddStore from './components/addStore/Index.vue';
 
-// Store settings
+// Settings
 import AccountSetting from './components/settings/__Main.vue'
 import AccountSettingIndex from './components/settings/Index.vue'
+import AccountSettingUser from './components/settings/User.vue'
+import AccountSettingAccount from './components/settings/Account.vue'
+import AccountSettingBankAccount from './components/settings/BankAccount.vue'
+import Store from './components/stores/Index.vue' // re-organize
 import AccountSettingMidtrans from './components/settings/Midtrans.vue'
 
 // Activate Merchant
 import ActivateMerchant from './components/ActivateMerchant.vue'
+
+// Sales Reports
+import SalesReport from './components/sales-reports/Index.vue'
+
+// Inbox
+import InboxIndex from './components/inbox/Index.vue'
 
 const routes = [
   { path: '*', redirect: '/login' },
@@ -330,15 +346,34 @@ const routes = [
       
       // Store Settings
       {
-        path: '/account-setting',
+        path: '/settings',
         component: AccountSetting,
-        name: 'account-setting',
-        redirect: '/account-setting/',
+        name: 'settings',
+        redirect: '/settings/user',
         children: [
-          { path: '/', component: AccountSettingIndex, name: 'as-index' },
-          { path: 'midtrans-api', component: AccountSettingMidtrans, name: 'as-midtrans' },
+          // { path: '/', component: AccountSettingIndex, name: 'as-index' },
+          // { path: 'midtrans-api', component: AccountSettingMidtrans, name: 'as-midtrans' },
+          { path: 'user', component: AccountSettingUser, name: 'user-setting' },
+          { path: 'account', component: AccountSettingAccount, name: 'account-setting' },
+          { path: 'bank-account', component: AccountSettingBankAccount, name: 'bank-account-setting' },
+          { path: 'add-user-store', component: Store, name: 'add-user-store-setting' },
         ]
-      }
+      },
+
+      // Sales Reports
+      {
+        path: '/sales-reports',
+        component: SalesReport,
+        name: 'sales-reports',
+      },
+
+      // Inbox
+      {
+        path: '/inbox',
+        component: InboxIndex,
+        name: 'inbox',
+      },
+
     ],
   },
 ];

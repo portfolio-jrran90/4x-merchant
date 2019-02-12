@@ -1,14 +1,12 @@
 <template>
-  <div class="py-4">
+  <div>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Merchant Settings</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Add User Store</li>
+      </ol>
+    </nav>
     <h2>
-      <font-awesome-icon icon="store"/> Stores
-      <a
-        href="#"
-        class="btn btn-secondary float-right"
-        @click.prevent="openModal('AddOutletMerchant')"
-      >
-        <font-awesome-icon icon="plus"/> Add
-      </a>
     </h2>
     <div class="card">
       <div class="card-header">
@@ -30,6 +28,11 @@
 
         <div class="row">
           <div class="col-md-3">
+            <div class="text-right">
+              <a href="#" class="btn btn-success btn-sm mb-2 px-4" @click.prevent="openModal('AddOutletMerchant')">
+                <font-awesome-icon icon="plus"/> Add
+              </a>
+            </div>
             <table class="table table-sm table-bordered table-hover">
               <thead class="thead-dark">
                 <tr>
@@ -40,7 +43,9 @@
                 <tr v-for="(data, index) in outletMerchants" :class="{ 'table-active': selectedStore === data._id }">
                   <td>{{ data.name }}</td>
                   <td class="text-center">
-                    <a href="#" @click.prevent="showStoreDetails(data._id)">view</a>
+                    <a href="#" @click.prevent="showStoreDetails(data._id)">
+                      <font-awesome-icon icon="search" />
+                    </a>
                   </td>
                 </tr>
                 <tr v-if="Object.keys(outletMerchants).length==0">
@@ -51,7 +56,7 @@
               </tbody>
             </table>
           </div>
-          <div class="col">
+          <div class="col store-details">
             <div class="card" v-if="(Object.keys(storeDetails).length != 0)">
               <div class="card-body">
                 <h4>Details for {{ storeDetails.name || '---' }}</h4>
@@ -68,19 +73,27 @@
                     <table class="table table-sm table-bordered">
                       <tbody>
                         <tr>
-                          <td class="table-secondary">Username</td>
+                          <td class="table-secondary">
+                            <font-awesome-icon icon="user" />
+                          </td>
                           <td class="table-light">{{ storeDetails.username || '---' }}</td>
                         </tr>
                         <tr>
-                          <td class="table-secondary">E-mail</td>
+                          <td class="table-secondary">
+                            <font-awesome-icon icon="envelope" />
+                          </td>
                           <td class="table-light">{{ storeDetails.email || '---' }}</td>
                         </tr>
                         <tr>
-                          <td class="table-secondary">Mobile No.</td>
+                          <td class="table-secondary">
+                            <font-awesome-icon icon="phone" />
+                          </td>
                           <td class="table-light">{{ storeDetails.mobileNumber || '---' }}</td>
                         </tr>
                         <tr>
-                          <td class="table-secondary">Date Created</td>
+                          <td class="table-secondary">
+                            <font-awesome-icon icon="calendar-check" />
+                          </td>
                           <td class="table-light">{{ storeDetails.createdAt || '---' }}</td>
                         </tr>
                       </tbody>
@@ -248,7 +261,6 @@ export default {
         'x-access-token': localStorage.getItem('auth_token')
       }
     }).then(res => {
-      // awts
       vm.outletMerchants = res.data
       // load the first data
       axios.get(`${process.env.VUE_APP_API_URL}/api/stores/${res.data[0]._id}`, {
@@ -369,5 +381,8 @@ export default {
 <style>
 .pac-container {
   z-index: 100000 !important;
+}
+.store-details table td:first-child{
+  text-align: center;
 }
 </style>

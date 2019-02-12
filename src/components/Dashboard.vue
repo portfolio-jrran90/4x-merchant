@@ -25,6 +25,53 @@
                   <font-awesome-icon icon="home" /> Home
                 </router-link>
               </li>
+              <li class="nav-item">
+                <router-link :to="{ name: 'transactions' }" class="nav-link">
+                  <font-awesome-icon icon="exchange-alt" /> Transaksi
+                </router-link>
+              </li>
+              <li class="nav-item">
+                <router-link :to="{ name: 'sales-reports' }" class="nav-link">
+                  <font-awesome-icon icon="chart-pie" /> Sales Report
+                </router-link>
+              </li>
+              <li class="nav-item">
+                <router-link :to="{ name: 'settings' }" class="nav-link">
+                  <font-awesome-icon icon="cog" /> Merchant Settings
+                </router-link>
+                <ul class="submenu">
+                  <li>
+                    <router-link :to="{ name: 'user-setting' }">
+                      User Setting
+                    </router-link>
+                  </li>
+                  <li>
+                    <router-link :to="{ name: 'account-setting' }">
+                      Account
+                    </router-link>
+                  </li>
+                  <li>
+                    <router-link :to="{ name: 'bank-account-setting' }">
+                      Bank Account
+                    </router-link>
+                  </li>
+                  <li>
+                    <router-link :to="{ name: 'add-user-store-setting' }">
+                      Add User Store
+                    </router-link>
+                  </li>
+                </ul>
+              </li>
+              <li class="nav-item">
+                <router-link :to="{ name: 'inbox' }" class="nav-link">
+                  <font-awesome-icon icon="envelope" /> Inbox
+                </router-link>
+              </li>
+              <!-- <li class="nav-item">
+                <router-link :to="{ name: 'stores' }" class="nav-link">
+                  <font-awesome-icon icon="store" /> Store
+                </router-link>
+              </li> -->
               <!-- <li class="nav-item">
                 <router-link :to="{ name: 'orders' }" class="nav-link">
                   <font-awesome-icon icon="shopping-cart" /> Orders
@@ -35,12 +82,7 @@
                   <font-awesome-icon icon="shopping-bag" /> Products
                 </router-link>
               </li> -->
-              <li class="nav-item">
-                <router-link :to="{ name: 'transactions' }" class="nav-link">
-                  <font-awesome-icon icon="exchange-alt" /> Transaksi
-                </router-link>
-              </li>
-              <li class="nav-item">
+              <!-- <li class="nav-item">
                 <router-link :to="{ name: 'promotions' }" class="nav-link">
                   <font-awesome-icon icon="bullhorn" /> Promosi
                 </router-link>
@@ -49,22 +91,12 @@
                 <router-link :to="{ name: 'customers' }" class="nav-link">
                   <font-awesome-icon icon="users" /> Pelanggan
                 </router-link>
-              </li>
-              <li class="nav-item">
-                <router-link :to="{ name: 'stores' }" class="nav-link">
-                  <font-awesome-icon icon="store" /> Store
-                </router-link>
-              </li>
-              <li class="nav-item">
+              </li> -->
+              <!-- <li class="nav-item">
                 <router-link :to="{ name: 'addStore' }" class="nav-link">
                   <font-awesome-icon icon="plus" /> Add User
                 </router-link>
-              </li>
-              <li class="nav-item">
-                <router-link :to="{ name: 'account-setting' }" class="nav-link">
-                  <font-awesome-icon icon="cog" /> Settings
-                </router-link>
-              </li>
+              </li> -->
 
               <!-- <li class="nav-item">
                 <router-link :to="{ name: 'analytics' }" class="nav-link">
@@ -193,10 +225,10 @@
   .sidebar .submenu a {
     font-size: 14px;
     color: #333;
-  }/*
+  }
   .sidebar .submenu .active {
     color: #007bff;
-  }*/
+  }
 
   /*
    * Content

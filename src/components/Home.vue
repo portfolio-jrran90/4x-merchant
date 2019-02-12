@@ -1,19 +1,12 @@
 <template>
   <div class="row">
-    <div class="col-md-9">
+    <div class="col-md-10">
       <div class="pt-5">
-        <h2 class="mb-4">
-          Selamat datang di EmpatKali Merchant Dashboard
-        </h2>
-
         <div class="card">
           <div class="card-body">
             <div class="row">
               <div class="col">
-                <h4 class="mb-3">Masukkan product promo merchant anda</h4>
-                <router-link :to="{ name: 'promotions' }" class="btn btn-secondary">
-                  <font-awesome-icon icon="plus"/> Tambah promo
-                </router-link>
+                <h2 class="mb-0">Selamat datang di Empatkali Merchant Dashboard</h2>
               </div>
             </div>
           </div>
@@ -24,5 +17,21 @@
 </template>
 
 <script>
-export default {}
+import axios from 'axios'
+
+export default {
+  data() {
+    return {
+      auth: {}
+    }
+  },
+  created() {
+    axios.get(`${process.env.VUE_APP_API_URL}/api/merchants/detail`, {
+      headers: {
+        'Authorization': process.env.VUE_APP_AUTHORIZATION,
+        'x-access-token': localStorage.getItem('auth_token')
+      }
+    }).then(res => this.auth = res.data)
+  }
+}
 </script>
