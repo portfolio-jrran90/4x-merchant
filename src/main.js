@@ -8,6 +8,8 @@ import axios from 'axios';
 import VueSweetalert2 from 'vue-sweetalert2'
 import App from './App.vue';
 
+import 'vue2-daterange-picker/dist/lib/vue-daterange-picker.min.css'
+
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
   faHome,
@@ -89,6 +91,9 @@ Vue.use(VueGoogleMaps, {
   // installComponents: true,
 });
 Vue.use(VueSweetalert2)
+
+// Filters
+import './filters/index'
 
 // Vue.axios.defaults.baseURL = process.env.VUE_APP_BASE_URL
 

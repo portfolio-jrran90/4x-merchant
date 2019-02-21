@@ -5,58 +5,63 @@
     </h2>
     <div class="card">
       <div class="card-header">
-        <div class="input-group">
-          <div class="input-group-prepend">
-            <span class="input-group-text">
-              <font-awesome-icon icon="search"/>
-            </span>
-          </div>
-          <input
-            type="text"
-            class="form-control"
-            aria-label="Text input with dropdown button"
-            placeholder="Search transaction"
-            style="border-left: 0"
+        <div class="form-inline">
+          <label class="my-1 mr-2" for="inlineFormCustomSelectPref">Filter by:</label>
+          <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref" v-model="filterQuery">
+            <option value="date">date</option>
+            <option value="store">store</option>
+          </select>
+          
+          <!-- date range -->
+          <date-range-picker
+            :opens="filterDateRange.opens"
+            :startDate="filterDateRange.startDate"
+            :endDate="filterDateRange.endDate"
+            @update="updateValues"
+            :locale-data="{ firstDay: 1, format: 'DD-MM-YYYY' }"
+            :minDate="filterDateRange.minDate" :maxDate="filterDateRange.maxDate"
+            class="mr-2"
+            v-if="filterQuery==='date'"
           >
+            <div slot="input" slot-scope="picker">
+              {{ picker.startDate | date }} - {{ picker.endDate | date }}
+            </div>
+          </date-range-picker>
+
+          <!-- store -->
+          <select class="form-control mr-2" v-if="filterQuery==='store'">
+            <option value="">-- select</option>
+            <option :value="store._id" v-for="store in stores">{{ store.name }}</option>
+          </select>
+
+          <button type="button" class="btn btn-primary my-1" @click="filterResult">Filter Result</button>
         </div>
       </div>
       <div class="card-body">
-        <table class="table table-striped table-bordered mb-0" style="border: 0 !important">
-          <thead>
+        <table class="table table-striped table-bordered mb-0 table-sm" style="border: 0 !important">
+          <thead class="table-dark">
             <tr>
-              <th>No. Transaksi</th>
-              <th class="text-right">Total</th>
-              <th>Store</th>
-              <th>Status Cicilan</th>
-              <th></th>
+              <th rowspan="2" class="text-center">No. Transaksi</th>
+              <th rowspan="2" class="text-center">Date Time</th>
+              <th colspan="2" class="text-center">Amount</th>
+              <th colspan="2" class="text-center">Payment Status</th>
+            </tr>
+            <tr>
+              <th class="text-center">Gross</th>
+              <th class="text-center">Net</th>
+              <th class="text-center">Approve by EMPATKALI</th>
+              <th class="text-center">Payment Confirm</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="data in transactions">
-              <td>{{ data.transactionNumber }}</td>
-              <td class="text-right">{{ Intl.NumberFormat('id-ID', {style: 'currency', currency: 'IDR'}).format(data.total) }}</td>
-              <td>{{ data.store }}</td>
-              <td>
-                <span
-                  class="badge badge-pill badge-success"
-                  v-if="data.status==1 || data.status==2 || data.status==3 || data.status==4"
-                >Cicilan ke-{{ data.status }}</span>
-                <span class="badge badge-pill badge-warning" v-if="data.status==0">Pending</span>
-              </td>
-              <td class="text-right">
-                <ul class="list-inline mb-0">
-                  <li class="list-inline-item">
-                    <a href="#" @click.prevent="openModal('ShowTransactionDetail', data)">
-                      <small>View Detail</small>
-                    </a>
-                  </li>
-                  <li class="list-inline-item">
-                    <a href="#" @click.prevent="openModal('ShowTransactionDetail', data)">
-                      <small>Create Invoice</small>
-                    </a>
-                  </li>
-                </ul>
-              </td>
+              <td class="text-center">{{ data.transactionNumber }}</td>
+              <!-- <td class="text-right">{{ Intl.NumberFormat('id-ID', {style: 'currency', currency: 'IDR'}).format(data.total) }}</td> -->
+              <td class="text-center">2012-12-12</td>
+              <td class="text-right">Rp. 1.000.000</td>
+              <td class="text-right">Rp. 1.000.000</td>
+              <td class="text-center">Approve by EMPATKALI</td>
+              <td class="text-center">Payment Confirm</td>
             </tr>
           </tbody>
         </table>
@@ -113,13 +118,30 @@
 
 <script>
 import axios from "axios";
+import DateRangePicker from 'vue2-daterange-picker'
+import moment from 'moment'
 
 export default {
+  components: {
+    DateRangePicker,
+  },
   data() {
     return {
+      // Search
+      filterQuery: 'date',
+      filterDateRange: {
+        opens: 'center',
+        startDate: new Date(),
+        endDate: new Date(),
+        minDate: '2017-09-02',
+        maxDate: '2020-10-02'
+      },
+
+      stores: {},
+
       modalShowTransactionDetail: false,
       transactions: {},
-      transactionDetails: {}
+      transactionDetails: {},
     };
   },
   created() {
@@ -131,6 +153,15 @@ export default {
         'x-access-token': localStorage.getItem('auth_token')
       }
     }).then(res => vm.transactions = res.data)
+
+    axios.get(`${process.env.VUE_APP_API_URL}/api/stores`, {
+      headers: {
+        'Authorization': process.env.VUE_APP_AUTHORIZATION,
+        'x-access-token': localStorage.getItem('auth_token')
+      }
+    }).then(res => vm.stores = res.data)
+
+    // api/stores?limit=100&skip=0
   },
   methods: {
     openModal(modal, data) {
@@ -148,13 +179,19 @@ export default {
               });
             });
           break;
-        default:
-          alert("error!");
+        default: alert("error!");
       }
+    },
+
+    updateValues (values) {
+      console.log('oh', values)
+      this.filterDateRange.startDate = values.startDate.toISOString().slice(0, 10)
+      this.filterDateRange.endDate = values.endDate.toISOString().slice(0, 10)
+    },
+
+    filterResult() {
+      alert()
     }
   }
 };
 </script>
-
-<style scoped>
-</style>

@@ -36,6 +36,16 @@
                 </router-link>
               </li>
               <li class="nav-item">
+                <router-link :to="{ name: 'promotions' }" class="nav-link">
+                  <font-awesome-icon icon="bullhorn" /> Promotion
+                </router-link>
+              </li>
+              <li class="nav-item">
+                <router-link :to="{ name: 'inbox' }" class="nav-link">
+                  <font-awesome-icon icon="envelope" /> Inbox
+                </router-link>
+              </li>
+              <li class="nav-item">
                 <router-link :to="{ name: 'settings' }" class="nav-link">
                   <font-awesome-icon icon="cog" /> Merchant Settings
                 </router-link>
@@ -61,11 +71,6 @@
                     </router-link>
                   </li>
                 </ul>
-              </li>
-              <li class="nav-item">
-                <router-link :to="{ name: 'inbox' }" class="nav-link">
-                  <font-awesome-icon icon="envelope" /> Inbox
-                </router-link>
               </li>
               <!-- <li class="nav-item">
                 <router-link :to="{ name: 'stores' }" class="nav-link">
