@@ -36,6 +36,12 @@
 
           <button type="button" class="btn btn-primary my-1" @click="filterResult">Filter Result</button>
         </div>
+        
+        <div class="alert alert-info mb-0 mt-3">
+          <h5 class="mb-0">Result(s):</h5>
+          Total rows: {{ transactions.length }}
+        </div>
+
       </div>
       <div class="card-body">
         <table class="table table-striped table-bordered mb-0 table-sm" style="border: 0 !important">
