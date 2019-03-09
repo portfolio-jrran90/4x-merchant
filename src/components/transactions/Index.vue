@@ -59,7 +59,10 @@
               <th class="text-center">Payment Confirm</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody v-if="transactions.length===0">
+            <tr><td colspan="6">No transaction(s)</td></tr>
+          </tbody>
+          <tbody v-else>
             <tr v-for="data in transactions">
               <td class="text-center">{{ data.transactionNumber }}</td>
               <!-- <td class="text-right">{{ Intl.NumberFormat('id-ID', {style: 'currency', currency: 'IDR'}).format(data.total) }}</td> -->
