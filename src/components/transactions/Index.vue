@@ -1,7 +1,7 @@
 <template>
   <div class="py-4">
     <h2>
-      <font-awesome-icon icon="exchange-alt"/>Transaksi
+      <font-awesome-icon icon="chart-pie"/>Sales Reports
     </h2>
     <div class="card">
       <div class="card-header">
@@ -84,8 +84,8 @@
               <td class="text-center">{{ data.jam }}</td>
               <td class="text-right">{{ data.cust_identity }}</td>
               <td class="text-right">{{ data.invoice }}</td>
-              <td class="text-center">{{ data.jumlah}}</td>
-              <td class="text-center">{{ (data.jumlah)*'10%'}}</td>
+              <td class="text-center">{{ data.jumlah }}</td>
+              <td class="text-center">{{ data.jumlah - ((data.jumlah)*10/100)}}</td>
               <td class="text-right">{{ data.mid }}</td>
               <td class="text-right">{{ data.paymentdate }}</td>
               <td class="text-center">Approve by EMPATKALI</td>
@@ -192,7 +192,8 @@ export default {
         {
           headers: {
             Authorization: process.env.VUE_APP_AUTHORIZATION,
-            "x-access-token": localStorage.getItem("auth_token")
+            "x-access-token": localStorage.getItem("auth_token"),
+            "Access-Control-Allow-Origin": "*"
           }
         }
       )
