@@ -1,6 +1,6 @@
 <template>
   <div class="pt-4 pb-5">
-    <div class="row mb-4">
+    <div class="row mb-4 c-sales-report">
       <div class="col">
         <h2>
           Sales Report
@@ -12,14 +12,18 @@
           <div class="card-body">
             <div class="row">
               <div class="col-md-9">
-                <canvas id="canvas" height="100"></canvas>
+                <div>
+                  <line-chart v-if="lineChartSalesLoaded" :chartdata="lineChartSalesData" :options="lineChartSalesOptions" />
+                </div>
               </div>
               <div class="col text-center">
                 <div class="card mb-3">
                   <div class="card-header">
                     <h5 class="mb-0">Weekly Sales Growth</h5>
                   </div>
-                  <div class="card-body" style="font-size: 1.5em">10%</div>
+                  <div class="card-body" style="font-size: 1.5em">
+                    10%
+                  </div>
                 </div>
                 <div class="card">
                   <div class="card-header">
@@ -34,15 +38,17 @@
       </div>
     </div>
 
-    <div class="row mb-4">
+    <!-- <div class="row mb-4">
       <div class="col">
         <h2>Settlement Report</h2>
         <div class="card">
           <div class="card-body">
             <div class="row">
               <div class="col-md-9">
-                <canvas id="canvas2" height="50"></canvas>
-                <canvas id="canvas3" height="50"></canvas>
+                <line-chart
+                  v-if="lineChartSettlementReportLoaded"
+                  :chartdata="lineChartSettlementReportData"
+                  :options="lineChartSettlementReportOptions" />
               </div>
               <div class="col text-center">
                 <router-link :to="{ name: 'transactions' }" class="btn btn-secondary btn-block py-3">Search for a transaction</router-link>
@@ -52,7 +58,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <div class="row">
       <div class="col">
@@ -67,80 +73,316 @@
 
 <script>
 import axios from 'axios'
-import { Line } from 'vue-chartjs'
+import md5 from 'md5'
+import LineChart from '../shared/charts/LineChart.js'
+// import { getWeeksMixin } from '../mixins/getWeeksMixin.js'
 
 export default {
-  /*extends: Line,
-  props: ['chartdata', 'options'],*/
+  components: {
+    LineChart
+  },
+  // mixins: [getWeeksMixin],
   data() {
     return {
-      auth: {}
+      auth: {},
+
+      lineChartSalesData: {},
+      lineChartSalesOptions: {},
+      lineChartSalesLoaded: false,
+      weeklySalesGrowth: 0,
+      monthlySalesGrowth: 0,
+
+      lineChartSettlementReportData: {},
+      lineChartSettlementReportOptions: {},
+      lineChartSettlementReportLoaded: false,
     }
   },
-  created() {
-    axios.get(`${process.env.VUE_APP_API_URL}/api/merchants/detail`, {
+  async mounted() {
+    let vm = this
+
+    // get merchant info
+    let merchantJson = await axios.get(`${process.env.VUE_APP_API_URL}/api/merchants/detail`, {
       headers: {
         'Authorization': process.env.VUE_APP_AUTHORIZATION,
         'x-access-token': localStorage.getItem('auth_token')
       }
-    }).then(res => this.auth = res.data)
+    })
+
+    // Generate Graph
+    // This should be filtered inside the API though
+    vm.getSalesReport(merchantJson.data._id)
+    vm.getSettlementReport(merchantJson.data._id)
   },
-  mounted() {
-    // this.renderChart(this.chartdata, this.options)
-    var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-    var config = {
-      type: 'line',
-      data: {
-        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-        datasets: [{
-          label: 'dataset',
-          backgroundColor: 'red',
-          borderColor: 'red',
-          data: [12, 19, 3, 5, 2, 3],
-          fill: false,
-        }]
-      },
-      options: {
-        responsive: true,
-        /*title: {
-          display: true,
-          text: 'Chart.js Line Chart'
-        },*/
-        tooltips: {
-          mode: 'index',
-          intersect: false,
-        },
-        hover: {
-          mode: 'nearest',
-          intersect: true
-        },
-        scales: {
-          xAxes: [{
-            display: true,
-            scaleLabel: {
-              display: true,
-              labelString: 'Month'
-            }
-          }],
-          yAxes: [{
-            display: true,
-            scaleLabel: {
-              display: true,
-              labelString: 'Value'
-            }
+  methods: {
+    /**
+     * Get result for Sales Report
+     *
+     * @param ObjectId merchId
+     */
+    async getSalesReport(merchId) {
+      let vm = this
+
+      vm.lineChartSalesLoaded = false
+      try {
+        // Note: Month always start on index 0
+        // Get all weeks in a month
+        let now = new Date()
+        var weeks = [],
+            firstDate = new Date( now.getFullYear(), now.getMonth(), 1 ),
+            lastDate = new Date( now.getFullYear(), now.getMonth()+1, 0 ),
+            numDays = lastDate.getDate()
+
+        var start = 1
+        var end = 7 - firstDate.getDay()
+        while(start <= numDays){
+          weeks.push({ start: start,end: end })
+          start = end + 1
+          end = end + 7
+          if(end > numDays) end = numDays
+        }
+
+        let startDate = `${firstDate.getFullYear()}-${firstDate.getMonth()+1}-${firstDate.getDate()}`
+        let endDate = `${lastDate.getFullYear()}-${lastDate.getMonth()+1}-${lastDate.getDate()}`
+        let md5Encrypt = md5(merchId + '4XEMPAT!')
+
+        // get transactions
+        let transactionJson = await axios.get(`http://sandbox.empatkali.co.id/transaksi.php?id=${merchId}&d=${startDate}&k=${endDate}&m=${md5Encrypt}`, {
+          headers: {
+            'Authorization': process.env.VUE_APP_AUTHORIZATION,
+            'x-access-token': localStorage.getItem('auth_token'),
+            'Access-Control-Allow-Origin': '*'
+          }
+        })
+
+        // sort the result from ascending
+        let transactionData = transactionJson.data.map(val => {
+          return {
+            paymentdate: new Date(val.paymentdate).getDate(),
+            amount: val.jumlah
+          }
+        })
+
+        let weekData = []
+        // weeks in a months
+        for (let i=0; i<weeks.length; i++) {
+          // extract days
+          weekData.push([])
+          for (let j=weeks[i].start; j<=weeks[i].end; j++) {
+            // data from DB
+            let dd = transactionData
+                      .reduce((acc, data) => {
+                        if (data.paymentdate != j) return acc
+                        return acc + parseFloat(data.amount)
+                      }, 0)
+            weekData[i].push(dd) 
+          }
+        }
+
+        // this part is too redundant, modify this
+        // report should be filtered inside the API though, not in front-end
+        let weeklyData = []
+        let weekIndex = []
+        for (let i=0; i<weeks.length; i++) {
+          weekIndex.push('Week ' + (i + 1)) // this will output the week
+          let aw = weekData[i].reduce((a, v) => a + v, 0)
+          weeklyData.push(aw)
+        }
+
+        console.log(weeklyData)
+
+        vm.lineChartSalesData = {
+          labels: weekIndex,
+          datasets: [{
+            label: '',
+            backgroundColor: 'red',
+            borderColor: 'red',
+            data: weeklyData,
+            fill: false,
           }]
         }
+        vm.lineChartSalesOptions = {
+          responsive: true,
+          maintainAspectRatio: false,
+          title: {
+            display: true,
+            text: 'For the month of March'
+          },
+          tooltips: {
+            mode: 'index',
+            intersect: false,
+          },
+          hover: {
+            mode: 'nearest',
+            intersect: true
+          },
+          scales: {
+            xAxes: [{
+              display: true,
+              scaleLabel: {
+                display: true,
+                labelString: 'Weeks'
+              }
+            }],
+            yAxes: [{
+              display: true,
+              scaleLabel: {
+                display: true,
+                labelString: 'Amount'
+              },
+              ticks: {
+                beginAtZero:true
+              }
+            }]
+          }
+        }
+        vm.lineChartSalesLoaded = true
+      } catch (e) {
+        console.error(e)
       }
-    };
+    },
 
-    var ctx = document.getElementById('canvas').getContext('2d');
-    window.myLine = new Chart(ctx, config);
+    /**
+     * Get result for Settlement Report
+     *
+     * @param ObjectId merchId
+     */
+    async getSettlementReport(merchId) {
+      let vm = this
 
-    var ctx2 = document.getElementById('canvas2').getContext('2d');
-    window.myLine2 = new Chart(ctx2, config);    
+      vm.lineChartSettlementReportLoaded = false
+      try {
+        // get md5
+        // Note: ya need to install md5 plugin for this
+        // let generatedMd5 = 
 
-    var ctx3 = document.getElementById('canvas3').getContext('2d');
-    window.myLine3 = new Chart(ctx3, config);    
-  },
+        // Note: Month always start on index 0
+        // Get all weeks in a month
+        let now = new Date()
+        var weeks = [],
+            firstDate = new Date( now.getFullYear(), now.getMonth(), 1 ),
+            lastDate = new Date( now.getFullYear(), now.getMonth()+1, 0 ),
+            numDays = lastDate.getDate()
+
+        var start = 1;
+        var end = 7 - firstDate.getDay();
+        while(start <= numDays){
+           weeks.push({ start: start,end: end });
+           start = end + 1;
+           end = end + 7;
+           if(end > numDays) end = numDays
+        }
+
+
+        let startDate = `${firstDate.getFullYear()}-${firstDate.getMonth()+1}-${firstDate.getDate()}`
+        let endDate = `${lastDate.getFullYear()}-${lastDate.getMonth()+1}-${lastDate.getDate()}`
+
+        // get transactions
+        let transactionJson = await axios.get(`http://sandbox.empatkali.co.id/transaksi.php?id=${merchId}&d=${startDate}&k=${endDate}&m=c00bdb56c3e31c0761a91b4fc79fa530`, {
+          headers: {
+            'Authorization': process.env.VUE_APP_AUTHORIZATION,
+            'x-access-token': localStorage.getItem('auth_token'),
+            'Access-Control-Allow-Origin': '*'
+          }
+        })
+
+        // console.log(transactionJson.data)
+
+        // 1. compare date from the DB and then get the day to insert to its appropriate week
+        // 2. if the date is in between the 
+
+        // sort the result from ascending
+        let transactionData = transactionJson.data.map(val => {
+          return {
+            paymentdate: new Date(val.paymentdate).getDate(),
+            amount: val.jumlah,
+            status: val.status
+          }
+        })
+        // console.log(transactionData)
+        // console.log('---')
+        // 
+        let weekData = []
+        // weeks in a months
+        for (let i=0; i<weeks.length; i++) {
+          // console.log('---')
+          // extract days
+          weekData.push([])
+          for (let j=weeks[i].start; j<=weeks[i].end; j++) {
+            // data from DB
+            let dd = transactionData
+                      // .filter(el => el.paymentdate == j)
+                      .reduce((acc, data) => {
+                        if (data.paymentdate != j) return acc
+                        return acc + parseFloat(data.amount)
+                      }, 0)
+            // console.log('dd', dd)
+            // before xa i.push, filter the result already
+            weekData[i].push(dd) 
+          }
+        }
+        // console.log(weekData)
+
+        // this part is too redundant, modify this
+        // report should be filtered inside the API though, not in front-end
+        let weeklyData = []
+        let weekIndex = []
+        for (let i=0; i<weeks.length; i++) {
+          weekIndex.push('Week ' + (i + 1)) // this will output the week
+          let aw = weekData[i].reduce((a, v) => a + v, 0)
+          weeklyData.push(aw)
+        }
+        // console.log(weeklyData)
+
+        vm.lineChartSettlementReportData = {
+          labels: weekIndex,
+          datasets: [{
+            label: '',
+            backgroundColor: 'red',
+            borderColor: 'red',
+            data: weeklyData,
+            fill: false,
+          }]
+        }
+        vm.lineChartSettlementReportOptions = {
+          responsive: true,
+          maintainAspectRatio: false,
+          title: {
+            display: true,
+            text: 'For the month of March'
+          },
+          tooltips: {
+            mode: 'index',
+            intersect: false,
+          },
+          hover: {
+            mode: 'nearest',
+            intersect: true
+          },
+          scales: {
+            xAxes: [{
+              display: true,
+              scaleLabel: {
+                display: true,
+                labelString: 'Weeks'
+              }
+            }],
+            yAxes: [{
+              display: true,
+              scaleLabel: {
+                display: true,
+                labelString: 'Amount'
+              },
+              ticks: {
+                beginAtZero:true
+              }
+            }]
+          }
+        }
+        vm.lineChartSettlementReportLoaded = true
+      } catch (e) {
+        console.error(e)
+      }
+    },
+  }
 }
 </script>
