@@ -29,7 +29,9 @@
                   <div class="card-header">
                     <h5 class="mb-0">Monthly Sales Growth</h5>
                   </div>
-                  <div class="card-body" style="font-size: 1.5em">10%</div>
+                  <div class="card-body" style="font-size: 1.5em">
+                    {{ monthlySalesGrowth }}%
+                  </div>
                 </div>
               </div>
             </div>
@@ -112,8 +114,19 @@ export default {
     // This should be filtered inside the API though
     vm.getSalesReport(merchantJson.data._id)
     vm.getSettlementReport(merchantJson.data._id)
+
+    vm.getSalesGrowth(merchantJson.data._id)
   },
   methods: {
+    /**
+     * Get month name
+     * 
+     * @param  Integer monthIndex
+     */
+    getCurrentMonthName() {
+      return new Date().toLocaleString('en-US', { month: 'long' })
+    },
+
     /**
      * Get result for Sales Report
      *
@@ -146,7 +159,8 @@ export default {
         let md5Encrypt = md5(merchId + '4XEMPAT!')
 
         // get transactions
-        let transactionJson = await axios.get(`http://sandbox.empatkali.co.id/transaksi.php?id=${merchId}&d=${startDate}&k=${endDate}&m=${md5Encrypt}`, {
+        // let transactionJson = await axios.get(`http://sandbox.empatkali.co.id/transaksi.php?id=${merchId}&d=${startDate}&k=${endDate}&m=${md5Encrypt}`, {
+        let transactionJson = await axios.get(`http://sandbox.empatkali.co.id/transaksi.php?id=5c63b4b88b904e1c13672183&d=2019-02-01&k=2019-02-31&m=${md5Encrypt}`, {
           headers: {
             'Authorization': process.env.VUE_APP_AUTHORIZATION,
             'x-access-token': localStorage.getItem('auth_token'),
@@ -188,8 +202,6 @@ export default {
           weeklyData.push(aw)
         }
 
-        console.log(weeklyData)
-
         vm.lineChartSalesData = {
           labels: weekIndex,
           datasets: [{
@@ -205,7 +217,7 @@ export default {
           maintainAspectRatio: false,
           title: {
             display: true,
-            text: 'For the month of March'
+            text: 'For the month of ' + vm.getCurrentMonthName()
           },
           tooltips: {
             mode: 'index',
@@ -383,6 +395,75 @@ export default {
         console.error(e)
       }
     },
+
+    /**
+     * Get/Calculate Sales Growth
+     * 
+     * @param  Integer merchId
+     */
+    // Note: All of this should be processed inside the backend
+    async getSalesGrowth(merchId) {
+      let vm = this
+      let md5Encrypt = md5(merchId + '4XEMPAT!')
+
+      // let now = new Date()
+      
+      // test
+      let now = new Date(2019, 2, 1)
+
+      // current date range
+      var currentFirstDate = new Date( now.getFullYear(), now.getMonth(), 1 ),
+          currentLastDate = new Date( now.getFullYear(), now.getMonth()+1, 0 )
+
+      let currentStartDate = `${currentFirstDate.getFullYear()}-${currentFirstDate.getMonth()+1}-${currentFirstDate.getDate()}`
+      let currentEndDate = `${currentLastDate.getFullYear()}-${currentLastDate.getMonth()+1}-${currentLastDate.getDate()}`
+
+      // previous date range
+      var previousFirstDate = new Date( now.getFullYear(), now.getMonth()-1, 1 ),
+          previousLastDate = new Date( now.getFullYear(), now.getMonth(), 0 )
+
+      let previousStartDate = `${previousFirstDate.getFullYear()}-${previousFirstDate.getMonth()+1}-${previousFirstDate.getDate()}`
+      let previousEndDate = `${previousLastDate.getFullYear()}-${previousLastDate.getMonth()+1}-${previousLastDate.getDate()}`
+
+      console.log('start', currentStartDate)
+      console.log('end', currentEndDate)
+
+      console.log('====')
+
+      console.log('start', previousStartDate)
+      console.log('end', previousEndDate)
+
+      // get the total transactions for the current month
+      let currentTransactionJson = await axios.get(`http://sandbox.empatkali.co.id/transaksi.php?id=${merchId}&d=${currentStartDate}&k=${currentEndDate}&m=${md5Encrypt}`, {
+        headers: {
+          'Authorization': process.env.VUE_APP_AUTHORIZATION,
+          'x-access-token': localStorage.getItem('auth_token'),
+          'Access-Control-Allow-Origin': '*'
+        }
+      })
+      let currentMonth = currentTransactionJson.data.map(val => parseFloat(val.jumlah)).reduce((a,v) => a + v, 0)
+
+
+      // get the total transactions from the previous month
+      let previousTransactionJson = await axios.get(`http://sandbox.empatkali.co.id/transaksi.php?id=${merchId}&d=${previousStartDate}&k=${previousEndDate}&m=${md5Encrypt}`, {
+        headers: {
+          'Authorization': process.env.VUE_APP_AUTHORIZATION,
+          'x-access-token': localStorage.getItem('auth_token'),
+          'Access-Control-Allow-Origin': '*'
+        }
+      })
+      let previousMonth = previousTransactionJson.data
+                      .map(val => parseFloat(val.jumlah))
+                      .reduce((a,v) => a + v, 0)
+
+      console.log('current', currentMonth)
+      console.log('previous', previousMonth)
+
+      // calculate the monthly growth sales
+      vm.monthlySalesGrowth = ( ((currentMonth - previousMonth) / previousMonth) * 100 ).toFixed(2)
+      console.log(vm.monthlySalesGrowth)
+
+    }
   }
 }
 </script>
