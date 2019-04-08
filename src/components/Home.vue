@@ -22,7 +22,7 @@
                     <h5 class="mb-0">Weekly Sales Growth</h5>
                   </div>
                   <div class="card-body" style="font-size: 1.5em">
-                    10%
+                    23%
                   </div>
                 </div>
                 <div class="card">
@@ -77,6 +77,8 @@
 import axios from 'axios'
 import md5 from 'md5'
 import LineChart from '../shared/charts/LineChart.js'
+import moment from 'moment'
+
 // import { getWeeksMixin } from '../mixins/getWeeksMixin.js'
 
 export default {
@@ -413,14 +415,16 @@ export default {
 
       // current date range
       var currentFirstDate = new Date( now.getFullYear(), now.getMonth(), 1 ),
-          currentLastDate = new Date( now.getFullYear(), now.getMonth()+1, 0 )
+          currentLastDate = new Date( now.getFullYear(), now.getMonth()+1, 0 ),
+          currentDate = currentLastDate.getDate()
 
       let currentStartDate = `${currentFirstDate.getFullYear()}-${currentFirstDate.getMonth()+1}-${currentFirstDate.getDate()}`
       let currentEndDate = `${currentLastDate.getFullYear()}-${currentLastDate.getMonth()+1}-${currentLastDate.getDate()}`
 
       // previous date range
       var previousFirstDate = new Date( now.getFullYear(), now.getMonth()-1, 1 ),
-          previousLastDate = new Date( now.getFullYear(), now.getMonth(), 0 )
+          previousLastDate = new Date( now.getFullYear(), now.getMonth(), 0 ),
+          previousDate = previousLastDate.getDate()
 
       let previousStartDate = `${previousFirstDate.getFullYear()}-${previousFirstDate.getMonth()+1}-${previousFirstDate.getDate()}`
       let previousEndDate = `${previousLastDate.getFullYear()}-${previousLastDate.getMonth()+1}-${previousLastDate.getDate()}`
@@ -456,12 +460,66 @@ export default {
                       .map(val => parseFloat(val.jumlah))
                       .reduce((a,v) => a + v, 0)
 
-      console.log('current', currentMonth)
-      console.log('previous', previousMonth)
-
       // calculate the monthly growth sales
       vm.monthlySalesGrowth = ( ((currentMonth - previousMonth) / previousMonth) * 100 ).toFixed(2)
-      console.log(vm.monthlySalesGrowth)
+
+
+
+      // test
+      // 
+      // Note:
+      // - Should get all week and compare, regardless of the month
+      // - just use momentjs
+
+      let numDays = currentLastDate.getDate()
+      console.log(numDays)
+      console.log('current week', moment().isoWeek())
+
+      /*var weeks = []
+      var start = 1
+      var end = 7 - currentFirstDate.getDay()
+      while(start <= numDays){
+        weeks.push({ start: start,end: end })
+        start = end + 1
+        end = end + 7
+        if(end > numDays) end = numDays
+      }
+
+      // aw
+      let weekData = []
+      // weeks in a months
+      for (let i=0; i<weeks.length; i++) {
+        // extract days
+        weekData.push([])
+        for (let j=weeks[i].start; j<=weeks[i].end; j++) {
+          // console.log(j)
+          // data from DB
+          let dd = transactionData
+                    .reduce((acc, data) => {
+                      if (data.paymentdate != j) return acc
+                      return acc + parseFloat(data.amount)
+                    }, 0)
+          weekData[i].push(dd) 
+          // aww
+        }
+      }*/
+
+      // iso week starts on Monday
+      /*console.log('total weeks in a year', moment('2019-12-29').isoWeeks())
+      console.log('last day of the year is', moment().endOf('year').format('YYYY-MM-DD'))
+      console.log(currentMonth)
+      console.log(weekData)
+      console.log(currentTransactionJson.data)*/
+
+      // this part is too redundant, modify this
+      // report should be filtered inside the API though, not in front-end
+      /*let weeklyData = []
+      let weekIndex = []
+      for (let i=0; i<weeks.length; i++) {
+        weekIndex.push('Week ' + (i + 1)) // this will output the week
+        let aw = weekData[i].reduce((a, v) => a + v, 0)
+        weeklyData.push(aw)
+      }*/
 
     }
   }
