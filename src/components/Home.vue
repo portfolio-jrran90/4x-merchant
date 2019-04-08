@@ -22,7 +22,7 @@
                     <h5 class="mb-0">Weekly Sales Growth</h5>
                   </div>
                   <div class="card-body" style="font-size: 1.5em">
-                    23%
+                    {{ weeklySalesGrowth }}%
                   </div>
                 </div>
                 <div class="card">
@@ -40,7 +40,7 @@
       </div>
     </div>
 
-    <!-- <div class="row mb-4">
+    <div class="row mb-4">
       <div class="col">
         <h2>Settlement Report</h2>
         <div class="card">
@@ -60,7 +60,7 @@
           </div>
         </div>
       </div>
-    </div> -->
+    </div>
 
     <div class="row">
       <div class="col">
@@ -137,6 +137,13 @@ export default {
     async getSalesReport(merchId) {
       let vm = this
 
+      // Status
+      // ========================
+      // 0 = pending
+      // 1 = on-going
+      // 2 = confirm
+      // 3 = because dispute mean the item was returned from the user
+
       vm.lineChartSalesLoaded = false
       try {
         // Note: Month always start on index 0
@@ -161,8 +168,8 @@ export default {
         let md5Encrypt = md5(merchId + '4XEMPAT!')
 
         // get transactions
-        // let transactionJson = await axios.get(`http://sandbox.empatkali.co.id/transaksi.php?id=${merchId}&d=${startDate}&k=${endDate}&m=${md5Encrypt}`, {
-        let transactionJson = await axios.get(`http://sandbox.empatkali.co.id/transaksi.php?id=5c63b4b88b904e1c13672183&d=2019-02-01&k=2019-02-31&m=${md5Encrypt}`, {
+        let transactionJson = await axios.get(`http://sandbox.empatkali.co.id/transaksi.php?id=${merchId}&d=${startDate}&k=${endDate}&m=${md5Encrypt}`, {
+        // let transactionJson = await axios.get(`http://sandbox.empatkali.co.id/transaksi.php?id=5c63b4b88b904e1c13672183&d=2019-02-01&k=2019-02-31&m=${md5Encrypt}`, {
           headers: {
             'Authorization': process.env.VUE_APP_AUTHORIZATION,
             'x-access-token': localStorage.getItem('auth_token'),
@@ -173,10 +180,13 @@ export default {
         // sort the result from ascending
         let transactionData = transactionJson.data.map(val => {
           return {
+            status: val.status,
             paymentdate: new Date(val.paymentdate).getDate(),
             amount: val.jumlah
           }
         })
+
+        // console.log(transactionData)
 
         let weekData = []
         // weeks in a months
@@ -263,12 +273,15 @@ export default {
     async getSettlementReport(merchId) {
       let vm = this
 
+      // Status
+      // ========================
+      // 0 = pending
+      // 1 = on-going
+      // 2 = confirm
+      // 3 = because dispute mean the item was returned from the user
+
       vm.lineChartSettlementReportLoaded = false
       try {
-        // get md5
-        // Note: ya need to install md5 plugin for this
-        // let generatedMd5 = 
-
         // Note: Month always start on index 0
         // Get all weeks in a month
         let now = new Date()
@@ -277,21 +290,22 @@ export default {
             lastDate = new Date( now.getFullYear(), now.getMonth()+1, 0 ),
             numDays = lastDate.getDate()
 
-        var start = 1;
-        var end = 7 - firstDate.getDay();
+        var start = 1
+        var end = 7 - firstDate.getDay()
         while(start <= numDays){
-           weeks.push({ start: start,end: end });
-           start = end + 1;
-           end = end + 7;
-           if(end > numDays) end = numDays
+          weeks.push({ start: start,end: end })
+          start = end + 1
+          end = end + 7
+          if(end > numDays) end = numDays
         }
-
 
         let startDate = `${firstDate.getFullYear()}-${firstDate.getMonth()+1}-${firstDate.getDate()}`
         let endDate = `${lastDate.getFullYear()}-${lastDate.getMonth()+1}-${lastDate.getDate()}`
+        let md5Encrypt = md5(merchId + '4XEMPAT!')
 
         // get transactions
-        let transactionJson = await axios.get(`http://sandbox.empatkali.co.id/transaksi.php?id=${merchId}&d=${startDate}&k=${endDate}&m=c00bdb56c3e31c0761a91b4fc79fa530`, {
+        let transactionJson = await axios.get(`http://sandbox.empatkali.co.id/transaksi.php?id=${merchId}&d=${startDate}&k=${endDate}&m=${md5Encrypt}`, {
+        // let transactionJson = await axios.get(`http://sandbox.empatkali.co.id/transaksi.php?id=5c63b4b88b904e1c13672183&d=2019-02-01&k=2019-02-31&m=${md5Encrypt}`, {
           headers: {
             'Authorization': process.env.VUE_APP_AUTHORIZATION,
             'x-access-token': localStorage.getItem('auth_token'),
@@ -299,42 +313,32 @@ export default {
           }
         })
 
-        // console.log(transactionJson.data)
-
-        // 1. compare date from the DB and then get the day to insert to its appropriate week
-        // 2. if the date is in between the 
-
         // sort the result from ascending
         let transactionData = transactionJson.data.map(val => {
           return {
+            status: val.status,
             paymentdate: new Date(val.paymentdate).getDate(),
-            amount: val.jumlah,
-            status: val.status
+            amount: val.jumlah
           }
         })
-        // console.log(transactionData)
-        // console.log('---')
-        // 
+
+        console.log(transactionData)
+
         let weekData = []
         // weeks in a months
         for (let i=0; i<weeks.length; i++) {
-          // console.log('---')
           // extract days
           weekData.push([])
           for (let j=weeks[i].start; j<=weeks[i].end; j++) {
             // data from DB
             let dd = transactionData
-                      // .filter(el => el.paymentdate == j)
                       .reduce((acc, data) => {
                         if (data.paymentdate != j) return acc
                         return acc + parseFloat(data.amount)
                       }, 0)
-            // console.log('dd', dd)
-            // before xa i.push, filter the result already
             weekData[i].push(dd) 
           }
         }
-        // console.log(weekData)
 
         // this part is too redundant, modify this
         // report should be filtered inside the API though, not in front-end
@@ -345,14 +349,21 @@ export default {
           let aw = weekData[i].reduce((a, v) => a + v, 0)
           weeklyData.push(aw)
         }
-        // console.log(weeklyData)
 
         vm.lineChartSettlementReportData = {
           labels: weekIndex,
           datasets: [{
-            label: '',
+            label: 'confirmed',
+            backgroundColor: 'green',
+            borderColor: 'green',
+            data: weeklyData,
+            fill: false,
+          },
+          {
+            label: 'disputed',
             backgroundColor: 'red',
             borderColor: 'red',
+            // data: [100000,2100000,3100000,4100000,5100000],
             data: weeklyData,
             fill: false,
           }]
@@ -362,7 +373,7 @@ export default {
           maintainAspectRatio: false,
           title: {
             display: true,
-            text: 'For the month of March'
+            text: 'For the month of ' + vm.getCurrentMonthName()
           },
           tooltips: {
             mode: 'index',
@@ -408,10 +419,10 @@ export default {
       let vm = this
       let md5Encrypt = md5(merchId + '4XEMPAT!')
 
-      // let now = new Date()
+      let now = new Date()
       
       // test
-      let now = new Date(2019, 2, 1)
+      // let now = new Date(2019, 2, 1)
 
       // current date range
       var currentFirstDate = new Date( now.getFullYear(), now.getMonth(), 1 ),
@@ -429,13 +440,15 @@ export default {
       let previousStartDate = `${previousFirstDate.getFullYear()}-${previousFirstDate.getMonth()+1}-${previousFirstDate.getDate()}`
       let previousEndDate = `${previousLastDate.getFullYear()}-${previousLastDate.getMonth()+1}-${previousLastDate.getDate()}`
 
-      console.log('start', currentStartDate)
+      /*console.log('start', currentStartDate)
       console.log('end', currentEndDate)
 
       console.log('====')
 
       console.log('start', previousStartDate)
-      console.log('end', previousEndDate)
+      console.log('end', previousEndDate)*/
+
+      // Note: create a function for this for simplification
 
       // get the total transactions for the current month
       let currentTransactionJson = await axios.get(`http://sandbox.empatkali.co.id/transaksi.php?id=${merchId}&d=${currentStartDate}&k=${currentEndDate}&m=${md5Encrypt}`, {
@@ -456,71 +469,59 @@ export default {
           'Access-Control-Allow-Origin': '*'
         }
       })
-      let previousMonth = previousTransactionJson.data
-                      .map(val => parseFloat(val.jumlah))
-                      .reduce((a,v) => a + v, 0)
+      let previousMonth = previousTransactionJson.data.map(val => parseFloat(val.jumlah)).reduce((a,v) => a + v, 0)
 
       // calculate the monthly growth sales
       vm.monthlySalesGrowth = ( ((currentMonth - previousMonth) / previousMonth) * 100 ).toFixed(2)
 
-
-
-      // test
-      // 
-      // Note:
-      // - Should get all week and compare, regardless of the month
-      // - just use momentjs
-
-      let numDays = currentLastDate.getDate()
-      console.log(numDays)
-      console.log('current week', moment().isoWeek())
-
-      /*var weeks = []
-      var start = 1
-      var end = 7 - currentFirstDate.getDay()
-      while(start <= numDays){
-        weeks.push({ start: start,end: end })
-        start = end + 1
-        end = end + 7
-        if(end > numDays) end = numDays
+    
+      // Get week
+      let getDaysInAWeekRange = {
+        current: {
+          /*s: moment().day('Monday').isoWeek( 9 ).format('YYYY-MM-DD'),
+          e: moment().day('Sunday').isoWeek( 9 ).format('YYYY-MM-DD'),*/
+          s: moment().day('Monday').isoWeek( moment().isoWeek() ).format('YYYY-MM-DD'),
+          e: moment().day('Sunday').isoWeek( moment().isoWeek() ).format('YYYY-MM-DD'),
+        },
+        previous: {
+          /*s: moment().day('Monday').isoWeek( 8 ).format('YYYY-MM-DD'),
+          e: moment().day('Sunday').isoWeek( 8 ).format('YYYY-MM-DD')*/
+          s: moment().day('Monday').isoWeek( moment().isoWeek() - 1 ).format('YYYY-MM-DD'),
+          e: moment().day('Sunday').isoWeek( moment().isoWeek() - 1 ).format('YYYY-MM-DD')
+        }
       }
 
-      // aw
-      let weekData = []
-      // weeks in a months
-      for (let i=0; i<weeks.length; i++) {
-        // extract days
-        weekData.push([])
-        for (let j=weeks[i].start; j<=weeks[i].end; j++) {
-          // console.log(j)
-          // data from DB
-          let dd = transactionData
-                    .reduce((acc, data) => {
-                      if (data.paymentdate != j) return acc
-                      return acc + parseFloat(data.amount)
-                    }, 0)
-          weekData[i].push(dd) 
-          // aww
+      /*console.log('current', getDaysInAWeekRange.current)
+      console.log('=======')
+      console.log('previous', getDaysInAWeekRange.previous)*/
+
+      // current week
+      let currentWeekTransactionJson = await axios.get(`http://sandbox.empatkali.co.id/transaksi.php?id=${merchId}&d=${getDaysInAWeekRange.current.s}&k=${getDaysInAWeekRange.current.e}&m=${md5Encrypt}`, {
+        headers: {
+          'Authorization': process.env.VUE_APP_AUTHORIZATION,
+          'x-access-token': localStorage.getItem('auth_token'),
+          'Access-Control-Allow-Origin': '*'
         }
-      }*/
+      })
+      let currentWeek = currentWeekTransactionJson.data.map(val => parseFloat(val.jumlah)).reduce((a,v) => a + v, 0)
 
-      // iso week starts on Monday
-      /*console.log('total weeks in a year', moment('2019-12-29').isoWeeks())
-      console.log('last day of the year is', moment().endOf('year').format('YYYY-MM-DD'))
-      console.log(currentMonth)
-      console.log(weekData)
-      console.log(currentTransactionJson.data)*/
+      // previous week
+      let previousWeekTransactionJson = await axios.get(`http://sandbox.empatkali.co.id/transaksi.php?id=${merchId}&d=${getDaysInAWeekRange.previous.s}&k=${getDaysInAWeekRange.previous.e}&m=${md5Encrypt}`, {
+        headers: {
+          'Authorization': process.env.VUE_APP_AUTHORIZATION,
+          'x-access-token': localStorage.getItem('auth_token'),
+          'Access-Control-Allow-Origin': '*'
+        }
+      })
+      let previousWeek = previousWeekTransactionJson.data.map(val => parseFloat(val.jumlah)).reduce((a,v) => a + v, 0)
 
-      // this part is too redundant, modify this
-      // report should be filtered inside the API though, not in front-end
-      /*let weeklyData = []
-      let weekIndex = []
-      for (let i=0; i<weeks.length; i++) {
-        weekIndex.push('Week ' + (i + 1)) // this will output the week
-        let aw = weekData[i].reduce((a, v) => a + v, 0)
-        weeklyData.push(aw)
-      }*/
+      /*console.log('current', currentWeekTransactionJson.data)
+      console.log('previous', previousWeekTransactionJson.data)
+      console.log(currentWeek + ' - ' + previousWeek)*/
 
+      // calculate the monthly growth sales
+      // vm.weeklySalesGrowth = ( ((currentWeek - previousWeek) / previousWeek) * 100 ).toFixed(2)
+      vm.weeklySalesGrowth = (previousWeek!=0) ? (((currentWeek - previousWeek) / previousWeek) * 100) : (previousWeek/1).toFixed(2)
     }
   }
 }
