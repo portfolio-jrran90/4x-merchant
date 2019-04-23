@@ -5,12 +5,10 @@
         :to="{ name: 'dashboard' }"
         class="navbar-brand col-sm-3 col-md-2 mr-0"
       >Empatkali Merchant</router-link>
-      <input
-        class="form-control form-control-dark w-100"
-        type="text"
-        placeholder="Search"
-        aria-label="Search"
-      >
+
+      <span class="w-100 pl-3" style="color: #fff">
+        Welcome {{ authDetail.name }}
+      </span>
       <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
           <a href="#" class="nav-link" @click.prevent="logout()">
@@ -35,16 +33,6 @@
                   <font-awesome-icon icon="chart-pie"/> Sales Report
                 </router-link>
               </li>
-              <!-- <li class="nav-item">
-                <router-link :to="{ name: 'sales-reports' }" class="nav-link">
-                  <font-awesome-icon icon="chart-pie"/>Sales Report
-                </router-link>
-              </li>
-              <li class="nav-item">
-                <router-link :to="{ name: 'promotions' }" class="nav-link">
-                  <font-awesome-icon icon="bullhorn" /> Promotion
-                </router-link>
-              </li>-->
               <li class="nav-item">
                 <router-link :to="{ name: 'inbox' }" class="nav-link">
                   <font-awesome-icon icon="envelope"/> Inbox
@@ -69,58 +57,6 @@
                   </li>
                 </ul>
               </li>
-              <!-- <li class="nav-item">
-                <router-link :to="{ name: 'stores' }" class="nav-link">
-                  <font-awesome-icon icon="store" /> Store
-                </router-link>
-              </li>-->
-              <!-- <li class="nav-item">
-                <router-link :to="{ name: 'orders' }" class="nav-link">
-                  <font-awesome-icon icon="shopping-cart" /> Orders
-                </router-link>
-              </li>
-              <li class="nav-item">
-                <router-link :to="{ name: 'products' }" class="nav-link">
-                  <font-awesome-icon icon="shopping-bag" /> Products
-                </router-link>
-              </li>-->
-              <!-- <li class="nav-item">
-                <router-link :to="{ name: 'promotions' }" class="nav-link">
-                  <font-awesome-icon icon="bullhorn" /> Promosi
-                </router-link>
-              </li>
-              <li class="nav-item">
-                <router-link :to="{ name: 'customers' }" class="nav-link">
-                  <font-awesome-icon icon="users" /> Pelanggan
-                </router-link>
-              </li>-->
-              <!-- <li class="nav-item">
-                <router-link :to="{ name: 'addStore' }" class="nav-link">
-                  <font-awesome-icon icon="plus" /> Add User
-                </router-link>
-              </li>-->
-              <!-- <li class="nav-item">
-                <router-link :to="{ name: 'analytics' }" class="nav-link">
-                  <font-awesome-icon icon="chart-pie" /> Analytics
-                </router-link>
-                <ul class="list-unstyled submenu" style="margin-left: 40px" v-if="$router.currentRoute.name=='analytics-dashboards' || $router.currentRoute.name=='analytics-reports' || $router.currentRoute.name=='analytics-live-views'">
-                  <router-link :to="{ name: 'analytics-dashboards' }" tag="li">
-                    <a href="">Dashboards</a>
-                  </router-link>
-                  <router-link :to="{ name: 'analytics-reports' }" tag="li">
-                    <a href="">Reports</a>
-                  </router-link>
-                  <router-link :to="{ name: 'analytics-live-views' }" tag="li">
-                    <a href="">Live Views</a>
-                  </router-link>
-                </ul>
-              </li>-->
-              <!-- <li class="nav-item">
-                <router-link :to="{ name: 'discounts' }" class="nav-link">
-                  <span data-feather="dollar-sign"></span>
-                  Discounts
-                </router-link>
-              </li>-->
             </ul>
           </div>
         </nav>
@@ -134,18 +70,32 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
+  data() {
+    return {
+      requestHeaders: {
+        headers: {
+          Authorization: process.env.VUE_APP_AUTHORIZATION,
+          'x-access-token': localStorage.getItem('auth_token')
+        }
+      },
+      authDetail: {}
+    }
+  },
+  created() {
+    this.getAuthDetail()
+  },
   methods: {
+    getAuthDetail() {
+      let vm = this
+      axios
+        .get(`${process.env.VUE_APP_API_URL}/api/merchants/detail`, vm.requestHeaders)
+        .then(res => vm.authDetail = res.data)
+    },
     logout() {
       this.$auth.logout({
-        // makeRequest: true,
-        success() {
-          // console.log(res.data)
-          console.log("success");
-        },
-        error() {
-          console.log("error");
-        },
         redirect: "/login"
       });
     }
@@ -239,8 +189,8 @@ body {
 }
 
 /*
-   * Navbar
-   */
+ * Navbar
+ */
 .navbar-brand {
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
@@ -265,4 +215,5 @@ body {
   border-color: transparent;
   box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.25);
 }
+
 </style>

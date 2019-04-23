@@ -21,6 +21,7 @@
             class="form-control"
             aria-label="Text input with dropdown button"
             placeholder="Search an outlet"
+            autocomplete="off"
           >
         </div>
       </div>

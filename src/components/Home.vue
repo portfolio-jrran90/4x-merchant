@@ -322,8 +322,6 @@ export default {
           }
         })
 
-        console.log(transactionData)
-
         let weekData = []
         // weeks in a months
         for (let i=0; i<weeks.length; i++) {
