@@ -1,7 +1,7 @@
 <template>
   <div class="py-4">
     <h2>
-      <font-awesome-icon icon="chart-pie"/>Sales Reports
+      <font-awesome-icon icon="chart-pie"/> Sales Report
     </h2>
     <div class="card">
       <div class="card-header">

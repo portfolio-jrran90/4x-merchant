@@ -65,7 +65,7 @@
                     <router-link :to="{ name: 'bank-account-setting' }">Bank Account</router-link>
                   </li>
                   <li>
-                    <router-link :to="{ name: 'add-user-store-setting' }">Add User Store</router-link>
+                    <router-link :to="{ name: 'add-user-store-setting' }">Store List</router-link>
                   </li>
                 </ul>
               </li>

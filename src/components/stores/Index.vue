@@ -3,7 +3,7 @@
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="#">Merchant Settings</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Add User Store</li>
+        <li class="breadcrumb-item active" aria-current="page">Store List</li>
       </ol>
     </nav>
     <h2>
@@ -20,12 +20,11 @@
             type="text"
             class="form-control"
             aria-label="Text input with dropdown button"
-            placeholder="Search an outlet merchant"
+            placeholder="Search an outlet"
           >
         </div>
       </div>
       <div class="card-body">
-
         <div class="row">
           <div class="col-md-3">
             <div class="text-right">
@@ -255,7 +254,7 @@ export default {
     // get geolocation
     vm.geolocation()
 
-    axios.get(`${process.env.VUE_APP_API_URL}/api/stores?limit=100&skip=0`, {
+    axios.get(`${process.env.VUE_APP_API_URL}/api/stores?limit=100&skip=0&active=1`, {
       headers: {
         'Authorization': process.env.VUE_APP_AUTHORIZATION,
         'x-access-token': localStorage.getItem('auth_token')
