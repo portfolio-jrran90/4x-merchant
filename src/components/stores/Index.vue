@@ -41,11 +41,15 @@
               </thead>
               <tbody>
                 <tr v-for="(data, index) in outletMerchants" :class="{ 'table-active': selectedStore === data._id }">
-                  <td>{{ data.name }}</td>
-                  <td class="text-center">
-                    <a href="#" @click.prevent="showStoreDetails(data._id)">
-                      <font-awesome-icon icon="search" />
-                    </a>
+                  <td @click="showStoreDetails(data._id)" style="cursor: pointer">
+                    {{ data.name }}
+
+                    <span class="float-right text-success" v-if="data.active==true">
+                      <font-awesome-icon icon="check-circle" />
+                    </span>
+                    <span class="float-right text-danger" v-if="data.active==false">
+                      <font-awesome-icon icon="times-circle" />
+                    </span>
                   </td>
                 </tr>
                 <tr v-if="Object.keys(outletMerchants).length==0">
@@ -94,10 +98,29 @@
                           <td class="table-secondary">
                             <font-awesome-icon icon="calendar-check" />
                           </td>
-                          <td class="table-light">{{ storeDetails.createdAt || '---' }}</td>
+                          <td class="table-light">{{ new Date(storeDetails.createdAt) | date }}</td>
+                        </tr>
+                        <tr>
+                          <td class="table-secondary">
+                            <font-awesome-icon icon="check-circle" />
+                          </td>
+                          <td class="table-light">
+                            <span :class="{'text-success': storeDetails.active===true, 'text-danger': storeDetails.active===false}">
+                              {{ (storeDetails.active===true)? 'Active':'Inactive' }}
+                            </span>
+                          </td>
                         </tr>
                       </tbody>
-                    </table>                    
+                    </table>
+                    
+                    <button class="btn btn-block"
+                      :class="{
+                        'btn-success': storeDetails.active===false,
+                        'btn-danger': storeDetails.active===true
+                      }"
+                      @click="setStoreStatus(storeDetails)">
+                      Set to {{ (storeDetails.active===true)?'INACTIVE':'ACTIVE' }}
+                    </button>
                   </div>
                 </div>
 
@@ -236,6 +259,12 @@ import axios from "axios";
 export default {
   data() {
     return {
+      requestHeaders: {
+        headers: {
+          Authorization: process.env.VUE_APP_AUTHORIZATION,
+          'x-access-token': localStorage.getItem('auth_token')
+        }
+      },
       modalShowAddOutletMerchant: false,
       dataInputOutletMerchant: {},
       outletMerchants: {},
@@ -255,7 +284,7 @@ export default {
     // get geolocation
     vm.geolocation()
 
-    axios.get(`${process.env.VUE_APP_API_URL}/api/stores?limit=100&skip=0&active=1`, {
+    axios.get(`${process.env.VUE_APP_API_URL}/api/stores?limit=100&skip=0`, {
       headers: {
         'Authorization': process.env.VUE_APP_AUTHORIZATION,
         'x-access-token': localStorage.getItem('auth_token')
@@ -357,10 +386,20 @@ export default {
     },
 
     /**
+     * Show list of stores
+     */
+    showStores() {
+      let vm = this
+      axios
+        .get(`${process.env.VUE_APP_API_URL}/api/stores?limit=100&skip=0`, vm.requestHeaders)
+        .then(res => vm.outletMerchants = res.data)
+    },
+
+    /**
      * Display store details
      * 
      * @param  ObjectId storeId
-     */
+    */ 
     showStoreDetails(storeId) {
       let vm = this
 
@@ -373,6 +412,28 @@ export default {
         vm.storeDetails = res.data
         vm.selectedStore = storeId
       })
+    },
+
+    /**
+     * Set store status
+     * 
+     * @param Object storeObj
+     */
+    setStoreStatus(storeObj) {
+      let vm = this
+
+      let bodyInput = {
+        store: storeObj._id,
+        status: (storeObj.active==true)?0:1
+      }
+
+      axios
+        .post(`${process.env.VUE_APP_API_URL}/api/stores/status`, bodyInput, vm.requestHeaders)
+        .then(res => {
+          alert(res.data.message)
+          vm.showStoreDetails(storeObj._id)
+          vm.showStores()
+        })
     }
   }
 };
