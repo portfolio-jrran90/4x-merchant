@@ -33,7 +33,8 @@ import {
   faCalendarCheck,
   faCheckCircle,
   faTimesCircle,
-  faInfo
+  faInfo,
+  faEdit
   // faTools
   // faCashRegister
 } from '@fortawesome/free-solid-svg-icons';
@@ -61,7 +62,8 @@ library.add(
   faCalendarCheck,
   faCheckCircle,
   faTimesCircle,
-  faInfo
+  faInfo,
+  faEdit
   // faTools
   // faCashRegister
 );
@@ -104,8 +106,10 @@ import './filters/index'
 Vue.axios.defaults.baseURL = process.env.VUE_APP_API_URL
 
 // Bootstrap
-import 'bootstrap/dist/css/bootstrap.css';
+// import 'bootstrap/scss/bootstrap.scss';
+import './assets/styles.scss'
 import 'bootstrap-vue/dist/bootstrap-vue.css';
+
 
 // Route components
 import Login from './components/Login.vue';
@@ -117,12 +121,12 @@ import OrdersAll from './components/orders/Index.vue';
 import OrdersDraft from './components/orders/Draft.vue';
 import OrdersAbandonedCheckouts from './components/orders/OrdersAbandonedCheckouts.vue';
 // Products
-import Products from './components/products/__Main.vue';
+/*import Products from './components/products/__Main.vue';
 import ProductsAll from './components/products/Index.vue';
 import ProductShow from './components/products/Show.vue';
 import ProductsTransfers from './components/products/Transfers.vue';
 import ProductsInventory from './components/products/Inventory.vue';
-import ProductsCollections from './components/products/Collections.vue';
+import ProductsCollections from './components/products/Collections.vue';*/
 // Transactions
 import Transactions from './components/transactions/Index.vue';
 // Promos
@@ -153,19 +157,19 @@ import shopPromo2 from './components/mobile/shopPromo2.vue';
 import Tomkins from './components/mobile/Tomkins.vue';
 
 // Store
-// import Store from './components/stores/Index.vue';
+import Store from './components/stores/Index.vue';
 
 // Add User Store Merchant
 import AddStore from './components/addStore/Index.vue';
 
 // Settings
-import AccountSetting from './components/settings/__Main.vue'
+/*import AccountSetting from './components/settings/__Main.vue'
 import AccountSettingIndex from './components/settings/Index.vue'
 import AccountSettingUser from './components/settings/User.vue'
 import AccountSettingAccount from './components/settings/Account.vue'
 import AccountSettingBankAccount from './components/settings/BankAccount.vue'
 import Store from './components/stores/Index.vue' // re-organize
-import AccountSettingMidtrans from './components/settings/Midtrans.vue'
+import AccountSettingMidtrans from './components/settings/Midtrans.vue'*/
 
 // Activate Merchant
 import ActivateMerchant from './components/ActivateMerchant.vue'
@@ -175,6 +179,9 @@ import SalesReport from './components/sales-reports/Index.vue'
 
 // Inbox
 import InboxIndex from './components/inbox/Index.vue'
+
+// Account Settings
+import AccountSetting from './components/account/Index.vue'
 
 const routes = [
   { path: '*', redirect: '/login' },
@@ -268,19 +275,19 @@ const routes = [
         ],
       },
       // Products
-      {
+      /*{
         path: '/products',
         component: Products,
         name: 'products',
         redirect: '/products/',
         children: [
-          { path: '/', component: ProductsAll, name: 'products-all' },
+          { path: '/', component: ProductsAll, name: 'products-all' },*/
           /*{ path: ':productId', component: ProductShow, name: 'product-show' },
 					{ path: 'transfers', component: ProductsTransfers, name: 'products-transfers' },
 					{ path: 'inventory', component: ProductsInventory, name: 'products-inventory' },
 					{ path: 'collections', component: ProductsCollections, name: 'products-collections' },*/
-        ],
-      },
+      //   ],
+      // },
       // Transactions
       {
         path: '/transactions',
@@ -356,7 +363,7 @@ const routes = [
       },
       
       // Store Settings
-      {
+      /*{
         path: '/settings',
         component: AccountSetting,
         name: 'settings',
@@ -369,7 +376,7 @@ const routes = [
           { path: 'bank-account', component: AccountSettingBankAccount, name: 'bank-account-setting' },
           { path: 'add-user-store', component: Store, name: 'add-user-store-setting' },
         ]
-      },
+      },*/
 
       // Sales Reports
       {
@@ -383,6 +390,13 @@ const routes = [
         path: '/inbox',
         component: InboxIndex,
         name: 'inbox',
+      },
+
+      // Settings
+      {
+        path: '/account',
+        component: AccountSetting,
+        name: 'account-settings'
       },
 
     ],

@@ -39,6 +39,16 @@
                 </router-link>
               </li>
               <li class="nav-item">
+                <router-link :to="{ name: 'inbox' }" class="nav-link">
+                  <font-awesome-icon icon="envelope"/> Stores
+                </router-link>
+              </li>
+              <li class="nav-item">
+                <router-link :to="{ name: 'account-settings' }" class="nav-link">
+                  <font-awesome-icon icon="cog"/> Account Settings
+                </router-link>
+              </li>
+              <!-- <li class="nav-item">
                 <router-link :to="{ name: 'settings' }" class="nav-link">
                   <font-awesome-icon icon="cog"/> Merchant Settings
                 </router-link>
@@ -56,7 +66,7 @@
                     <router-link :to="{ name: 'add-user-store-setting' }">Store List</router-link>
                   </li>
                 </ul>
-              </li>
+              </li> -->
             </ul>
           </div>
         </nav>
