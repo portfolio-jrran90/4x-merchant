@@ -32,7 +32,8 @@ import {
   faEnvelope,
   faCalendarCheck,
   faCheckCircle,
-  faTimesCircle
+  faTimesCircle,
+  faInfo
   // faTools
   // faCashRegister
 } from '@fortawesome/free-solid-svg-icons';
@@ -59,7 +60,8 @@ library.add(
   faEnvelope,
   faCalendarCheck,
   faCheckCircle,
-  faTimesCircle
+  faTimesCircle,
+  faInfo
   // faTools
   // faCashRegister
 );
