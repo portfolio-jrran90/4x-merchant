@@ -101,7 +101,7 @@ Vue.use(VueSweetalert2)
 // Filters
 import './filters/index'
 
-// Vue.axios.defaults.baseURL = process.env.VUE_APP_BASE_URL
+Vue.axios.defaults.baseURL = process.env.VUE_APP_API_URL
 
 // Bootstrap
 import 'bootstrap/dist/css/bootstrap.css';
@@ -415,11 +415,11 @@ Vue.use(require('@websanova/vue-auth'), {
   http: require('@websanova/vue-auth/drivers/http/axios.1.x.js'),
   router: require('@websanova/vue-auth/drivers/router/vue-router.2.x.js'),
   loginData: {
-    url: `${process.env.VUE_APP_API_URL}/api/merchants/login`,
+    url: `/api/merchants/login`,
     method: 'POST',
     redirect: '/login',
   },
-  authRedirect: { path: `${process.env.VUE_APP_API_URL}/api/merchants/login` },
+  authRedirect: { path: `/api/merchants/login` },
   tokenDefaultName: 'auth_token',
   refreshData: { enabled: false },
   fetchData: { enabled: false }

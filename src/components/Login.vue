@@ -6,7 +6,7 @@
           <div class="card">
             <h5 class="card-header text-center">
               <img src="https://empatkali.co.id/assets/img/logo-final.png" alt="empatkali logo" style="width: 50px" class="mb-2">
-              <br>Login
+              <br>Merchant Login
             </h5>
             <div class="card-body">
               <form @submit.prevent="login()">
@@ -48,9 +48,6 @@
 
 <script>
 export default {
-  mounted() {
-    console.log("redirect", this.$auth.redirect());
-  },
   data() {
     return {
       context: "login context",
@@ -68,8 +65,6 @@ export default {
   methods: {
     login() {
       let vm = this;
-      let redirect = vm.$auth.redirect();
-
       vm.$auth
         .login({
           data: vm.data.body, // Axios
@@ -82,11 +77,7 @@ export default {
           }
         })
         .then(
-          res => {
-            console.log(res);
-            // alert('logging in..')
-            // should add some effects for logging in
-          },
+          res => {},
           err => {
             alert("Invalid Email/Password!");
           }
