@@ -9,22 +9,6 @@
     <h2>
     </h2>
     <div class="card">
-      <div class="card-header">
-        <div class="input-group mb-0">
-          <div class="input-group-prepend">
-            <span class="input-group-text">
-              <font-awesome-icon icon="search"/>
-            </span>
-          </div>
-          <input
-            type="text"
-            class="form-control"
-            aria-label="Text input with dropdown button"
-            placeholder="Search an outlet"
-            autocomplete="off"
-          >
-        </div>
-      </div>
       <div class="card-body">
         <div class="row">
           <div class="col-md-3">
@@ -43,7 +27,6 @@
                 <tr v-for="(data, index) in outletMerchants" :class="{ 'table-active': selectedStore === data._id }">
                   <td @click="showStoreDetails(data._id)" style="cursor: pointer">
                     {{ data.name }}
-
                     <span class="float-right text-success" v-if="data.active==true">
                       <font-awesome-icon icon="check-circle" />
                     </span>
@@ -224,6 +207,15 @@
                   v-model="dataInputOutletMerchant.password"
                   v-validate="'required'"
                 >
+                <b-popover target="inputPassword" triggers="hover focus">
+                  <template slot="title">Password criterias</template>
+                  <ul class="mb-0">
+                    <li>At least 10 characters long</li>
+                    <li>Must contain at least one (1) lowercase letter</li>
+                    <li>Must contain at least one (1) upppercase letter</li>
+                    <li>Must contain at least one (1) special character</li>
+                  </ul>
+                </b-popover>
                 <span class="invalid-feedback">{{ errors.first('password') }}</span>
               </div>
             </div>
@@ -250,11 +242,7 @@
 </template>
 
 <script>
-// Note:
-// - sweet alert
-// - axios custom error handler
-
-import axios from "axios";
+import axios from 'axios'
 
 export default {
   data() {
@@ -325,45 +313,42 @@ export default {
       })
 
       vm.$validator.validate().then(result => {
-        if (!result) {
-          alert("Please fix following error(s)!");
-        } else {
-          axios
-            .post(
-              `${process.env.VUE_APP_API_URL}/api/stores`,
-              vm.dataInputOutletMerchant,
-              {
-                headers: {
-                  'Authorization': process.env.VUE_APP_AUTHORIZATION,
-                  'Content-Type': 'application/json',
-                  'x-access-token': localStorage.getItem('auth_token')
-                }
+        if (!result) return
+        axios
+          .post(
+            `${process.env.VUE_APP_API_URL}/api/stores`,
+            vm.dataInputOutletMerchant,
+            {
+              headers: {
+                'Authorization': process.env.VUE_APP_AUTHORIZATION,
+                'Content-Type': 'application/json',
+                'x-access-token': localStorage.getItem('auth_token')
               }
-            )
-            .then(res => {
-              axios.get(`${process.env.VUE_APP_API_URL}/api/stores?limit=100&skip=0`, {
-                headers: {
-                  'Authorization': process.env.VUE_APP_AUTHORIZATION,
-                  'x-access-token': localStorage.getItem('auth_token')
-                }
-              }).then(res2 => {
-                vm.outletMerchants = res2.data
-                alert("Outlet merchant successfully added!");
-                vm.modalShowAddOutletMerchant = false
-              })
+            }
+          )
+          .then(res => {
+            axios.get(`${process.env.VUE_APP_API_URL}/api/stores?limit=100&skip=0`, {
+              headers: {
+                'Authorization': process.env.VUE_APP_AUTHORIZATION,
+                'x-access-token': localStorage.getItem('auth_token')
+              }
+            }).then(res2 => {
+              vm.outletMerchants = res2.data
+              alert("Outlet merchant successfully added!");
+              vm.modalShowAddOutletMerchant = false
             })
-            .catch(err => {
-              if (err.response) {
-                alert(err.response.data.message)
-                console.log(err.response.data.message)
-              } else if (err.request) {
-                console.log(err.request)
-              } else {
-                console.log('Error', err.message)
-              }
-              console.log(err.config)
-            });
-        }
+          })
+          .catch(err => {
+            if (err.response) {
+              alert(err.response.data.message)
+              console.log(err.response.data.message)
+            } else if (err.request) {
+              console.log(err.request)
+            } else {
+              console.log('Error', err.message)
+            }
+            console.log(err.config)
+          });
       });
     },
     /**
