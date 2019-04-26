@@ -1,12 +1,7 @@
 <template>
-  <div>
-    <nav aria-label="breadcrumb">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="#">Merchant Settings</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Store List</li>
-      </ol>
-    </nav>
-    <h2>
+  <div class="py-4">
+    <h2 class="mb-3">
+      <font-awesome-icon icon="store"/> Stores
     </h2>
     <div class="card">
       <div class="card-body">

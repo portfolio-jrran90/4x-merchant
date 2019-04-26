@@ -3,8 +3,8 @@
     <h2 class="mb-3">
       <font-awesome-icon icon="cog"/> Account Settings
     </h2>
-	  <b-card no-body>
-	    <b-tabs pills card vertical nav-wrapper-class="w-25">
+		<b-card no-body>
+			<b-tabs pills card vertical nav-wrapper-class="w-25">
 
 	      <b-tab title="Merchant Profile" active>
 	      	<div class="row">

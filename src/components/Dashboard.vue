@@ -39,8 +39,8 @@
                 </router-link>
               </li>
               <li class="nav-item">
-                <router-link :to="{ name: 'inbox' }" class="nav-link">
-                  <font-awesome-icon icon="envelope"/> Stores
+                <router-link :to="{ name: 'stores' }" class="nav-link">
+                  <font-awesome-icon icon="store"/> Stores
                 </router-link>
               </li>
               <li class="nav-item">
