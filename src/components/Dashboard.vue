@@ -4,7 +4,7 @@
       <router-link
         :to="{ name: 'dashboard' }"
         class="navbar-brand col-sm-3 col-md-2 mr-0"
-      >Empatkali Merchant</router-link>
+      >4x Merchant</router-link>
 
       <span class="w-100 pl-3" style="color: #fff">
         Welcome {{ authDetail.name }}
@@ -48,25 +48,6 @@
                   <font-awesome-icon icon="cog"/> Account Settings
                 </router-link>
               </li>
-              <!-- <li class="nav-item">
-                <router-link :to="{ name: 'settings' }" class="nav-link">
-                  <font-awesome-icon icon="cog"/> Merchant Settings
-                </router-link>
-                <ul class="submenu">
-                  <li>
-                    <router-link :to="{ name: 'user-setting' }">User Setting</router-link>
-                  </li>
-                  <li>
-                    <router-link :to="{ name: 'account-setting' }">Account</router-link>
-                  </li>
-                  <li>
-                    <router-link :to="{ name: 'bank-account-setting' }">Bank Account</router-link>
-                  </li>
-                  <li>
-                    <router-link :to="{ name: 'add-user-store-setting' }">Store List</router-link>
-                  </li>
-                </ul>
-              </li> -->
             </ul>
           </div>
         </nav>

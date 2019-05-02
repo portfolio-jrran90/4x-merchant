@@ -13,3 +13,8 @@ Vue.filter('date', date => {
 Vue.filter('readMore', (text, length, suffix) => {
 	return (text.length>length) ? (text.substring(0, length) + suffix) : text
 })
+
+// Indonesian Rupiah Format
+Vue.filter('currency', amount => {
+	return Intl.NumberFormat('id-ID', {style: 'currency', currency: 'IDR'}).format(amount)
+})
