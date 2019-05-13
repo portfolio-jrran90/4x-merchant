@@ -6,6 +6,9 @@ import VeeValidate from 'vee-validate';
 import * as VueGoogleMaps from 'vue2-google-maps';
 import axios from 'axios';
 import VueSweetalert2 from 'vue-sweetalert2'
+
+import VueApexCharts from 'vue-apexcharts'
+
 import App from './App.vue';
 
 import 'vue2-daterange-picker/dist/lib/vue-daterange-picker.min.css'
@@ -99,6 +102,8 @@ Vue.use(VueGoogleMaps, {
   // installComponents: true,
 });
 Vue.use(VueSweetalert2)
+Vue.use(VueApexCharts)
+Vue.component('apexchart', VueApexCharts)
 
 // Filters
 import './filters/index'
