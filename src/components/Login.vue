@@ -16,7 +16,7 @@
                       type="text"
                       class="form-control"
                       id="inputEmail"
-                      placeholder="Email"
+                      placeholder="Email/Username"
                       v-model="data.body.identity"
                     >
                   </div>

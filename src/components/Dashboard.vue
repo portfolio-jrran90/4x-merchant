@@ -33,11 +33,11 @@
                   <font-awesome-icon icon="chart-pie"/> Sales Report
                 </router-link>
               </li>
-              <li class="nav-item">
+              <!-- <li class="nav-item">
                 <router-link :to="{ name: 'inbox' }" class="nav-link">
                   <font-awesome-icon icon="envelope"/> Inbox
                 </router-link>
-              </li>
+              </li> -->
               <li class="nav-item">
                 <router-link :to="{ name: 'stores' }" class="nav-link">
                   <font-awesome-icon icon="store"/> Stores
