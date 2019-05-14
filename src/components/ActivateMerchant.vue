@@ -11,7 +11,7 @@
 						<h4 class="mb-0">Change Password</h4>
 					</div>
 					<div class="card-body">
-						<p class="text-left">Welcome junjun, in order for your account to be activated, you have to change your password.</p>
+						<p class="text-left">Welcome, in order for your account to be activated, you have to change your password.</p>
 						<form @submit.prevent="changePassword">
 						  <div class="form-group">
 						    <input type="password" class="form-control" placeholder="Enter current password" name="currentPassword"
