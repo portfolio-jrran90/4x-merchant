@@ -80,6 +80,12 @@
                         </tr>
                         <tr>
                           <td class="table-secondary">
+                            Type
+                          </td>
+                          <td class="table-light">{{ (storeDetails.online)?'Online':'Offline' }}</td>
+                        </tr>
+                        <tr>
+                          <td class="table-secondary">
                             <font-awesome-icon icon="check-circle" />
                           </td>
                           <td class="table-light">
@@ -186,6 +192,20 @@
                   v-validate="'required'"
                 >
                 <span class="invalid-feedback">{{ errors.first('mobileNumber') }}</span>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="inputMobileNo" class="col-sm-3 col-form-label">Type</label>
+              <div class="col-sm-9">
+                <select class="form-control" v-model="dataInputOutletMerchant.online"
+                        name="type"
+                        :class="{'is-invalid': errors.first('type')}"
+                        v-validate="'required'">
+                  <option value="true">Online</option>
+                  <option value="false">Offline</option>
+                </select>
+                <span class="invalid-feedback">{{ errors.first('type') }}</span>
               </div>
             </div>
 
