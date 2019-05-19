@@ -1,5 +1,18 @@
 <template>
   <div class="py-4">
+    
+    <b-alert variant="info" :show="stores.length==0">
+      <!--
+        This will check if the merchant has already stores,
+        if not, this will appear otherwise not
+      -->
+      <h4>Get Started!</h4>
+      <p>
+        Welcome to your dashboard!<br>
+        To help you get <strong>started</strong>, create your store by clicking the button below.
+      </p>
+      <router-link :to="{ name: 'stores' }" class="btn btn-info px-5">Create store</router-link>
+    </b-alert>
 
     <div class="row mb-2 c-filter">
       <div class="col">
@@ -95,22 +108,6 @@
         </div>
       </div>
     </div>
-
-    <!-- <div class="row mb-4">
-      <div class="col">
-        <div class="card">
-          <div class="card-header">
-            <h4 class="py-2 mb-0">Settlement Report for {{ getCurrentMonthName() }}</h4>    
-          </div>
-          <div class="card-body">
-            <bar-chart
-              v-if="lineChartSettlementReportLoaded"
-              :chartdata="lineChartSettlementReportData"
-              :options="lineChartSettlementReportOptions" />
-          </div>
-        </div>
-      </div>
-    </div> -->
 
   </div>
 </template>
