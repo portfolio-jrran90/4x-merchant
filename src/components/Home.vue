@@ -90,7 +90,7 @@
             <h4 class="py-2 mb-0">Average Order Value</h4>    
           </div>
           <div class="card-body">
-            <apexchart height="350" type="line" :options="salesChartOptions" :series="salesSeries"></apexchart>
+            <apexchart height="350" type="line" :options="averageOrderChartOptions" :series="averageOrderSeries"></apexchart>
           </div>
         </div>
       </div>
@@ -145,6 +145,17 @@ export default {
         }
       },
       salesSeries: [],
+
+      averageOrderChartOptions: {
+        chart: {
+          id: 'vuechart-example2'
+        },
+        xaxis: {
+          categories: []
+        }
+      },
+      averageOrderSeries: [],
+
       noOfSales: {
         days: [],
         number: []
@@ -256,8 +267,25 @@ export default {
       for (let i=0; i<end_day.daysInMonth(); i++) dailyIndex[i] = i+1
       vm.noOfSales.days = dailyIndex
 
+      // Sales
       vm.salesChartOptions = {
         ...vm.salesChartOptions, ...{
+          xaxis: {
+            categories: dailyIndex,
+          },
+          yaxis: {
+            labels: {
+              formatter: function(value) {
+                return Intl.NumberFormat('id-ID', {style: 'currency', currency: 'IDR'}).format(value)
+              }
+            }
+          }
+        }
+      }
+
+      // Average Order
+      vm.averageOrderChartOptions = {
+        ...vm.averageOrderChartOptions, ...{
           xaxis: {
             categories: dailyIndex,
           },
@@ -291,11 +319,27 @@ export default {
         dailyNumberOfSales.push(ee)
       }
 
+      // this is for getting the average
+      let dailyAverageOrder = []
+      for (let i=0; i<end_day.daysInMonth(); i++) {
+        if ( parseInt(dailyNumberOfSales[i]) == 0 ) {
+          dailyAverageOrder[i] = 0
+        } else {
+          dailyAverageOrder.push( (dailyData[i] / dailyNumberOfSales[i]) )
+        }
+      }
+
       vm.noOfSales.number = dailyNumberOfSales
 
+      // Sales
       vm.salesSeries = [{
         name: 'sales',
         data: dailyData
+      }]
+      // Average Order
+      vm.averageOrderSeries = [{
+        name: 'average',
+        data: dailyAverageOrder
       }]
 
       document.querySelector('.c-filter button').disabled = false
