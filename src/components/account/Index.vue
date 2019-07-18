@@ -109,6 +109,16 @@
 	      	</table>
 	      </b-tab>
 
+	      <b-tab title="Change password">
+	      	<h4>Change Password</h4>
+	      	<hr>
+	      	<p>
+	      		Further instruction(s) for changing/resetting your password will be sent to this email address
+	      		<strong><u>{{ authDetails.merchant.email }}</u></strong>
+	      	</p>
+	      	<button class="btn btn-primary px-5" @click="changePassword">Send</button>
+	      </b-tab>
+
 	    </b-tabs>
 	  </b-card>
 
@@ -319,7 +329,20 @@ export default {
 						})
 					break
 			}
-		}
+		},
+
+		/**
+		 * Change password
+		 */
+		changePassword() {
+			let vm = this
+			axios
+				.post('/api/merchants/resetpassword', { email: vm.authDetails.merchant.email }, vm.requestHeaders)
+				.then(res => {
+					alert(res.data.message)
+		      vm.$auth.logout({ redirect: "/login" })
+				})
+		},
 	}
 }
 </script>

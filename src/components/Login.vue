@@ -40,16 +40,34 @@
               </form>
             </div>
           </div>
+          <div class="mt-1">
+            <a href="#" @click.prevent="openModal('forgot-password')">Forgot password?</a>
+          </div>
         </div>
       </div>
     </div>
+
+    <b-modal v-model="modal.showForgot" title="Forgot Password" ok-title="Update"
+      @ok.prevent="forgotPassword">
+      <div class="form-group mb-0">
+        <input type="email" class="form-control" v-model="modal.forgot.email">
+      </div>
+    </b-modal>
   </div>
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   data() {
     return {
+      requestedHeaders: {
+        headers: {
+          Authorization: process.env.VUE_APP_AUTHORIZATION,
+          'x-access-token': localStorage.getItem('auth_token')
+        }
+      },
       context: "login context",
       data: {
         body: {
@@ -59,7 +77,13 @@ export default {
         rememberMe: false,
         fetchUser: true
       },
-      error: null
+      error: null,
+      modal: {
+        showForgot: false,
+        forgot: {
+          email: ''
+        }
+      }
     };
   },
   methods: {
@@ -82,6 +106,31 @@ export default {
             alert("Invalid Email/Password!");
           }
         );
+    },
+
+    /**
+     * Open modal
+     * 
+     * @param  String type
+     */
+    openModal(type) {
+      let vm = this
+      if (type === 'forgot-password') {
+        vm.modal.showForgot = true
+      }
+    },
+
+    /**
+     * Forgot password
+     */
+    forgotPassword() {
+      let vm = this
+      axios
+        .post('/api/merchants/resetpassword', { email: vm.modal.forgot.email }, vm.requestedHeaders)
+        .then(res => {
+          alert(res.data.message)
+          vm.modal.showForgot = false
+        })
     }
   }
 };
