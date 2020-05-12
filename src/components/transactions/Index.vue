@@ -7,7 +7,6 @@
       <div class="card-header">
         <div class="form-inline">
           <label class="my-1 mr-2" for="inlineFormCustomSelectPref">Filter:</label>
-
           <!-- date range -->
           <date-range-picker
             :opens="filterDateRange.opens"
@@ -41,11 +40,16 @@
         <table class="table table-striped table-bordered mb-0 table-sm" style="border: 0 !important">
           <thead class="table-dark">
             <tr>
-              <th class="text-left">Invoice</th>
-              <th class="text-center">Date</th>
-              <th class="text-center">Store</th>
-              <th class="text-center">Customer</th>
-              <th class="text-right">Total</th>
+              <th class="text-left" rowspan="2" style="vertical-align: middle">Invoice</th>
+              <th class="text-center" rowspan="2" style="vertical-align: middle">Date</th>
+              <th class="text-center" rowspan="2" style="vertical-align: middle">Store</th>
+              <th class="text-center" rowspan="2" style="vertical-align: middle">Customer</th>
+              <th class="text-right" rowspan="2" style="vertical-align: middle">Total</th>
+              <th class="text-center" colspan="2" v-if="isAuthZilingo">Voucher</th>
+            </tr>
+            <tr class="text-center" v-if="isAuthZilingo">
+              <th>Code</th>
+              <th>Expiration Date</th>
             </tr>
           </thead>
           <tbody v-if="transactions.length === 0">
@@ -60,6 +64,8 @@
               <td class="text-center">{{ data.store_name.data.name }}</td>
               <td class="text-center">{{ data.user }}</td>
               <td class="text-right">{{ data.total | currency }}</td>
+              <td class="text-center" v-if="isAuthZilingo">{{ `KCI${data.zilingo.code}` }}</td>
+              <td class="text-center" v-if="isAuthZilingo">{{ new Date(data.zilingo.expire) | date }}</td>
             </tr>
           </tbody>
         </table>
@@ -127,10 +133,11 @@ export default {
     return {
       requestHeaders: {
         headers: {
-          'Authorization': process.env.VUE_APP_AUTHORIZATION,
+          Authorization: process.env.VUE_APP_AUTHORIZATION,
           'x-access-token': localStorage.getItem('auth_token')
         }
       },
+      authDetail: {},
       // Search
       filterGetStores: {},
       filterDateRange: {
@@ -147,11 +154,28 @@ export default {
       transactionDetails: {}
     };
   },
+  computed: {
+    // This will identify if the authenticated user is Zilingo
+    isAuthZilingo() {
+      return this.authDetail.username === 'zilingo'
+    }
+  },
   created() {
-    this.showStores()
-    this.filterResult()
+    let vm = this
+    vm.getAuthDetail()
+    vm.showStores()
+    vm.filterResult()
   },
   methods: {
+    /**
+     * Get Authenticated User Detail
+     */
+    getAuthDetail() {
+      let vm = this
+      axios
+        .get('/api/merchants/detail', vm.requestHeaders)
+        .then(res => vm.authDetail = res.data)
+    },
 
     /**
      * Show stores for filter
