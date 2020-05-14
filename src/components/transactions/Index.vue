@@ -44,11 +44,11 @@
               <th class="text-center" rowspan="2" style="vertical-align: middle">Date</th>
               <th class="text-center" rowspan="2" style="vertical-align: middle">Store</th>
               <th class="text-center" rowspan="2" style="vertical-align: middle">Customer</th>
-              <th class="text-right" rowspan="2" style="vertical-align: middle">Total</th>
+              <th class="text-center" rowspan="2" style="vertical-align: middle">Total</th>
               <th class="text-center" colspan="2" v-if="isAuthZilingo">Voucher</th>
             </tr>
             <tr class="text-center" v-if="isAuthZilingo">
-              <th>Code</th>
+              <th style="vertical-align: middle;">Code</th>
               <th>Expiration Date</th>
             </tr>
           </thead>
@@ -64,8 +64,8 @@
               <td class="text-center">{{ data.store_name.data.name }}</td>
               <td class="text-center">{{ data.user }}</td>
               <td class="text-right">{{ data.total | currency }}</td>
-              <td class="text-center" v-if="isAuthZilingo">{{ `KCI${data.zilingo.code}` }}</td>
-              <td class="text-center" v-if="isAuthZilingo">{{ new Date(data.zilingo.expire) | date }}</td>
+              <td class="text-center" v-if="isAuthZilingo">{{ (data.zilingo.code != 'false') ? `KCI${data.zilingo.code}` : '---' }}</td>
+              <td class="text-center" v-if="isAuthZilingo">{{ data.zilingo.expire }}</td>
             </tr>
           </tbody>
         </table>
