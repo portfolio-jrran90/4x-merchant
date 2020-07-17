@@ -5,7 +5,7 @@
         <div class="col-4">
           <div class="card">
             <h5 class="card-header text-center">
-              <img src="https://empatkali.co.id/assets/img/logo-final.png" alt="empatkali logo" style="width: 50px" class="mb-2">
+              <img src="https://images.empatkali.co.id/rebranding/logo-icon-main.png" alt="empatkali logo" style="width: 50px" class="mb-2">
               <br>Merchant Login
             </h5>
             <div class="card-body">

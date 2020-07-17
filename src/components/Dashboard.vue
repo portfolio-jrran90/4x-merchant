@@ -4,7 +4,9 @@
       <router-link
         :to="{ name: 'dashboard' }"
         class="navbar-brand col-sm-3 col-md-2 mr-0"
-      >4x Merchant</router-link>
+      >
+        <img src="https://images.empatkali.co.id/rebranding/logo.png" alt="" style="width: 100px">
+      </router-link>
 
       <span class="w-100 pl-3" style="color: #fff">
         Welcome {{ authDetail.name }}
