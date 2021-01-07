@@ -61,8 +61,18 @@
     <div class="row c-sales-report mb-2">
       <div class="col">
         <div class="card">
-          <div class="card-header">
-            <h4 class="py-2 mb-0">Sales for {{ getCurrentMonthName() }}</h4>
+          <div class="card-header d-flex">
+            <h4 class="py-2 mb-0 flex-grow-1">Sales for {{ getCurrentMonthName() }}</h4>
+
+            <download-excel 
+              class="btn btn-primary btn-lg ml-2 btn-csv"
+              :data="salesCsvData"
+              type="csv"
+              name="sales-reports.csv"
+              :escapeCsv="false"
+            >
+              Download as CSV
+            </download-excel>
           </div>
           <div class="card-body">
             <apexchart height="350" type="line" :options="salesChartOptions" :series="salesSeries"></apexchart>
@@ -99,8 +109,18 @@
     <div class="row c-sales-report mb-2">
       <div class="col">
         <div class="card">
-          <div class="card-header">
-            <h4 class="py-2 mb-0">Average Order Value</h4>    
+          <div class="card-header d-flex">
+            <h4 class="py-2 mb-0 flex-grow-1">Average Order Value</h4>    
+
+            <download-excel 
+              class="btn btn-primary btn-lg ml-2 btn-csv"
+              :data="averageCsvData"
+              type="csv"
+              name="average-reports.csv"
+              :escapeCsv="false"
+            >
+              Download as CSV
+            </download-excel>
           </div>
           <div class="card-body">
             <apexchart height="350" type="line" :options="averageOrderChartOptions" :series="averageOrderSeries"></apexchart>
@@ -156,8 +176,37 @@ export default {
       noOfSales: {
         days: [],
         number: []
-      }
+      },
 
+      salesCsvData: [],
+      averageCsvData: [],
+
+      json_data: [
+        {
+          name: "Tony Peña",
+          city: "New York",
+          country: "United States",
+          birthdate: "1978-03-15",
+          phone: {
+            mobile: "1-541-754-3010",
+            landline: "(541) 754-3010",
+          },
+        },
+        {
+          name: "Thessaloniki",
+          city: "Athens",
+          country: "Greece",
+          birthdate: "1987-11-23",
+          phone: {
+            mobile: "+1 855 275 5071",
+            landline: "(2741) 2621-244",
+          },
+        },
+      ],
+      json_fields: {
+        "Complete name": "name",
+        "City": "city",
+      },
     }
   },
   created() {
@@ -339,6 +388,12 @@ export default {
         data: dailyAverageOrder
       }]
 
+      vm.salesCsvData = [];
+      vm.averageCsvData = [];
+
+      vm.generateCsvData(vm.salesSeries[0].data, 'sales');
+      vm.generateCsvData(vm.averageOrderSeries[0].data, 'average');
+
       document.querySelector('.c-filter button').disabled = false
       document.querySelector('.c-filter button').innerHTML = 'Generate'
 
@@ -349,6 +404,35 @@ export default {
       // 2 = confirm
       // 3 = because dispute mean the item was returned from the user
     },
+
+    /*
+    * Format data for download CSV (date, sales)
+    */
+    generateCsvData(chartData, type) {
+      let vm = this
+      let monthNow  = moment().format('MM');
+      let yearNow  = moment().format('YYYY');
+
+      if(type == 'sales'){
+        _.map(chartData, (value, index) =>  {
+          vm.salesCsvData.push({
+            date: moment( monthNow + '/' + (index+1) + '/' + yearNow , 'MM/D/YYYY' ).format('DD/MM/YYYY'),
+            sales: value
+          });
+        });
+      }
+
+      if(type == 'average'){
+        
+        _.map(chartData, (value, index) =>  {
+          vm.averageCsvData.push({
+            date: moment( monthNow + '/' + (index+1) + '/' + yearNow , 'MM/D/YYYY' ).format('DD/MM/YYYY'),
+            average: value
+          });
+        });
+      }
+
+    }
   }
 }
 </script>

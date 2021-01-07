@@ -1,12 +1,12 @@
 <template>
   <div class="py-4">
-    <h2 class="mb-3">
-      <font-awesome-icon icon="cog"/> Account Settings
+    <h2 class="mb-3 page-title">
+			<img :src="'../assets/img/setting.png'" alt="" class="page-title-img"> <span>Account Settings</span> 
     </h2>
 		<b-card no-body>
-			<b-tabs pills card vertical nav-wrapper-class="w-25">
+			<b-tabs pills card vertical nav-class="p-3" nav-wrapper-class="w-25">
 
-	      <b-tab title="Merchant Profile" active>
+	      <b-tab title="Merchant Profile" title-link-class="menu-item-div" active>
 	      	<div class="row">
 	      		<div class="col-md-3">
 	      		<figure class="figure">
@@ -24,7 +24,7 @@
 	      					<td colspan="2" class="table-primary">
 	      						<h4 class="mb-0 p-2">
 	      							Merchant Profile
-	      							<a href="#" class="float-right" @click.prevent="openModal('EditMerchantProfile')">
+	      							<a v-if="isUserSuperAdmin" href="#" class="float-right" @click.prevent="openModal('EditMerchantProfile')">
 	      								<font-awesome-icon icon="edit" />
 	      							</a>
 	      						</h4>
@@ -59,7 +59,7 @@
 		    					<td colspan="2" class="table-primary">
 		    						<h4 class="mb-0 py-2 p-2">
 		    							PIC
-		    							<a href="#" class="float-right" @click.prevent="openModal('EditPIC')">
+		    							<a v-if="isUserSuperAdmin" href="#" class="float-right" @click.prevent="openModal('EditPIC')">
 		    								<font-awesome-icon icon="edit" />
 		    							</a>
 		    						</h4>
@@ -82,13 +82,13 @@
 	      	</div>
 	      </b-tab>
 
-	      <b-tab title="Bank Account">
+	      <b-tab title="Bank Account" title-link-class="menu-item-div">
 	      	<table class="table table-sm table-bordered">
     				<tr>
     					<td colspan="2" class="table-primary">
     						<h4 class="mb-0 py-2 p-2">
     							Bank Account
-    							<a href="#" class="float-right" @click.prevent="openModal('EditBankAccount')">
+    							<a v-if="isUserSuperAdmin" href="#" class="float-right" @click.prevent="openModal('EditBankAccount')">
     								<font-awesome-icon icon="edit" />
     							</a>
     						</h4>
@@ -109,14 +109,77 @@
 	      	</table>
 	      </b-tab>
 
-	      <b-tab title="Change password">
+	      <b-tab title="Change password" title-link-class="menu-item-div">
 	      	<h4>Change Password</h4>
 	      	<hr>
 	      	<p>
 	      		Further instruction(s) for changing/resetting your password will be sent to this email address
 	      		<strong><u>{{ authDetails.merchant.email }}</u></strong>
 	      	</p>
-	      	<button class="btn btn-primary px-5" @click="changePassword">Send</button>
+	      	<button v-if="isUserSuperAdmin" class="btn btn-primary px-5" @click="changePassword">Send</button>
+	      </b-tab>
+
+				<b-tab title="Contract" title-link-class="menu-item-div">
+					<div class="contract-container">
+						<!-- <vue-pdf :src="authDetails.contract"></vue-pdf> -->
+						<iframe id="pdf-div" :src="authDetails.contract" frameborder="0" type="application/pdf" allowtransparency="true"></iframe>
+						<!-- <embed id="pdf-div" :src="`https://drive.google.com/viewerng/viewer?embedded=false&url=${ authDetails.contract }`"> -->
+						<!-- <div class="text-center">
+							<img :src="'../assets/img/EmpatKali_Logo.png'" alt="" class="mb-4" style="width: 330px;">
+						</div>
+
+						<div class="d-flex mt-3 mb-4">
+							<div class="flex-grow-1">
+								Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+								Donec vel vulputate nulla, quis consequat risus. Quisque
+								ullamcorper justo neque, sit amet malesuada erat effict
+								ur vel. Proin ut egestas purus. Sed bibendum, purus vitae
+								suscipit semper, odio metus posuere mauris, nec tempu
+								s mi velit luctus dolor. Maecenas et fringilla enim. Duis ut
+								magna id enim fermentum tincidunt id id metus. Donec
+								consectetur facilisis purus et posuere. Pellentesque a nis
+								bibendum, efficitur nisi nec, ornare nibh.
+							</div>
+
+							<div class="flex-grow-1">
+								Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+								Donec vel vulputate nulla, quis consequat risus. Quisque
+								ullamcorper justo neque, sit amet malesuada erat effict
+								ur vel. Proin ut egestas purus. Sed bibendum, purus vitae
+								suscipit semper, odio metus posuere mauris, nec tempu
+								s mi velit luctus dolor. Maecenas et fringilla enim. Duis ut
+								magna id enim fermentum tincidunt id id metus. Donec
+								consectetur facilisis purus et posuere. Pellentesque a nis
+								bibendum, efficitur nisi nec, ornare nibh.
+							</div>
+						</div>
+
+						<div class="d-flex">
+							<div class="flex-grow-1">
+								Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+								Donec vel vulputate nulla, quis consequat risus. Quisque
+								ullamcorper justo neque, sit amet malesuada erat effict
+								ur vel. Proin ut egestas purus. Sed bibendum, purus vitae
+								suscipit semper, odio metus posuere mauris, nec tempu
+								s mi velit luctus dolor. Maecenas et fringilla enim. Duis ut
+								magna id enim fermentum tincidunt id id metus. Donec
+								consectetur facilisis purus et posuere. Pellentesque a nis
+								bibendum, efficitur nisi nec, ornare nibh.
+							</div>
+
+							<div class="flex-grow-1">
+								Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+								Donec vel vulputate nulla, quis consequat risus. Quisque
+								ullamcorper justo neque, sit amet malesuada erat effict
+								ur vel. Proin ut egestas purus. Sed bibendum, purus vitae
+								suscipit semper, odio metus posuere mauris, nec tempu
+								s mi velit luctus dolor. Maecenas et fringilla enim. Duis ut
+								magna id enim fermentum tincidunt id id metus. Donec
+								consectetur facilisis purus et posuere. Pellentesque a nis
+								bibendum, efficitur nisi nec, ornare nibh.
+							</div>
+						</div> -->
+					</div>
 	      </b-tab>
 
 	    </b-tabs>
@@ -206,6 +269,7 @@
 
 <script>
 import axios from 'axios'
+import pdf from 'vue-pdf'
 
 export default {
 	data() {
@@ -213,10 +277,13 @@ export default {
 			requestHeaders: {
 	      headers: {
 	        Authorization: process.env.VUE_APP_AUTHORIZATION,
-	        'x-access-token': localStorage.getItem('auth_token')
+					'x-access-token': localStorage.getItem('auth_token'),
+					'Access-Control-Allow-Origin': '*',
 	      }
 			},
-			authDetails: {},
+			authDetails: {
+				contract: null
+			},
 			modalShow: {
 				editMerchantProfile: false,
 				editPIC: false,
@@ -226,7 +293,8 @@ export default {
 				merchantProfile: {},
 				PIC: {},
 				bankAccount: {},
-			}
+			},
+			isUserSuperAdmin: false,
 		}
 	},
 	created() {
@@ -248,8 +316,13 @@ export default {
 				vm.authDetails = {
 					merchant: merchantDtl.data,
 					pic: picDtl.data,
-					bank: bankDtl.data
+					bank: bankDtl.data,
+					contract: null,
 				}
+				console.log(merchantDtl);
+				vm.isUserSuperAdmin = merchantDtl.data.adminMerchant ? false : true;
+
+				await vm.getContract();
 			} catch (err) {
 				console.log('error', err)
 			}
@@ -343,9 +416,82 @@ export default {
 		      vm.$auth.logout({ redirect: "/login" })
 				})
 		},
+
+		/**
+		 * For Contract PDF data
+		 */
+		getContract() {
+			let vm = this
+			axios
+				.get(`/api/merchants/${vm.authDetails.merchant._id}/contract`, vm.requestHeaders)
+				.then(res => {
+					console.log(res);
+					vm.authDetails.contract = res.data.data.image;
+
+					// let image = res.data.data.image;
+
+					// axios
+					// 	.get(image, vm.requestHeaders)
+					// 	.then(response => {
+					// 		console.log(response);
+					// 	})
+
+					// vm.authDetails.contract = {
+					// 	url: res.data.data.image,
+					// 	httpHeaders: vm.requestHeaders.header,
+					// 	withCredentials: true,
+					// }
+					// vm.authDetails.contract = pdf.createLoadingTask(res.data.data.image, {
+					// 	withCredentials: true,
+					// 	httpHeaders: vm.requestHeaders.headers
+					// });
+
+					// vm.authDetails.contract.promise.then(pdf => {
+					// 	console.log(pdf);
+					// 	vm.numPages = pdf.numPages;
+					// });
+				})
+		},
 	}
 }
 </script>
 
-<style scoped>
+<style>
+	.menu-item-div{
+    border-radius: 10px !important;
+    font-weight: 600;
+    height: 46px;
+		line-height: 30px;
+		margin-bottom: 5px;
+	}
+</style>
+
+<style lang="scss" scoped>
+  .page-title{
+    .page-title-img{
+      width: 24px;
+      vertical-align: middle;
+      display: inline-block;
+      margin-right: 10px;
+    }
+    span{
+      vertical-align: middle;
+      display: inline-block;
+      font-size: 16px;
+      font-weight: 700;
+    }
+	}
+	.card{
+    border-radius: 10px;
+	}
+	.contract-container{
+		// max-height: 500px;
+		height: 500px;
+		// overflow-y: auto;
+
+		#pdf-div{
+			width: 100%;
+    	height: 100%;
+		}
+	}
 </style>

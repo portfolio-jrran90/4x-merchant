@@ -21,7 +21,7 @@
             <div
               slot="input"
               slot-scope="picker"
-            >{{ picker.startDate | date }} - {{ picker.endDate | date }}</div>
+            >{{ picker.startDate | moment('DD/MM/YYYY') }} - {{ picker.endDate | moment('DD/MM/YYYY') }}</div>
           </date-range-picker>
 
           <!-- store -->
@@ -31,6 +31,19 @@
           </select>
           
           <button type="button" class="btn btn-primary my-1" @click="filterResult">Generate Result</button>
+
+          <div class="flex-grow-1 text-right">
+            <download-excel 
+              class="btn btn-primary ml-2 btn-csv"
+              :data="salesCsvData"
+              type="csv"
+              :name="salesCsvFilename"
+              :escapeCsv="false"
+            >
+              Download as CSV
+            </download-excel>
+          </div>
+          
         </div>
 
         <div class="alert alert-info mb-0 mt-3">Merchant anda memiliki {{ transactions.length }} transaksi</div>
@@ -60,7 +73,7 @@
           <tbody v-else>
             <tr v-for="data in transactions">
               <td class="text-left">{{ data.transactionNumber }}</td>
-              <td class="text-center">{{ new Date(data.createdAt) | date }}</td>
+              <td class="text-center">{{ new Date(data.createdAt) | moment('DD/MM/YYYY') }}</td>
               <td class="text-center">{{ data.store_name.data.name }}</td>
               <td class="text-center">{{ data.user }}</td>
               <td class="text-right">{{ data.total | currency }}</td>
@@ -151,7 +164,10 @@ export default {
 
       modalShowTransactionDetail: false,
       transactions: {},
-      transactionDetails: {}
+      transactionDetails: {},
+
+      salesCsvData: [],
+      salesCsvFilename: '',
     };
   },
   computed: {
@@ -202,6 +218,9 @@ export default {
           return v
         })
         vm.transactions = await Promise.all(mapAdditionalDetails)
+        console.log(vm.transactions);
+        vm.generateCsvData(vm.transactions);
+        
       } catch (err) {
         console.log('error', err)
       }
@@ -256,6 +275,25 @@ export default {
       this.filterDateRange.endDate = values.endDate.toISOString().slice(0, 10);
     },
 
+    /*
+    * Format data for download CSV (date, sales)
+    */
+    generateCsvData(transData) {
+      let vm = this
+      vm.salesCsvData = [];
+      vm.salesCsvFilename = "sales-reports-" + moment(vm.filterDateRange.startDate).format('DD/MM/YYYY') + "-" + moment(vm.filterDateRange.endDate).format('DD/MM/YYYY') + ".csv";
+
+      _.map(transData, (value, index) =>  {
+        vm.salesCsvData.push({
+          storeName: value.store_name.data.name,
+          invoiceNumber: value.transactionNumber,
+          date: moment(value.createdAt).format('DD/MM/YYYY'),
+          customer: value.user,
+          total: value.total,
+          // voucher: value.voucher
+        });
+      });
+    }
   }
 };
 </script>
