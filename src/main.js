@@ -7,7 +7,12 @@ import * as VueGoogleMaps from 'vue2-google-maps';
 import axios from 'axios';
 import VueSweetalert2 from 'vue-sweetalert2'
 
+import JsonExcel from "vue-json-excel";
 import VueApexCharts from 'vue-apexcharts'
+import VueMoment from 'vue-moment'
+import VueLodash from 'vue-lodash'
+import lodash from 'lodash'
+import vuePdf from 'vue-pdf'
 
 import App from './App.vue';
 
@@ -72,11 +77,15 @@ library.add(
 );
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 
+Vue.component('vue-pdf', vuePdf);
+
 Vue.config.productionTip = false;
 Vue.use(VueRouter);
 Vue.use(VueAxios, axios);
 Vue.use(BootstrapVue);
-Vue.use(VeeValidate);
+Vue.use(VeeValidate, {
+  fieldsBagName: 'vvFields'
+});
 Vue.use(VueGoogleMaps, {
   load: {
     key: 'AIzaSyCkjWXef2lDguLgq1Pk9cUkWQd3ReWXXaQ',
@@ -103,7 +112,12 @@ Vue.use(VueGoogleMaps, {
 });
 Vue.use(VueSweetalert2)
 Vue.use(VueApexCharts)
+Vue.use(VueMoment)
+// Vue.use(JsonExcel)
 Vue.component('apexchart', VueApexCharts)
+Vue.component("downloadExcel", JsonExcel);
+
+Vue.use(VueLodash, { name: 'custom' , lodash: lodash })
 
 // Filters
 import './filters/index'

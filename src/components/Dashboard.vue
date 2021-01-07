@@ -5,16 +5,16 @@
         :to="{ name: 'dashboard' }"
         class="navbar-brand col-sm-3 col-md-2 mr-0"
       >
-        <img src="https://images.empatkali.co.id/rebranding/logo.png" alt="" style="width: 100px">
+        <img :src="'../assets/img/EmpatKali_Logo_White.png'" alt="" style="width: 121px">
       </router-link>
 
-      <span class="w-100 pl-3" style="color: #fff">
+      <span class="w-100 pl-4 font-weight-bold" style="color: #fff">
         Welcome {{ authDetail.name }}
       </span>
       <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
-          <a href="#" class="nav-link" @click.prevent="logout()">
-            <span data-feather="log-out"></span> Sign out
+          <a href="#" class="nav-link btn-signout" @click.prevent="logout()">
+            Sign out
           </a>
         </li>
       </ul>
@@ -27,12 +27,12 @@
             <ul class="nav flex-column">
               <li class="nav-item">
                 <router-link :to="{ name: 'home' }" class="nav-link">
-                  <font-awesome-icon icon="home"/> Home
+                  <img :src="'../assets/img/home.png'" alt=""> <span>Home</span>
                 </router-link>
               </li>
               <li class="nav-item">
                 <router-link :to="{ name: 'transactions' }" class="nav-link">
-                  <font-awesome-icon icon="chart-pie"/> Sales Report
+                  <img :src="'../assets/img/report.png'" alt=""> <span>Sales Report</span>
                 </router-link>
               </li>
               <!-- <li class="nav-item">
@@ -42,12 +42,12 @@
               </li> -->
               <li class="nav-item">
                 <router-link :to="{ name: 'stores' }" class="nav-link">
-                  <font-awesome-icon icon="store"/> Stores
+                  <img :src="'../assets/img/stores.png'" alt=""> <span>Stores</span>
                 </router-link>
               </li>
               <li class="nav-item">
                 <router-link :to="{ name: 'account-settings' }" class="nav-link">
-                  <font-awesome-icon icon="cog"/> Account Settings
+                  <img :src="'../assets/img/setting.png'" alt=""> <span>Account Settings</span>
                 </router-link>
               </li>
             </ul>
@@ -118,7 +118,7 @@ body {
   left: 0;
   z-index: 100; /* Behind the navbar */
   padding: 48px 0 0; /* Height of navbar */
-  box-shadow: inset -1px 0 0 rgba(0, 0, 0, 0.1);
+  /* box-shadow: inset -1px 0 0 rgba(0, 0, 0, 0.1); */
 }
 
 .sidebar-sticky {
@@ -140,6 +140,7 @@ body {
 .sidebar .nav-link {
   font-weight: 500;
   color: #333;
+  padding: 14px 16px;
 }
 
 .sidebar .nav-link .feather {
@@ -147,8 +148,22 @@ body {
   color: #999;
 }
 
-.sidebar .nav-link.active {
-  color: #007bff;
+.sidebar .nav-link img{
+  width: 24px;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 10px;
+}
+.sidebar .nav-link span{
+  display: inline-block;
+  vertical-align: middle;
+  font-weight: 700;
+  color: #353D46;
+  line-height: 1;
+}
+
+.sidebar .nav-link.active span {
+  color: #393C8E;
 }
 
 .sidebar .nav-link:hover .feather,
@@ -188,8 +203,13 @@ body {
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
   font-size: 1rem;
-  background-color: rgba(0, 0, 0, 0.25);
-  box-shadow: inset -1px 0 0 rgba(0, 0, 0, 0.25);
+  background: #020D18;
+  /* box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15); */
+  height: 54px;
+}
+
+.navbar-nav{
+  background-color: #353D46 !important;
 }
 
 .navbar .form-control {
@@ -207,6 +227,19 @@ body {
 .form-control-dark:focus {
   border-color: transparent;
   box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.25);
+}
+
+.btn-signout{
+  background: #393C8E;
+  box-shadow: 0px 2px 2px 1px rgba(0, 0, 0, 0.05);
+  border-radius: 5px;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 21px;
+  text-align: center;
+  color: #FFFFFF !important;
+  opacity: 1;
+  padding: 8px 18px;
 }
 
 </style>

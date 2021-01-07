@@ -1,13 +1,13 @@
 <template>
   <div class="py-4">
-    <h2 class="mb-3">
-      <font-awesome-icon icon="store"/> Stores
+    <h2 class="mb-3 page-title">
+      <img :src="'../assets/img/stores.png'" alt="" class="page-title-img"> <span>Stores</span> 
     </h2>
     <div class="card">
       <div class="card-body">
         <div class="row">
           <div class="col-md-3">
-            <div class="text-right">
+            <div v-if="isUserSuperAdmin" class="text-right">
               <a href="#" class="btn btn-success btn-sm mb-2 px-4" @click.prevent="openModal('AddOutletMerchant')">
                 <font-awesome-icon icon="plus"/> Add
               </a>
@@ -32,7 +32,7 @@
                 </tr>
                 <tr v-if="Object.keys(outletMerchants).length==0">
                   <td colspan="2">
-                    No record! <a href="#" @click.prevent="openModal('AddOutletMerchant')">Add store</a>
+                    No record! <a v-if="isUserSuperAdmin" href="#" @click.prevent="openModal('AddOutletMerchant')">Add store</a>
                   </td>
                 </tr>
               </tbody>
@@ -76,7 +76,7 @@
                           <td class="table-secondary">
                             <font-awesome-icon icon="calendar-check" />
                           </td>
-                          <td class="table-light">{{ new Date(storeDetails.createdAt) | date }}</td>
+                          <td class="table-light">{{ new Date(storeDetails.createdAt) | moment('DD/MM/YYYY') }}</td>
                         </tr>
                         <tr>
                           <td class="table-secondary">
@@ -97,7 +97,7 @@
                       </tbody>
                     </table>
                     
-                    <button class="btn btn-block"
+                    <button v-if="isUserSuperAdmin" class="btn btn-block"
                       :class="{
                         'btn-success': storeDetails.active===false,
                         'btn-danger': storeDetails.active===true
@@ -279,6 +279,8 @@ export default {
       // Store Details
       storeDetails: {},
       selectedStore: false, // this will highlight the active row
+      merchantDetail: {},
+      isUserSuperAdmin: false,
     };
   },
   created() {
@@ -305,6 +307,8 @@ export default {
         vm.selectedStore = res.data[0]._id
       })
     })
+
+    vm.getMerchantDetails();
   },
   methods: {
     openModal(modal, data) {
@@ -434,10 +438,51 @@ export default {
           vm.showStoreDetails(storeObj._id)
           vm.showStores()
         })
+    },
+
+
+    /*
+     * Get Merchant User Details
+     *
+     */
+
+    getMerchantDetails()  {
+      let vm = this
+      axios.get(`${process.env.VUE_APP_API_URL}/api/merchants/detail`, {
+        headers: {
+          'Authorization': process.env.VUE_APP_AUTHORIZATION,
+          'x-access-token': localStorage.getItem('auth_token')
+        }
+      }).then(res => {
+        console.log(res);
+        vm.merchantDetail = res.data;
+        vm.isUserSuperAdmin = vm.merchantDetail.adminMerchant ? false : true;
+      })
     }
   }
 };
 </script>
+
+<style lang="scss" scoped>
+  .page-title{
+    .page-title-img{
+      width: 24px;
+      vertical-align: middle;
+      display: inline-block;
+      margin-right: 10px;
+    }
+    span{
+      vertical-align: middle;
+      display: inline-block;
+      font-size: 16px;
+      font-weight: 700;
+    }
+  }
+
+  .card{
+    border-radius: 10px;
+  }
+</style>
 
 <style>
 .pac-container {
